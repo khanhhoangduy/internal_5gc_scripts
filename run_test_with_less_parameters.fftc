@@ -12,13 +12,13 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url>https://terralogic-vel.spirenteng.com/</velocity_url>
-                    <username>khoang</username>
-                    <password pt:mask="true">zUgPiFuqcv7ZS6G+lqtexNQ2TJa8Y9Q+</password>
+                    <username/>
+                    <password pt:mask="true">CaK+mWSFs84=</password>
                     <tas_name>landslide-tas2.spirenteng.com</tas_name>
-                    <ts_name>landslide-ts2a.spirenteng.com</ts_name>
-                    <ports pt:description="Example: 2,3;2,3,4 "/>
+                    <ts_name/>
+                    <ports pt:description="Example: 2,3;2,3,4">2,3;4,2,3</ports>
                     <routing pt:datatype="BOOLEAN">false</routing>
-                    <tc_dir>project://ai_LS_5G/testcases/isolation/smf/I-SMF-8-CO_UeEmergencyPduSessionEstablishment.fftc</tc_dir>
+                    <tc_dir>project://ai_LS_5G/testcases/isolation/smf/</tc_dir>
                     <tas_username>sms</tas_username>
                     <tas_password>a1b2c3d4</tas_password>
                     <reservation_timeout pt:datatype="INTEGER">3600</reservation_timeout>
