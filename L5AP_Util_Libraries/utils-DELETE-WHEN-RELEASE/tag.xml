@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<tag_list>
+    <tag port_desc="2:2">A-2TS</tag>
+    <tag port_desc="3:3">B-2TS</tag>
+    <tag port_desc="1:2">C-2TS</tag>
+    <tag port_desc="2:1:1">D-3TS</tag>
+    <tag port_desc="3:2">E-2TS</tag>
+    <tag port_desc="2:1">F-2TS</tag>
+    <tag port_desc="3:1:2">G-3TS</tag>
+    <tag port_desc="4:3">H-2TS</tag>
+    <tag port_desc="1:1">I-2TS</tag>
+    <tag port_desc="2:1:3">J-3TS</tag>
+    <tag port_desc="3:1:1">K-3TS</tag>
+    <tag port_desc="2:1:2">L-3TS</tag>
+    <tag port_desc="2:3">M-2TS</tag>
+    <tag port_desc="1:1:1">N-3TS</tag>
+    <tag port_desc="5:3">O-2TS</tag>
+    <tag port_desc="2:1:1:2">P-4TS</tag>
+    <tag port_desc="4:4">Q-2TS</tag>
+    <tag port_desc="3:1:3">R-3TS</tag>
+    <tag port_desc="2:2:3">S-3TS</tag>
+    <tag port_desc="3:4">T-2TS</tag>
+    <tag port_desc="3:1">U-2TS</tag>
+    <tag port_desc="3:2:1">V-3TS</tag>
+</tag_list>

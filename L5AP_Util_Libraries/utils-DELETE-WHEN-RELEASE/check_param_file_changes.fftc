@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<testCase version="9.3.0.202302120019">
+    <general>
+        <language>Python</language>
+        <xPathVersion>XPATH31</xPathVersion>
+    </general>
+    <execution>
+        <parameters version="9.3.0.202302120019">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <repo_parent_dir pt:description="Path to folder containing 5gc-aap and 5gc-aap-ls-ste repositories">C:\\Users\\quang.vo\\Documents\\Spirent</repo_parent_dir>
+                    <current_release pt:datatype="INTEGER" pt:description="R11">11</current_release>
+                    <check_param_or_ste pt:datatype="BOOLEAN" pt:description="true: param, false: ste">false</check_param_or_ste>
+                    <Param>
+                        <file_extension>ffpt</file_extension>
+                        <from_to_commits>aa7cde3..cbfb6ef</from_to_commits>
+                        <repo_name>5gc-aap</repo_name>
+                    </Param>
+                    <STE>
+                        <file_extension>ste</file_extension>
+                        <from_to_commits>4251191..71f0ec2</from_to_commits>
+                        <repo_name>5gc-aap-ls-ste</repo_name>
+                    </STE>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
+    <procedures>
+        <item name="main">
+            <steps>
+                <item guid="e56ee04e-3cc4-464b-8c5e-e6402d746242" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import git</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="8a2930b9-0c06-4370-8303-ecd2af7f27b9" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>from git import Repo</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="e4991b7c-f28c-44e1-ac9a-e4b43be72815" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>repo_dir = param(&quot;repo_parent_dir&quot;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="8fc6efda-0e80-43e2-84fe-47a5e1d98275" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>should_check_param = True if str(param(&quot;check_param_or_ste&quot;)).lower() == &quot;true&quot; else False</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="12654373-81e7-4566-9d7f-5d2fdc8dedbd" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>param_path = &quot;Param&quot; if should_check_param else &quot;STE&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="a8ceca30-6fdf-4216-b4fb-8fbfaf7e789a" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>repo_name = param(f&quot;{param_path}/repo_name&quot;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="5965f846-9a04-4d6b-9d3d-1ad30b3b8f53" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>path = r&quot;{0}\\{1}&quot;.format(repo_dir, repo_name)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="80306b7f-72af-4221-9eb5-ea78ee438736" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>repo = git.Repo(path)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="a3f0ec91-9b1e-4f61-a2fe-5e742019f887" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>file_extension = param(f&quot;{param_path}/file_extension&quot;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="01747ac2-acd2-4515-953a-89133ed88aeb" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>from_to_commits = param(f&quot;{param_path}/from_to_commits&quot;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="642b5085-e495-4e78-a564-44fd13d22142" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ffpt_logs = repo.git.log(from_to_commits, &quot;--oneline&quot;, f&quot;*.{file_extension}&quot;);print(ffpt_logs)</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>//table/row/key</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>commit_list</storageLocation>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="c61b606d-a6d1-416b-891a-9f6d12d1ef57" action="for" useFieldsInCommand="false">
+                    <command>
+                        <body>commit in commit_list:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="32abf45d-5526-4f8a-9452-1ed296e90b8c" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>files_changed = repo.git.execute([&quot;git&quot;, &quot;diff-tree&quot;, &quot;--no-commit-id&quot;, &quot;--name-only&quot;, commit, &quot;-r&quot;]);print(files_changed)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="f33a8236-4d98-4251-8d99-5b18b3a52d6d" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>file in files_changed.split(&apos;\\n&apos;):</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="294e69fc-dae7-4ac6-88ee-85f18c11bf07" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>should_check_param:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="eadb74bb-db48-405a-91c5-a982a4234cf3" action="comment" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Check parameter file</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="4a2ca72c-770b-4546-9505-9c33d808d831" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>not file or not file.endswith(f&quot;.{file_extension}&quot;):</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="5a78afff-7528-43ea-b16e-455505b1c7a4" action="continue" useFieldsInCommand="false">
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="3d2bc4c7-7faf-4c93-96e0-3470707cc497" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>test_name = file.rsplit(&apos;/&apos;, 1)[-1][0:-5];print(test_name)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="9aba03e1-77ae-4bc9-83fe-737db3a02725" action="call" useFieldsInCommand="false">
+                                            <command>
+                                                <body>get_release(test_name=test_name, repo_dir=repo_dir, commit_id=commit)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="be5e1571-6274-4efb-ad7d-0e42dded73e7" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="f8e3cf3e-0ad6-45ef-82b1-61570e68ad49" action="comment" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Check ste file</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="49a93e07-e0af-4bb1-82f7-786b540371f1" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>path_split = file.split(&quot;/&quot;);print(path_split)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="db03279a-cfbd-4eeb-bf8b-2f94d9d285a3" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>len(path_split) != 2:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="21e02175-a5fb-425b-8704-f882904b6f51" action="continue" useFieldsInCommand="false">
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="1fec3f87-3f74-4c02-bf35-791daaa7ed0a" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>test_release = path_split[0]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="3dbfa477-a85b-492b-93f1-b74fb0961ed5" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>test_name = path_split[1]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="7de8b3dc-72cc-4324-8f48-dfa588f3886c" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>not test_release.startswith(&quot;5gc-r&quot;):</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="651da09f-487e-4cdc-9237-f63e2627fe96" action="continue" useFieldsInCommand="false">
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="2dc9e567-a238-4e4d-a7fe-456b292797ab" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>release = param(&quot;current_release&quot;)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="a7714092-ef44-470e-952a-f4f236f3abf8" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>f&quot;5gc-r{release}&quot; == test_release:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="d36b03f0-482f-45e8-92ae-64f9d639762d" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Warning:[test_name] from [test_release]</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Warning</severity>
+                                                        <message inherit="false">[test_name] from [test_release]</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="21c9e787-0b86-45f3-9609-b729a0f09e77" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="e288be1b-9a54-40ea-b7fe-70da6693c1e3" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>OK:[test_name] from [test_release]</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">OK</severity>
+                                                        <message inherit="false">[test_name] from [test_release]</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+        <item name="get_release" isPublic="true">
+            <steps>
+                <item guid="4509d432-f1e9-41d8-9096-f4c9621bcf68" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ste_path = r&quot;{0}\\5gc-aap-ls-ste&quot;.format(repo_dir)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="c06d764c-7c2f-487e-b6db-a834b2c363ff" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import os</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="99e063c6-0575-4117-b440-55dc3f49e453" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>release = int(param(&quot;current_release&quot;))</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="58574e95-7e0f-477e-85fd-c7f771a47b68" action="for" useFieldsInCommand="false">
+                    <command>
+                        <body>i in range(1, release + 1):</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="1556aef3-d708-4bbb-a2fb-d7ba544a947e" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>file in os.listdir(rf&quot;{ste_path}\\5gc-r{i}&quot;):</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="b160e9e5-fb81-45d9-a1b4-4e8807344689" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>test_name in file:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="d2198bd5-4186-401f-b855-5f267ae72031" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>print(file)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="9a570f01-a4a2-4f13-8ee4-9a4d30d8d7f8" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>i == release:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="b6300c2f-1233-4502-940b-983f8d964e7e" action="message" skip="true" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Warning:[file] ignored due to new test</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Warning</severity>
+                                                        <message inherit="false">[file] ignored due to new test</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="7534723b-6eae-41ae-b7c8-184a02e57073" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="b5a0e64a-4b5b-4cb5-bff4-8946c34286bd" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>print(commit_id)</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="none">
+                                                                    <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="assert">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                        <expression>True</expression>
+                                                                        <actionsWhenTrue>
+                                                                            <item actionId="DeclareExecutionIssue">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                                    <message>[file] from release 5gc-r[i], commit ID: [commit_id]</message>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                        </actionsWhenTrue>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="58834a28-6093-4db9-b0d4-64b8524e01ac" action="return">
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="test_name"/>
+                <item name="repo_dir"/>
+                <item name="commit_id"/>
+            </arguments>
+        </item>
+    </procedures>
+</testCase>
