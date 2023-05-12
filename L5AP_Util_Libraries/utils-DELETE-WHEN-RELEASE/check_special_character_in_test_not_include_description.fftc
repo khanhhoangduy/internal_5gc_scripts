@@ -181,14 +181,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="a505a228-e355-4f19-b1c1-b3171ec025cd" action="message" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>Information:Check  &quot;[current_tc_name]&quot;</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                                        <message inherit="false">Check  &quot;[current_tc_name]&quot;</message>
-                                                    </applicationProperties>
-                                                </item>
                                                 <item guid="3445dc16-72ac-4e80-914f-1c2614b95efc" action="comment" useFieldsInCommand="false">
                                                     <command>
                                                         <body>Read data file</body>
@@ -217,10 +209,10 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                 <body>data = current_file.read(); print(data)</body>
                                                             </command>
                                                             <eventHandlers>
-                                                                <item name="OnInternalError">
+                                                                <item name="OnInterpreterError">
                                                                     <item actionId="DeclareExecutionIssue">
                                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
-                                                                            <message>{0}</message>
+                                                                            <message>Open &quot;[current_tc_name]&quot; failed. {error}</message>
                                                                         </actionProperties>
                                                                     </item>
                                                                     <item actionId="Eval">
@@ -229,6 +221,9 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                         </actionProperties>
                                                                     </item>
                                                                     <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="Continue">
                                                                         <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                     </item>
                                                                 </item>
@@ -241,18 +236,42 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="60e2511b-4fa1-4409-8e54-e89baf3c3859" action="if" useFieldsInCommand="false">
+                                                        <item guid="7ed37339-788c-4912-a8b7-d2b03953ab69" action="eval" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>not is_false:</body>
+                                                                <body>data.encode(&apos;ascii&apos;)</body>
                                                             </command>
-                                                            <nestedSteps>
-                                                                <item guid="7ed37339-788c-4912-a8b7-d2b03953ab69" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>data.encode(&apos;ascii&apos;)</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>isEmpty</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="message">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="OK">
+                                                                                <message>[current_tc_name]</message>
+                                                                                <tag sub="false" defaultValue=""/>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                            </postProcessing>
+                                                            <eventHandlers>
+                                                                <item name="OnInterpreterError">
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>Encode &quot;[current_tc_name]&quot; failed. {error}</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="Continue">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
                                                                 </item>
-                                                            </nestedSteps>
+                                                            </eventHandlers>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
