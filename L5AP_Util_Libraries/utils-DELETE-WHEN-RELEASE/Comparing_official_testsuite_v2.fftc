@@ -1,0 +1,1622 @@
+<?xml version="1.0"?>
+<testCase version="9.1.0.202208171942">
+    <general>
+        <owner>Khoang</owner>
+        <isProcedureLibrary>true</isProcedureLibrary>
+        <language>Python</language>
+        <xPathVersion>XPATH31</xPathVersion>
+    </general>
+    <execution>
+        <parameters version="9.1.0.202208171942">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <Official_tas_url>http://landslide-tas2.spirenteng.com:8080/api</Official_tas_url>
+                    <Official_library_names pt:description="Seperated by &quot;;&quot;">[5G Compliance];[5G Capacity And Performance];[5G Security];[ORAN Mid-Haul];[ORAN Front-Haul]</Official_library_names>
+                    <Development_tas_url>http://landslide-tas3.spirenteng.com:8080/api</Development_tas_url>
+                    <Development_library_names pt:description="Seperated by &quot;;&quot;">{iTest Automation}</Development_library_names>
+                    <Tas_username>sms</Tas_username>
+                    <Tas_password>a1b2c3d4</Tas_password>
+                    <Tas_dev_username>sms</Tas_dev_username>
+                    <Tas_dev_password>a1b2c3d4</Tas_dev_password>
+                    <Specified_testsessions pt:description="Empty for all"/>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
+    <procedures>
+        <item name="main">
+            <steps>
+                <item guid="f5dd662f-689c-484d-ae8b-37097c9cfdec" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Show general messages</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="b326ede2-d770-4282-826e-f2d3352e0cf3" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:====================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">====================================</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="0ce04c27-1f9d-4416-afff-418b107c341c" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=                COMPARE TEST SESSIONS SCRIPT                =</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=                COMPARE TEST SESSIONS SCRIPT                =</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="193d8a04-c4a9-4a61-9445-40da5e752836" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=                        Created by: Khanh Hoang                      =</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=                        Created by: Khanh Hoang                      =</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="3335a9e3-34d1-46f8-bbbf-3ea5db009aee" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=                           Last update: 9/8/2022                          =</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=                           Last update: 9/8/2022                          =</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="c7219d7b-2120-46bd-bc09-028888a189e9" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:====================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">====================================</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="4351e49c-c0f5-4ffa-a35c-56115425f04a" action="comment" useFieldsInCommand="false" skippReporting="false">
+                    <command>
+                        <body>Configure variables for each library</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="33e212d3-5111-4d44-9dbc-eb13759916aa" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>General settings</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="57939ee6-700e-47d2-8158-b7083a7ac586" action="comment" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Official library name</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="9f0c5561-0113-4fc2-befd-2ea5397d66fe" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>official_library_name = &quot;[5G Capacity And Performance]&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="c1f83927-999c-44d5-91a6-7a40dd3a95bb" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>official_co_library_name = &quot;[5G Compliance]&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="e674d87b-e208-444d-8651-25cd107386aa" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>official_library_names = param(&apos;Official_library_names&apos;)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="e3527e43-c7f7-4e49-a540-7dd9bc3b06c5" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>official_library_name_list = official_library_names.split(&apos;;&apos;)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="80b480bb-7034-41ec-ad6c-1b0c4af4a7b4" action="comment" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Dev library name</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="ebe0faa4-3dfe-4692-82ab-ee5622ec3cc0" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>dev_library_names = param(&apos;Development_library_names&apos;)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="f0299dc2-8daa-4706-8f2e-de29b7cf4076" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>dev_library_list = dev_library_names.split(&apos;;&apos;)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="888d635b-fb81-4c32-b5ac-d684de180a33" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Configure TAS: hostname/username/password</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="64fd9cf5-84ca-4add-95d4-187a5fd0058c" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>For Official</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="d8d12109-3536-4f05-95c9-d6ec377db127" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_tas_api_url = param(&apos;Official_tas_url&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="51561d9d-81ae-4c74-92fe-114ed04dab29" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_tas_username = param(&apos;Tas_username&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="ada61de0-1877-413d-b276-81452c0659a3" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_tas_password = param(&apos;Tas_password&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="e29b8ea2-b3aa-430c-a727-d9ebe4b77850" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>For Dev</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="9124689b-c3c2-4caf-befa-0db70473737b" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_api_url = param(&apos;Development_tas_url&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="7cefc151-e585-46ea-aa64-561110f04c45" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_username = param(&apos;Tas_dev_username&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="4154c772-3cf5-4add-aeb3-1d5aabc2a155" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_password = param(&apos;Tas_dev_password&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="187d6ec9-d9f4-4447-9552-1c93dc118a52" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Show TAS Information</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="77bc3a78-30c8-4635-9627-2117f38373a8" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information: Official TAS:</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false"> Official TAS:</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="72ad154c-9491-4e2d-8895-3edeaa7868a3" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:   + Official_tas_url: &quot;[official_tas_api_url]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">   + Official_tas_url: &quot;[official_tas_api_url]&quot;</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="1de817c8-f73b-4b64-80c5-e387323b2477" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:   + Official_library_names:</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">   + Official_library_names:</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="9d75c0d8-32c2-4558-83f0-1e15110ee006" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>name in official_library_name_list:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="76e1c7ca-2428-41e6-872b-260b4d66fb7b" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Information:        - [name]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <message inherit="false">        - [name]</message>
+                                    </applicationProperties>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="68392a83-35df-4ee6-93d8-0d7dfb4a2195" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information: Development TAS:</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false"> Development TAS:</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="7a8c70b6-8996-441e-8f42-36adf81152e0" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:   + Development_tas_url: &quot;[tas_api_url]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">   + Development_tas_url: &quot;[tas_api_url]&quot;</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="8300d1cc-4fb1-4998-9daf-d1d69c28c8fe" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:   + Development_library_names:</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">   + Development_library_names:</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="024944b2-4495-44f8-bfa7-ec69d1ae3143" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>name in dev_library_list:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="fa3997d5-2ce3-45f0-8a43-892a42e642f8" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Information:        - [name]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <message inherit="false">        - [name]</message>
+                                    </applicationProperties>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="0acf7dcc-d91a-486b-8ed7-26ae667858fd" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=================================================================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=================================================================================</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="f15aedf1-e320-4d7d-b0c7-1da1ac00d002" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Do not change this</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="70f81cfa-e078-4eaa-a64d-d4951527d31b" action="open" session="s1">
+                            <command>
+                                <body>application:com.spirent.itest.applications.landsliderest</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>success</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>str(value) == &quot;true&quot;</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                            <message>Connected to Official TAS: [official_tas_api_url]</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                                <actionsWhenFalse>
+                                                    <item actionId="FailTest">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                            <message>Can not connect to Official TAS: [official_tas_api_url]</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                    <item actionId="ExitProcedure">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                    </item>
+                                                </actionsWhenFalse>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                                <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="[official_tas_api_url]" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                                    <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="[tas_username]" user.inherit="false" password.masked="true" password="E0y2oVE5EjbcnpinSpi3qQ==" password.inherit="false" acceptAllCertificates="true" acceptAllCertificates.inherit="false"/>
+                                </sessionProperties>
+                                <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                            </applicationProperties>
+                        </item>
+                        <item guid="533abf5b-4c70-4ccc-bf1b-11791d333245" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>Get Test Sessions from Official library</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="a3aab852-2632-4522-8676-bc0daf4a50d6" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Information:Getting test sessions from Official TAS</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <message inherit="false">Getting test sessions from Official TAS</message>
+                                    </applicationProperties>
+                                </item>
+                                <item guid="7a8927d8-adad-4b1f-a5cd-211394f6215a" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_tests = {}</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="75d6a06e-0eb0-4292-82bb-c1cce08461d1" action="Custom" session="s1">
+                                    <command>
+                                        <body>-requestMethod GET -dataType json -rawResponse true -url libraries</body>
+                                    </command>
+                                    <postProcessing>
+                                        <storeResponseAt>official_tas_library_names_xml</storeResponseAt>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries" url.inherit="false"/>
+                                </item>
+                                <item guid="a069879f-ab72-4917-a7a8-7ac50e727336" action="for" useFieldsInCommand="false">
+                                    <command>
+                                        <body>library_name in official_library_name_list:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="6c2289b9-66ed-4ae8-b23e-cb9f8ceca4af" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>query_path = &apos;//libraries/item[name=&quot;{0}&quot;]/id&apos;.format(library_name);print(query_path)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="4374711a-597a-48db-897d-cf055088243e" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>library_id = query(&apos;official_tas_library_names_xml&apos;, query_path);print(library_id)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="8f70ec39-306d-4baf-be17-375435abfbc3" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>library_id:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="3959e8c8-063e-45cc-b8b1-042921f68ee3" action="Custom" session="s1">
+                                                    <command>
+                                                        <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[library_id]/testsessions</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(//Json/testSessions/item)</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="assert">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                        <expression>int(value) == 0</expression>
+                                                                        <actionsWhenTrue>
+                                                                            <item actionId="Eval">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                    <statement>test_names = &quot;&quot;</statement>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                            <item actionId="SkipRemainingRules">
+                                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                            </item>
+                                                                        </actionsWhenTrue>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>//testSessions/item/name</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>test_names</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                        <storeResponseAt>official_testsessions_xml</storeResponseAt>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[library_id]/testsessions" url.inherit="false"/>
+                                                </item>
+                                                <item guid="0ccea9b0-1f9d-4f04-a576-67fbfd6396f4" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>test_names:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="1a68469d-0fae-4b56-88d6-49b7ef58d90a" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>official_tests[library_id] = test_names</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="76e2c6cf-4603-431d-a873-96578fb1289e" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="a3e68f1f-ffa2-41c2-a0e5-85b51e8a00b1" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Error: Library &quot;[library_name]&quot; does not exist in &quot;[official_tas_api_url]&quot;</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Error</severity>
+                                                        <message inherit="false"> Library &quot;[library_name]&quot; does not exist in &quot;[official_tas_api_url]&quot;</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="8dfe3be8-9c35-4876-be3d-5ea31ea926a8" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>Get Test Sessions from Dev library</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="2be4def2-35f2-41d2-ba08-dba98d59ea4b" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>dev_tests = {}</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="675f0207-bfdc-49c4-bdf1-70c030b667c6" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_tas_api_url != tas_api_url:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="64f60b4d-5627-45cb-945d-4d20c4bf346c" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:Getting test sessions from Development TAS</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">Getting test sessions from Development TAS</message>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="5479a806-1abc-409a-bc03-fd917e30a32f" action="open" session="s2" useFieldsInCommand="false">
+                                            <command>
+                                                <body>application:com.spirent.itest.applications.landsliderest</body>
+                                            </command>
+                                            <postProcessing>
+                                                <analysisRules>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>success</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="assert">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                <expression>str(value) == &quot;true&quot;</expression>
+                                                                <actionsWhenTrue>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                                            <message>Connected to Development TAS: [tas_api_url]</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </actionsWhenTrue>
+                                                                <actionsWhenFalse>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>Can not connect to Development TAS: [tas_api_url]</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="ExitProcedure">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                                    </item>
+                                                                </actionsWhenFalse>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                </analysisRules>
+                                            </postProcessing>
+                                            <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                                                <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="[tas_api_url]" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                                                    <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="[official_tas_username]" user.inherit="false" password.masked="true" password="x4RqOIOQW+LDjHM91SGwf3BN7Uc2pO5Z" password.inherit="false"/>
+                                                </sessionProperties>
+                                                <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="2f469f9d-db0c-4a90-ba64-0c16592aa841" action="Custom" session="s2">
+                                            <command>
+                                                <body>-requestMethod GET -dataType json -rawResponse true -url libraries</body>
+                                            </command>
+                                            <postProcessing>
+                                                <storeResponseAt>dev_tas_library_names_xml</storeResponseAt>
+                                            </postProcessing>
+                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries" url.inherit="false"/>
+                                        </item>
+                                        <item guid="8057d63e-c99c-4957-973b-6e4cfdcba875" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>library_name in dev_library_list:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="cad56580-0d22-4a80-90af-852d79e271c5" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>query_path = &apos;//libraries/item[name=&quot;{0}&quot;]/id&apos;.format(library_name);print(query_path)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="078f2905-9290-4377-b311-34715dfa94fe" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>library_id = query(&apos;dev_tas_library_names_xml&apos;, query_path);print(library_id)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="ca23d5db-08c2-4529-be41-e8413d5e51fc" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>library_id:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="271348cb-d180-4de3-b166-d2ebce6959ad" action="Custom" session="s2">
+                                                            <command>
+                                                                <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[library_id]/testsessions</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(//Json/testSessions/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="assert">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                                <expression>int(value) == 0</expression>
+                                                                                <actionsWhenTrue>
+                                                                                    <item actionId="Eval">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                            <statement>test_names = &quot;&quot;</statement>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                    <item actionId="SkipRemainingRules">
+                                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                    </item>
+                                                                                </actionsWhenTrue>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>//testSessions/item/name</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>test_names</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                                <storeResponseAt>official_testsessions_xml</storeResponseAt>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[library_id]/testsessions" url.inherit="false"/>
+                                                        </item>
+                                                        <item guid="6ea69dc8-fc3d-4325-861d-3aab5951283f" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>test_names:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="b7f6bf5d-6c18-463d-8a6f-84978b37d994" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>dev_tests[library_id] = test_names</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="aae06cd0-b7ad-4fa1-9575-45b5a9a14403" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="8df38b8d-0571-47d8-ae40-75a0ef31ada8" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Error: Library &quot;[library_name]&quot; does not exist in &quot;[tas_api_url]&quot;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <severity inherit="false">Error</severity>
+                                                                <message inherit="false"> Library &quot;[library_name]&quot; does not exist in &quot;[tas_api_url]&quot;</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="8767a187-41c9-4031-aaf2-aff5b190dafe" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="b23e69f3-566b-4987-b2b7-4676fcf167da" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:Getting test sessions in Development library from Official TAS</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">Getting test sessions in Development library from Official TAS</message>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="e891e41e-2476-4233-9c98-391751dd0f64" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>library_name in dev_library_list:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="f3a23bd5-0cb9-4fcf-a579-b633ce0e5352" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>query_path = &apos;//libraries/item[name=&quot;{0}&quot;]/id&apos;.format(library_name);print(query_path)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="3a69b80d-313c-43ad-8695-b83c30c6a9a8" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>library_id = query(&apos;official_tas_library_names_xml&apos;, query_path);print(library_id)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="dd040882-299d-4e1c-80a1-e483ed39a71b" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>library_id:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="1eada44e-d849-456a-be90-3ca744ada04b" action="Custom" session="s1">
+                                                            <command>
+                                                                <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[library_id]/testsessions</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(//Json/testSessions/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="assert">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                                <expression>int(value) == 0</expression>
+                                                                                <actionsWhenTrue>
+                                                                                    <item actionId="Eval">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                            <statement>test_names = &quot;&quot;</statement>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                    <item actionId="SkipRemainingRules">
+                                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                    </item>
+                                                                                </actionsWhenTrue>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>//testSessions/item/name</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>test_names</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                                <storeResponseAt>official_testsessions_xml</storeResponseAt>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[library_id]/testsessions" url.inherit="false"/>
+                                                        </item>
+                                                        <item guid="58d73644-37ab-407e-93c5-52c60dc12e15" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>test_names:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="037189fd-634f-4bd4-a002-d778700bd5b4" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>dev_tests[library_id] = test_names</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="241f3fb2-2d94-4747-8ba6-e557188d101e" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="620332cf-9b8c-46c1-9e33-2741e6c34bde" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Error: Library &quot;[library_name]&quot; does not exist in &quot;[official_tas_api_url]&quot;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <severity inherit="false">Error</severity>
+                                                                <message inherit="false"> Library &quot;[library_name]&quot; does not exist in &quot;[official_tas_api_url]&quot;</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="27ed110e-bd2a-42e9-8213-c17121aba847" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=================================================================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=================================================================================</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="f2688b33-c799-4a8e-953b-e26b576199e6" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:Comparing...</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">Comparing...</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="195c783a-a71c-402d-97dd-f1ff9c1b5393" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=================================================================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=================================================================================</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="0b18ef5b-0597-45c9-8f43-864867a72158" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Compare</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="d2a0c4ac-e8c8-400a-b84a-9d9d4434dd2b" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>dev_library_id in dev_tests:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="996fd725-f2ba-4117-8204-8243b5a79a1a" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tests = dev_tests[dev_library_id];print(tests)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="8f380f26-7447-45bb-afd1-d412ed395984" action="for" useFieldsInCommand="false">
+                                    <command>
+                                        <body>test_name in tests:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="04086487-ad25-496c-961a-3d9db1363afb" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:Comparing &quot;[test_name]&quot;...</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">Comparing &quot;[test_name]&quot;...</message>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="165bc774-bfac-4680-8d42-1cd6d4f59936" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>is_found = False</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="1149124a-5f82-4224-85c6-c34a118676d0" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>official_library_id in official_tests:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="35b7801a-ba38-43b2-9f9a-b017b354be40" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>test_name not in official_tests[official_library_id]:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="4dea3854-7863-4731-8e3e-0daa46f58cd1" action="continue" useFieldsInCommand="false">
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="f83fcb18-e135-42e0-a99f-bb1e546ead45" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="6e86077a-a3c3-423d-94a2-17073518282e" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>is_found = True</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="c8ba53f6-3005-4336-9ae2-72c2a0cf21b8" action="break" useFieldsInCommand="false">
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="bd3d444a-e9cf-4ca0-be1a-27dcee6101f8" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>is_found:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="46c02894-498e-43ed-8738-d31359503fa4" action="Custom" session="s1">
+                                                    <command>
+                                                        <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[official_library_id]/testsessions/[test_name]</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(mapped/Json/favoriteMeasurements/item)</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_favorite_count</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(mapped/Json/reservations/item)</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_reservations_count</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(mapped/Json/tsGroups/item)</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_tsgroup_count</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>mapped/Json/keywords</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_keywords</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;])</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_testnode_count</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;]/name()</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>official_testnode_names</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                        <storeResponseAt>official_testsession_xml</storeResponseAt>
+                                                        <storeResponseText>true</storeResponseText>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[official_library_id]/testsessions/[test_name]" url.inherit="false"/>
+                                                </item>
+                                                <item guid="c5600208-07ee-4b4d-b974-c3ef8689ef81" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>official_tas_api_url != tas_api_url:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="760bcc48-bccf-4388-a0b6-93a85d718265" action="Custom" session="s2">
+                                                            <command>
+                                                                <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[dev_library_id]/testsessions/[test_name]</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/favoriteMeasurements/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_favorite_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/reservations/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_reservations_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/tsGroups/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_tsgroup_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>mapped/Json/keywords</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_keywords</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;])</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_testnode_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;]/name()</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_testnode_names</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                                <storeResponseAt>dev_testsession_xml</storeResponseAt>
+                                                                <storeResponseText>true</storeResponseText>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[dev_library_id]/testsessions/[test_name]" url.inherit="false"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="86150aea-cd21-40a1-8874-ba6fdd38abab" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="130640db-1a6b-484e-b338-33792134c448" action="Custom" session="s1">
+                                                            <command>
+                                                                <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[dev_library_id]/testsessions/[test_name]</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/favoriteMeasurements/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_favorite_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/reservations/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_reservations_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(mapped/Json/tsGroups/item)</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_tsgroup_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>mapped/Json/keywords</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_keywords</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>count(//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;])</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_testnode_count</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>//tsGroups/item/testCases/item/parameters/*[class = &quot;TestNode&quot;]/name()</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="store">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                                <storageLocation>dev_testnode_names</storageLocation>
+                                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                                <storeResponseAt>dev_testsession_xml</storeResponseAt>
+                                                                <storeResponseText>true</storeResponseText>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[dev_library_id]/testsessions/[test_name]" url.inherit="false"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="4c4ba7a2-b09f-4cb5-b39c-a02ebf46ba7b" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Compare favorite measurements</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="b80d9a17-2742-4965-94a0-c2373209e868" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>dev_favorite_count != official_favorite_count:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="5f2a5788-5119-48e0-8bd5-a6108b4f0dc5" action="message" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>Error:\\[MEASUREMENT] Favorite Measurements does not match. Dev: [dev_favorite_count] - Official: [official_favorite_count]</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                        <severity inherit="false">Error</severity>
+                                                                        <message inherit="false">\\[MEASUREMENT] Favorite Measurements does not match. Dev: [dev_favorite_count] - Official: [official_favorite_count]</message>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="a434c59a-b21a-4be7-b7e9-f3d0867ac09a" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Compare keywords</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="23221280-694c-47ec-b81d-a3c138a8c002" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>dev_keywords != official_keywords:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="437bf027-da66-471b-85c5-98f956e7c9b0" action="message" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>Warning:[KEYWORD] Keyword does not match:</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="a9cee243-5c60-4693-99d5-85d8d54abff1" action="message" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>Warning:   - &quot;[dev_keywords]&quot;</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                <severity inherit="false">Warning</severity>
+                                                                                <message inherit="false">   - &quot;[dev_keywords]&quot;</message>
+                                                                            </applicationProperties>
+                                                                        </item>
+                                                                        <item guid="d0f74db2-da21-4d94-bf31-f855e1864611" action="message" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>Warning:   - &quot;[official_keywords]&quot;</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                <severity inherit="false">Warning</severity>
+                                                                                <message inherit="false">   - &quot;[official_keywords]&quot;</message>
+                                                                            </applicationProperties>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                        <severity inherit="false">Warning</severity>
+                                                                        <message inherit="false">[KEYWORD] Keyword does not match:</message>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="d8713088-8177-4a48-98b7-9598097db7cb" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Compare testcases</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="9178b14c-66ec-43fb-bb0a-0f414b86110d" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>dev_tsgroup_count != official_tsgroup_count:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="ef2b4975-1563-4074-b6dd-27b00868feaa" action="message" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>Error:\\[TEST CASE] TsGroups does not match. Dev: [dev_tsgroup_count] - Official: [official_tsgroup_count]</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                        <severity inherit="false">Error</severity>
+                                                                        <message inherit="false">\\[TEST CASE] TsGroups does not match. Dev: [dev_tsgroup_count] - Official: [official_tsgroup_count]</message>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="09b450bc-cee3-4a42-ab41-49c38a7d1a56" action="else" useFieldsInCommand="false">
+                                                            <nestedSteps>
+                                                                <item guid="a4e5d59f-6ef2-4883-86f3-e3ae6ebf60e3" action="for" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>group_i in range(1, int(dev_tsgroup_count) + 1):</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="f44c9f7b-f8c2-4643-890e-ae71da4e0955" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>query_path = &apos;count(mapped/Json/tsGroups/item[{0}]/testCases/item)&apos;.format(group_i)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="0fdd0bac-7efa-4c50-8d2b-28b0d863ee9c" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>dev_testcase_count = query(&apos;dev_testsession_xml&apos;,query_path);print(dev_testcase_count)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="bc78bf1e-af74-451f-871d-ea78bf97dadb" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>official_testcase_count = query(&apos;official_testsession_xml&apos;,query_path);print(official_testcase_count)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="80565997-a79f-4036-8e81-b4e10f50ab20" action="if" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>dev_testcase_count != official_testcase_count:</body>
+                                                                            </command>
+                                                                            <nestedSteps>
+                                                                                <item guid="a794e824-95cb-49e9-a35c-476be069fe73" action="message" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>Error:\\[TEST CASE] Testcases does not match. Dev: [dev_testcase_count] - Official: [official_testcase_count]</body>
+                                                                                    </command>
+                                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                        <severity inherit="false">Error</severity>
+                                                                                        <message inherit="false">\\[TEST CASE] Testcases does not match. Dev: [dev_testcase_count] - Official: [official_testcase_count]</message>
+                                                                                    </applicationProperties>
+                                                                                </item>
+                                                                            </nestedSteps>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="9fec8155-d2f0-4473-b677-b17043a66d9c" action="else" useFieldsInCommand="false">
+                                                                            <nestedSteps>
+                                                                                <item guid="0891658b-1a6d-4352-9717-19e95d442bbd" action="comment" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>Compare testnodes</body>
+                                                                                    </command>
+                                                                                    <nestedSteps>
+                                                                                        <item guid="b75751f9-dc26-4b8f-9e04-e5f56484da6c" action="if" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>official_testnode_count != dev_testnode_count:</body>
+                                                                                            </command>
+                                                                                            <nestedSteps>
+                                                                                                <item guid="83d00397-c0d4-462e-ab62-6869681570ae" action="message" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>Error:\\[TEST NODE] Test Node count does not match. Dev: [dev_testnode_count] - Official: [official_testnode_count]</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                                        <severity inherit="false">Error</severity>
+                                                                                                        <message inherit="false">\\[TEST NODE] Test Node count does not match. Dev: [dev_testnode_count] - Official: [official_testnode_count]</message>
+                                                                                                    </applicationProperties>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="ee79b43c-228e-4b4d-8713-c29e823dba70" action="else" useFieldsInCommand="false">
+                                                                                            <nestedSteps>
+                                                                                                <item guid="83fb43b0-efa3-4f89-b939-46258cb0effd" action="if" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>not all(item in dev_testnode_names for item in official_testnode_names):</body>
+                                                                                                    </command>
+                                                                                                    <nestedSteps>
+                                                                                                        <item guid="427da819-e9d5-4770-835c-58c41485d2f9" action="message" useFieldsInCommand="false">
+                                                                                                            <command>
+                                                                                                                <body>Error:\\[TEST NODE] Test Nodes does not match. Dev: [dev_testnode_names] - Official: [official_testnode_names]</body>
+                                                                                                            </command>
+                                                                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                                                <severity inherit="false">Error</severity>
+                                                                                                                <message inherit="false">\\[TEST NODE] Test Nodes does not match. Dev: [dev_testnode_names] - Official: [official_testnode_names]</message>
+                                                                                                            </applicationProperties>
+                                                                                                        </item>
+                                                                                                    </nestedSteps>
+                                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                    </nestedSteps>
+                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                </item>
+                                                                                <item guid="cd59af42-fb3d-464e-9056-00f1e355ad57" action="for" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>tc_i in range(1, int(dev_testcase_count) + 1):</body>
+                                                                                    </command>
+                                                                                    <nestedSteps>
+                                                                                        <item guid="ad62407e-29c7-4666-8006-5b60d59dd48d" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>query_path = &apos;count(mapped/Json/tsGroups/item[{0}]/testCases/item[{1}]/parameters/*/class)&apos;.format(group_i, tc_i)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="ff1580a4-ef2f-420f-811d-9111c1985d54" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>dev_node_count = query(&apos;dev_testsession_xml&apos;,query_path);print(dev_node_count)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="938f8a43-1c05-4908-99bd-0126a902762d" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>official_node_count = query(&apos;official_testsession_xml&apos;,query_path);print(official_node_count)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="a4832e8f-1b2f-4a29-9f48-b0cb5970fd57" action="if" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>dev_node_count != official_node_count:</body>
+                                                                                            </command>
+                                                                                            <nestedSteps>
+                                                                                                <item guid="d9439039-346f-49ab-a400-d0529b6331db" action="eval" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>message = &apos;[TEST NODE] TestNodes does not match. Dev: {0}:{1}:{2} - Official: {0}:{1}:{3}&apos;.format(group_i - 1, tc_i -1 ,dev_node_count, official_node_count)</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                </item>
+                                                                                                <item guid="41148ae5-0db6-4923-ba1c-d6fa77411a5a" action="message" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>Error:[message]</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                                        <severity inherit="false">Error</severity>
+                                                                                                        <message inherit="false">[message]</message>
+                                                                                                    </applicationProperties>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="d62265c0-cfa0-49bc-a7e0-7e20b5190583" action="else" useFieldsInCommand="false">
+                                                                                            <nestedSteps>
+                                                                                                <item guid="afb71ddc-cb93-48a3-bae4-ced9a784fa9a" action="comment" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>Insert steps here for when expression is false</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="7a883aee-23c3-4685-a9f2-ec3df9e559d9" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>query_path = &apos;count(mapped/Json/tsGroups/item[{0}]/testCases/item[{1}]/parameters/*/name)&apos;.format(group_i, tc_i)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="fafe5c16-d12b-453d-a063-4576b5afae22" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>dev_sut_count = query(&apos;dev_testsession_xml&apos;,query_path);print(dev_sut_count)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="5850bc8b-d398-4585-8ab2-951595a9217a" action="eval" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>official_sut_count = query(&apos;official_testsession_xml&apos;,query_path);print(official_sut_count)</body>
+                                                                                            </command>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="72369e00-a3cd-4b5f-bb33-d0886d740171" action="if" useFieldsInCommand="false">
+                                                                                            <command>
+                                                                                                <body>dev_sut_count != official_sut_count:</body>
+                                                                                            </command>
+                                                                                            <nestedSteps>
+                                                                                                <item guid="b71e16d9-45de-42e9-8437-cf2a38c338dd" action="eval" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>message = &apos;[TEST SUT] SUTs does not match. Dev: {0}:{1}:{2} - Official: {0}:{1}:{3}&apos;.format(group_i - 1, tc_i -1 ,dev_sut_count, official_sut_count)</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                </item>
+                                                                                                <item guid="fffaa93f-fe83-47da-ba90-446a01c7102f" action="message" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>Error:[message]</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                                        <severity inherit="false">Error</severity>
+                                                                                                        <message inherit="false">[message]</message>
+                                                                                                    </applicationProperties>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                        <item guid="c1d689e7-2e5b-4772-89a6-3ff3a91f2380" action="else" useFieldsInCommand="false">
+                                                                                            <nestedSteps>
+                                                                                                <item guid="a4e21398-91ec-427b-a0e9-49543aac34e4" action="comment" useFieldsInCommand="false">
+                                                                                                    <command>
+                                                                                                        <body>Insert steps here for when expression is false</body>
+                                                                                                    </command>
+                                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                </item>
+                                                                                            </nestedSteps>
+                                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                        </item>
+                                                                                    </nestedSteps>
+                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                </item>
+                                                                            </nestedSteps>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="5fcba08c-8083-456f-90a4-3368d8abbc11" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Compare reservation</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="a1db8e57-a1d2-480d-9f8e-9a5622e0e466" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>dev_reservations_count != official_reservations_count:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="feff8ef7-0f9f-4627-b1fc-8d62a0861d50" action="message" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>Error:\\[RESERVATION] Reservation does not match. Dev: [dev_reservations_count] - Official: [official_reservations_count]</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                        <severity inherit="false">Error</severity>
+                                                                        <message inherit="false">\\[RESERVATION] Reservation does not match. Dev: [dev_reservations_count] - Official: [official_reservations_count]</message>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="843cb4e7-f7de-49df-b789-41900a5376f5" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Information:--------------------------------------------------------------------------------------</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <message inherit="false">--------------------------------------------------------------------------------------</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="01a161da-93ee-4561-8f4c-6c3b600679eb" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="71823ff8-2cc4-4f07-aeca-96e1a11c86e9" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Error:\\[NOT EXIST] [test_name] does not exist in Official Library</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Error</severity>
+                                                        <message inherit="false">\\[NOT EXIST] [test_name] does not exist in Official Library</message>
+                                                    </applicationProperties>
+                                                </item>
+                                                <item guid="e00af9a2-ef49-41ad-8af2-52ad43c496d9" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Information:--------------------------------------------------------------------------------------</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <message inherit="false">--------------------------------------------------------------------------------------</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="203ff7ce-34eb-446e-8b3c-fc7b2aafcdbc" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Close</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="a12ed5e5-55a8-467f-967a-58129a8805cb" action="close" session="s1" useFieldsInCommand="false">
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="f25edaef-f17d-4efa-8064-3a0d968670de" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>official_tas_api_url != tas_api_url:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="95a0947a-d8b1-4ecd-8d77-85c76850cfd7" action="close" session="s2">
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <multilineDescription>Copy this script to your test location. Change line value:
+- 5: test session name
+- 6: test name
+- 11.4: select your test file
+run and see. Goodluck</multilineDescription>
+        </item>
+    </procedures>
+</testCase>

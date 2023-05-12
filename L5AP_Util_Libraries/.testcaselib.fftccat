@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<TestCaseCatalog version="9.3.0.202303231235">
+    <testCaseCatalog>
+        <item name="utils-DELETE-WHEN-RELEASE/Comparing_official_testsuite-DELETE-ME.fftc">
+            <tcDescriptor version="9.3.0.202303231235">
+                <general>
+                    <owner>Khoang</owner>
+                    <isProcedureLibrary>true</isProcedureLibrary>
+                    <language>Python</language>
+                </general>
+            </tcDescriptor>
+        </item>
+        <item name="utils-DELETE-WHEN-RELEASE/Comparing_official_testsuite_v2.fftc">
+            <tcDescriptor version="9.3.0.202303231235">
+                <general>
+                    <owner>Khoang</owner>
+                    <isProcedureLibrary>true</isProcedureLibrary>
+                    <language>Python</language>
+                    <xPathVersion>XPATH31</xPathVersion>
+                </general>
+            </tcDescriptor>
+        </item>
+        <item name="utils-DELETE-WHEN-RELEASE/create_paramfile_for_favorites_parameter-DELETE-ME.fftc">
+            <tcDescriptor version="9.3.0.202303231235">
+                <general>
+                    <documentation>Add Sut/TestNode and favorite Parameters to new file parameter</documentation>
+                    <notes>Change line value:
+- 5: test session names
+- 6: group names
+Run and copy parameters from new file to your testcase
+Goodluck</notes>
+                    <owner>Khoang</owner>
+                    <isProcedureLibrary>true</isProcedureLibrary>
+                    <language>Python</language>
+                </general>
+                <procedures>
+                    <item name="get_description" isPublic="true">
+                        <arguments>
+                            <item name="variable_name">
+                                <isMandatory>true</isMandatory>
+                            </item>
+                            <item name="sut_description_names"/>
+                            <item name="node_description_names"/>
+                        </arguments>
+                    </item>
+                    <item name="build_array_parameter_2" isPublic="true">
+                        <arguments>
+                            <item name="param_name"/>
+                            <item name="param_content"/>
+                            <item name="space_length"/>
+                        </arguments>
+                    </item>
+                    <item name="build_array_parameter" isPublic="true">
+                        <arguments>
+                            <item name="param_name"/>
+                            <item name="param_content"/>
+                            <item name="space_length"/>
+                        </arguments>
+                    </item>
+                    <item name="find_topo_tag" isPublic="true">
+                        <arguments>
+                            <item name="sut">
+                                <isMandatory>true</isMandatory>
+                            </item>
+                            <item name="sba">
+                                <defaultValue>0</defaultValue>
+                            </item>
+                            <item name="nodal">
+                                <isMandatory>true</isMandatory>
+                            </item>
+                            <item name="nodal2">
+                                <defaultValue>0</defaultValue>
+                            </item>
+                        </arguments>
+                    </item>
+                </procedures>
+            </tcDescriptor>
+        </item>
+    </testCaseCatalog>
+</TestCaseCatalog>
