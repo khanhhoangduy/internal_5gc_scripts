@@ -1,0 +1,1 @@
+java -jar Compare_Doc_Jira_Testcase.jar -doc "D:\Document\Landslide\5GC-Documents" -tc "D:\clister\5gc-aap - original\Landslide_5GC\ai_LS_5G\testcases" -jira "D:\Document\Landslide\jira_export.xml" -e
