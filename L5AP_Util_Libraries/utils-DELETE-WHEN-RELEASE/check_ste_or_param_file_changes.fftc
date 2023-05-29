@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<testCase version="9.3.0.202302120019">
+<testCase version="9.3.0.202303231235">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.3.0.202302120019">
+        <parameters version="9.3.0.202303231235">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <repo_parent_dir pt:description="Path to folder containing 5gc-aap and 5gc-aap-ls-ste repositories">C:\\Users\\quang.vo\\Documents\\Spirent</repo_parent_dir>
-                    <current_release pt:datatype="INTEGER" pt:description="R11">11</current_release>
-                    <check_param_or_ste pt:datatype="BOOLEAN" pt:description="true: param, false: ste">false</check_param_or_ste>
+                    <current_release pt:datatype="INTEGER" pt:description="R12">12</current_release>
+                    <check_param_or_ste pt:datatype="BOOLEAN" pt:description="true: param, false: ste">true</check_param_or_ste>
                     <Param>
                         <file_extension>ffpt</file_extension>
-                        <from_to_commits>aa7cde3..cbfb6ef</from_to_commits>
+                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">3ef3e1a1..b56c936</from_to_commits>
                         <repo_name>5gc-aap</repo_name>
                     </Param>
                     <STE>
                         <file_extension>ste</file_extension>
-                        <from_to_commits>4251191..71f0ec2</from_to_commits>
+                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">cc038e8..c89b434</from_to_commits>
                         <repo_name>5gc-aap-ls-ste</repo_name>
                     </STE>
                 </parameters>
@@ -294,7 +294,7 @@
                             <nestedSteps>
                                 <item guid="b160e9e5-fb81-45d9-a1b4-4e8807344689" action="if" useFieldsInCommand="false">
                                     <command>
-                                        <body>test_name in file:</body>
+                                        <body>file.startswith(test_name):</body>
                                     </command>
                                     <nestedSteps>
                                         <item guid="d2198bd5-4186-401f-b855-5f267ae72031" action="eval" useFieldsInCommand="false">
@@ -338,7 +338,7 @@
                                                                         <actionsWhenTrue>
                                                                             <item actionId="DeclareExecutionIssue">
                                                                                 <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
-                                                                                    <message>[file] from release 5gc-r[i], commit ID: [commit_id]</message>
+                                                                                    <message>[test_name].ffpt from release 5gc-r[i], commit ID: [commit_id]</message>
                                                                                 </actionProperties>
                                                                             </item>
                                                                         </actionsWhenTrue>
