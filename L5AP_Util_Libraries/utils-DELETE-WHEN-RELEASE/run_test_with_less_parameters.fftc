@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<testCase version="9.3.0.202303281712">
+<testCase version="9.4.0.202305212312">
     <general>
         <notes>Copy or move this test to &apos;ai_LS_5G&apos; project.
 Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocity to.</notes>
@@ -8,7 +8,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.3.0.202303281712">
+        <parameters version="9.4.0.202305212312">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url>https://terralogic-vel.spirenteng.com/</velocity_url>
@@ -1211,10 +1211,145 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 <body>len(ts_names) &gt; 1:</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="c9d51a0a-a847-4fad-b165-b7b267b298d7" action="comment" useFieldsInCommand="false">
+                                                <item guid="c9d51a0a-a847-4fad-b165-b7b267b298d7" action="if" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>Insert steps here for when expression is true</body>
+                                                        <body>isinstance(ts_ids, str):</body>
                                                     </command>
+                                                    <nestedSteps>
+                                                        <item guid="6ee79e87-975f-4bb2-be02-4d442a4be7e0" action="json" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}&apos;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                <action inherit="false">setJsonValue</action>
+                                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}</pathValue>
+                                                                <documentName inherit="false">condition</documentName>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="eb1080a2-aafa-4d5e-9bda-b0619f62cef7" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_ids)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="4abd49be-3269-475b-882b-250aadaed8cd" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="b9a6d71b-2180-49d4-a496-e39d34c00044" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[1]);print(modified_condition)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="726fa4d6-cadb-4818-b01e-1fb35955d742" action="json" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                <action inherit="false">setJsonValue</action>
+                                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
+                                                                <documentName inherit="false">condition</documentName>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="baa72439-6a1d-4dfe-9fde-6ee0e2fb034e" action="json" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                <action inherit="false">addJsonNode</action>
+                                                                <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
+                                                                <documentName inherit="false">request_body</documentName>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="3fc9b964-193a-42ca-a047-fbeebc2ac1ea" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>condition_index += 1</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="eb7fe4ee-5e70-4892-be93-b598912c095d" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="f3f6dc1d-bf78-4395-9af1-a2306d425dee" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>condition_length = len(ts_names) - 1 if len(ts_names) - 1 &lt; len(ts_ids) else len(ts_ids)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="c7d3540f-a6bb-431a-969a-c538088d0c75" action="for" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>i in range(0, condition_length):</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="0e9c4c2d-3683-45b1-9230-e1aeca96ebbb" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>ts_id = ts_ids[i]</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="c23fc12c-d9a1-42fb-956c-606c41555525" action="json" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}&apos;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                        <action inherit="false">setJsonValue</action>
+                                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}</pathValue>
+                                                                        <documentName inherit="false">condition</documentName>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                                <item guid="0ada3eaf-56ef-4f4d-8d6c-c9c5122c5324" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_id)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="c7f793a1-89d7-420c-94a2-f2b264d64969" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="07063196-4ab3-4e9a-be9c-bec1fcb40d0d" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[i + 1]);print(modified_condition)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="d6ccfbd0-bcf6-4f5c-921a-cc8e968601cf" action="json" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                        <action inherit="false">setJsonValue</action>
+                                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
+                                                                        <documentName inherit="false">condition</documentName>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                                <item guid="eca2d58e-672c-4e9e-a983-6f85456d282d" action="json" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                        <action inherit="false">addJsonNode</action>
+                                                                        <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
+                                                                        <documentName inherit="false">request_body</documentName>
+                                                                    </applicationProperties>
+                                                                </item>
+                                                                <item guid="103ab5bb-fcfd-45bb-bfd5-b16f18d8d7ac" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>condition_index += 1</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
                                             </nestedSteps>
