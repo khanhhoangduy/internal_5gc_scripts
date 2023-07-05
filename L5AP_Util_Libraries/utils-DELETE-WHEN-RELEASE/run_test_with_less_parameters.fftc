@@ -16,7 +16,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <password pt:mask="true">CaK+mWSFs84=</password>
                     <tas_name>landslide-tas2.spirenteng.com</tas_name>
                     <ts_name/>
-                    <ports pt:description="Example: 2,3;2,3,4">2,3;4,2,3</ports>
+                    <ports pt:description="Example: 2,3;2,3,4"/>
                     <routing pt:datatype="BOOLEAN">false</routing>
                     <tc_dir>project://ai_LS_5G/testcases/isolation/smf/</tc_dir>
                     <tas_username>sms</tas_username>
@@ -234,6 +234,21 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 </analysisRules>
                                 <storeResponseAt>topologies_xml</storeResponseAt>
                             </postProcessing>
+                            <eventHandlers>
+                                <item name="OnToolError">
+                                    <item actionId="DeclareExecutionIssue">
+                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                            <message>{error}</message>
+                                        </actionProperties>
+                                    </item>
+                                    <item actionId="FailTest">
+                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                    </item>
+                                    <item actionId="ExitExecution">
+                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                    </item>
+                                </item>
+                            </eventHandlers>
                             <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="/velocity/api/topology/v18/topologies?limit=100" action.inherit="false"/>
                         </item>
                         <item guid="ee7ab6eb-2a28-46ca-b616-58f5e1b8489c" action="for" useFieldsInCommand="false">
@@ -1007,13 +1022,19 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="velocity/api/topology/v18/topology/[topology_id]/resources" action.inherit="false"/>
                 </item>
+                <item guid="eabf5812-303a-4bd0-8f43-cf0bd804ec2b" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>current_time = info(&apos;time&apos;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
                 <item guid="01493a1d-b090-4c2a-9760-edd2d181f5fc" action="json" useFieldsInCommand="false">
                     <command>
-                        <body>action=&apos;createJson&apos;, documentName=&apos;request_body&apos;, fromFile=false, jsonString=&apos;{&quot;duration&quot;:[reservation_time],&quot;customConditions&quot;:\\\\[],&quot;name&quot;:&quot;Script automation reservation&quot;,&quot;topologyId&quot;:&quot;[topology_id]&quot;,&quot;description&quot;:&quot;This is a demo reservation&quot;}&apos;</body>
+                        <body>action=&apos;createJson&apos;, documentName=&apos;request_body&apos;, fromFile=false, jsonString=&apos;{&quot;duration&quot;:[reservation_time],&quot;customConditions&quot;:\\\\[],&quot;name&quot;:&quot;Script automation reservation - [current_time]&quot;,&quot;topologyId&quot;:&quot;[topology_id]&quot;,&quot;description&quot;:&quot;This is a demo reservation&quot;}&apos;</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
                         <action inherit="false">createJson</action>
-                        <jsonString inherit="false" sub="true">{&quot;duration&quot;:[reservation_time],&quot;customConditions&quot;:\\[],&quot;name&quot;:&quot;Script automation reservation&quot;,&quot;topologyId&quot;:&quot;[topology_id]&quot;,&quot;description&quot;:&quot;This is a demo reservation&quot;}</jsonString>
+                        <jsonString inherit="false" sub="true">{&quot;duration&quot;:[reservation_time],&quot;customConditions&quot;:\\[],&quot;name&quot;:&quot;Script automation reservation - [current_time]&quot;,&quot;topologyId&quot;:&quot;[topology_id]&quot;,&quot;description&quot;:&quot;This is a demo reservation&quot;}</jsonString>
                         <documentName inherit="false">request_body</documentName>
                     </applicationProperties>
                 </item>
