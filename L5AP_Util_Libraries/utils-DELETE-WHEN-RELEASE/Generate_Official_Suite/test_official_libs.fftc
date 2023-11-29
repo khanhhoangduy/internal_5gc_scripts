@@ -1,9 +1,19 @@
 <?xml version="1.0"?>
-<testCase version="9.3.0.202303231235">
+<testCase version="9.4.0.202308191630">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
+    <execution>
+        <parameters version="9.4.0.202308191630">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <tas_url>http://10.140.68.124:8080/api</tas_url>
+                    <check_number_test_session pt:datatype="BOOLEAN">false</check_number_test_session>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
     <procedures>
         <item name="main">
             <steps>
@@ -13,7 +23,7 @@
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
                         <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="http://10.140.68.124:8080/api" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="[param(&quot;tas_url&quot;)]" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
                             <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="sms" user.inherit="false" password.masked="true" password="R4CPLwlDFA4Jor6ZZIWzzg==" password.inherit="false"/>
                         </sessionProperties>
                         <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -83,6 +93,17 @@
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ Capacity and Performance: [cp_pf_count] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
                                 </analysisRules>
                             </postProcessing>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -144,6 +165,17 @@
                                                 <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
                                                 <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
                                                 <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ CU Compliance: [cu_co_count] tests</message>
+                                                <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -211,6 +243,17 @@
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ CU Capacity and Performance: [cu_cp_pf_count] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
                                 </analysisRules>
                             </postProcessing>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -272,6 +315,17 @@
                                                 <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
                                                 <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
                                                 <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ Compliance: [co_count] tests</message>
+                                                <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -339,6 +393,17 @@
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ Security: [sa_count] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
                                 </analysisRules>
                             </postProcessing>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -351,6 +416,33 @@
                         <body>count = int(co_count) + int(sa_count) + int(cp_pf_count) + int(cu_co_count) + int(cu_cp_pf_count);print(str(count))</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ce7117a1-7db8-474a-a214-1f505650562f" action="message" useFieldsInCommand="false">
+                    <command>
+                        <body>Information:Total test items: [count]</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="none">
+                                    <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                </extractorInfo>
+                                <processorInfo ruleType="assert">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                        <expression>True</expression>
+                                        <actionsWhenTrue>
+                                            <item actionId="PassTestIfNotAlreadyFailed">
+                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                            </item>
+                                        </actionsWhenTrue>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                        <message inherit="false">Total test items: [count]</message>
+                    </applicationProperties>
                 </item>
                 <item guid="baa0318d-4938-442a-815b-17950599c91d" action="close" session="s1">
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -379,6 +471,12 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
+                <item guid="ca4902eb-8a0f-4452-89b6-431a0593af68" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>no_test_sessions = {}</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
                 <item guid="f6219eb1-5af5-49b4-9fc8-3a4de5abab50" action="for" useFieldsInCommand="false">
                     <command>
                         <body>item in test_session_list:</body>
@@ -392,7 +490,7 @@
                         </item>
                         <item guid="4ea95d78-0e6b-46b0-8414-f2fd14e5cb4e" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>m = re.finditer(pattern, item)</body>
+                                <body>m = re.finditer(pattern, item);</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -401,19 +499,151 @@
                                 <body>m:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="b865c1a5-0fc4-4151-b4cd-518dcf55b7c6" action="eval" useFieldsInCommand="false">
+                                <item guid="f6d0d068-d3b4-4a2b-8651-58ba3848c17e" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>cp_pf_list.add(item[:next(m).end() - 1])</body>
+                                        <body>short_name = item[:next(m).end() - 1]</body>
                                     </command>
                                     <eventHandlers>
                                         <item name="OnInterpreterError">
                                             <item actionId="DeclareExecutionIssue">
-                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Warning">
-                                                    <message>Cannot process [item]</message>
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                    <message> Found [item]</message>
                                                 </actionProperties>
+                                            </item>
+                                            <item actionId="Continue">
+                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                             </item>
                                         </item>
                                     </eventHandlers>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="b865c1a5-0fc4-4151-b4cd-518dcf55b7c6" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>cp_pf_list.add(short_name)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="a7373a4e-5ffb-4578-bf3b-ff35f2ab1fbf" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>str(param(&apos;check_number_test_session&apos;, &apos;true&apos;)).lower() == &apos;true&apos;:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="d0bec76a-6eaa-464a-8ee4-97f64fda7b54" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>short_name in no_test_sessions:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="2743d9d0-0428-41f4-91c1-44c1ee296b0f" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>no_test_sessions[short_name] += 1</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="54efd5d9-fcff-43c4-9a49-ad76296e8533" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="6fe97cef-2bf0-4b61-bb90-ac86f23d3303" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>no_test_sessions[short_name] = 1</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="b609bf63-94b4-4f0a-a480-418017560945" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>str(param(&apos;check_number_test_session&apos;, &apos;true&apos;)).lower() == &apos;true&apos;:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="e8a2adf9-b41c-42ab-9645-cc369d96d545" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>key, val in no_test_sessions.items():</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="4929c555-0f03-44eb-b105-d3bcfde53dd5" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>val == 1:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="9a013ebb-c9e5-4b4b-8949-6af79152ce6e" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Warning:Find [val] test session for test [key]</body>
+                                            </command>
+                                            <postProcessing>
+                                                <analysisRules>
+                                                    <item>
+                                                        <extractorInfo extractorType="none">
+                                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="assert">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                <expression>True</expression>
+                                                                <actionsWhenFalse>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                </actionsWhenFalse>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                </analysisRules>
+                                            </postProcessing>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Warning</severity>
+                                                <message inherit="false">Find [val] test session for test [key]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="4e6939b7-84dd-4f7f-83c5-e6ecec223a5b" action="elif" useFieldsInCommand="false">
+                                    <command>
+                                        <body>val == 2:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="86955974-face-4a8c-8a34-a596c7d7227b" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>item in test_session_list:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="4fee25d4-eaab-4d8b-bafa-6dbf7b962906" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>item.startswith(key):</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="e0166d75-2338-4b61-b2af-973b6121c0ef" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>item.endswith(&quot;5GC&quot;) or item.endswith(&quot;SBA&quot;) or item.endswith(&quot;UP&quot;):</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="914797c3-a6cf-4a51-9b37-bfb82986b574" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>print(item)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
