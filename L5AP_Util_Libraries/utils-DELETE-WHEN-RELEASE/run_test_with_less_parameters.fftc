@@ -13,7 +13,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url>https://terralogic-vel.spirenteng.com/</velocity_url>
                     <username>khoang</username>
-                    <password pt:mask="true">CaK+mWSFs84=</password>
+                    <password pt:mask="true">zUgPiFuqcv6rwplOB42N+g==</password>
                     <tc_dir>project://ai_LS_5G/testcases/</tc_dir>
                     <tas_name>landslide-tas2.spirenteng.com</tas_name>
                     <ts_name/>
@@ -25,6 +25,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <optimistic_mode pt:datatype="BOOLEAN">false</optimistic_mode>
                     <parameter_key_value pt:description="Seperate by ;. Example: TC_parameters/Session_Capacity=10"/>
                     <include_rnh_mode pt:datatype="BOOLEAN">true</include_rnh_mode>
+                    <topology_reserve_timeout pt:datatype="INTEGER">180</topology_reserve_timeout>
                     <Official_Library_IDs>
                         <Capacity_And_Performance>-511</Capacity_And_Performance>
                         <Security>-515</Security>
@@ -1329,7 +1330,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             <nestedSteps>
                                                                 <item guid="74c1d7cb-2ec4-4357-bfb0-f2ada26b7ad2" action="eval" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=true&apos;;print(parameters)</body>
+                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=True&apos;;print(parameters)</body>
                                                                     </command>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
@@ -1340,7 +1341,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             <nestedSteps>
                                                                 <item guid="c53bbbec-d394-466f-bdde-68c5b14e1987" action="eval" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=false&apos;;print(parameters)</body>
+                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=False&apos;;print(parameters)</body>
                                                                     </command>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
@@ -1354,7 +1355,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             <nestedSteps>
                                                                 <item guid="8cd5b014-391a-4f4c-bf44-54592e6edbf3" action="eval" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>parameters += &apos;\\nTC_parameters/Optimistic_Mode=true&apos;;print(parameters)</body>
+                                                                        <body>parameters += &apos;\\nTC_parameters/Optimistic_Mode=True&apos;;print(parameters)</body>
                                                                     </command>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
@@ -1827,12 +1828,26 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                         </item>
                                         <item guid="5b9284ac-5048-443e-ac6d-b9e080256ffa" action="elif" useFieldsInCommand="false">
                                             <command>
-                                                <body>tas_name == &quot;landslide-tas3.spirenteng.com&quot; or tas_name == &quot;landslide-tas2.spirenteng.com&quot;:</body>
+                                                <body>tas_name == &quot;landslide-tas2.spirenteng.com&quot;:</body>
                                             </command>
                                             <nestedSteps>
                                                 <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
                                                     <command>
                                                         <body>ts_names.append(&quot;ac-landslide-kvm-ts1&quot; +item)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="1cca6c11-5f10-42e7-9af3-9a691b9db6a5" action="elif" useFieldsInCommand="false">
+                                            <command>
+                                                <body>tas_name == &quot;landslide-tas3.spirenteng.com&quot;:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>ts_names.append(&quot;landslide-kvm-ts3&quot; +item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -2478,7 +2493,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <nestedSteps>
                         <item guid="acc17311-79eb-4c72-aa12-5c218c1695d8" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>time_out = 180</body>
+                                <body>time_out = param(&apos;topology_reserve_timeout&apos;, 180)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -2642,13 +2657,13 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             <nestedSteps>
                                 <item guid="5cfe1e03-482a-4a41-9679-2377af46ff4d" action="sleep">
                                     <command>
-                                        <body>5</body>
+                                        <body>15</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="162991b0-7b53-4154-9834-a4724378181a" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>time_out -=5 </body>
+                                        <body>time_out -=15 </body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -2725,6 +2740,28 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             </item>
                                         </analysisRules>
                                     </postProcessing>
+                                    <eventHandlers>
+                                        <item name="OnQueryExtractorInvalidQuery">
+                                            <item actionId="DeclareExecutionIssue">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                    <message>{auto_message_wait}</message>
+                                                </actionProperties>
+                                            </item>
+                                            <item actionId="RepeatStep">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.RepeatStepPropertyGroup"/>
+                                            </item>
+                                        </item>
+                                        <item name="OnNoMatchesFound">
+                                            <item actionId="DeclareExecutionIssue">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                    <message>{auto_message_wait}</message>
+                                                </actionProperties>
+                                            </item>
+                                            <item actionId="RepeatStep">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.RepeatStepPropertyGroup"/>
+                                            </item>
+                                        </item>
+                                    </eventHandlers>
                                     <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="velocity/api/reservation/v21/reservation/[reservation_id]" action.inherit="false"/>
                                 </item>
                             </nestedSteps>
