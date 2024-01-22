@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<testCase version="9.4.0.202307101309">
+<testCase version="9.5.0.202312192015">
     <general>
         <notes>Copy or move this test to &apos;ai_LS_5G&apos; project.
 Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocity to.</notes>
@@ -8,23 +8,23 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.4.0.202307101309">
+        <parameters version="9.5.0.202312192015">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url>https://terralogic-vel.spirenteng.com/</velocity_url>
                     <username>khoang</username>
-                    <password pt:mask="true">zUgPiFuqcv4XbOATd7IJNQ==</password>
+                    <password pt:mask="true">CaK+mWSFs84=</password>
+                    <tc_dir>project://ai_LS_5G/testcases/</tc_dir>
                     <tas_name>landslide-tas2.spirenteng.com</tas_name>
                     <ts_name/>
                     <ports pt:description="Example: 2,3;2,3,4"/>
                     <routing pt:datatype="BOOLEAN">false</routing>
-                    <tc_dir>project://ai_LS_5G/testcases/oran/cu/I-CUSA-37-CO_F1CplaneIntraGnbDuInterCellHo.fftc</tc_dir>
                     <tas_username>sms</tas_username>
                     <tas_password>a1b2c3d4</tas_password>
                     <reservation_timeout pt:datatype="INTEGER">3600</reservation_timeout>
                     <optimistic_mode pt:datatype="BOOLEAN">false</optimistic_mode>
                     <parameter_key_value pt:description="Seperate by ;. Example: TC_parameters/Session_Capacity=10"/>
-                    <include_rnh_mode pt:datatype="BOOLEAN">false</include_rnh_mode>
+                    <include_rnh_mode pt:datatype="BOOLEAN">true</include_rnh_mode>
                     <Official_Library_IDs>
                         <Capacity_And_Performance>-511</Capacity_And_Performance>
                         <Security>-515</Security>
@@ -53,6 +53,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <item guid="c459de64-1066-4f8e-b220-7fe2ed95ed68" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>import re</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="50018a04-3eb1-4d8a-b2c8-5027e10aa748" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>import random</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -172,6 +178,253 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
+                        <item guid="c6d8638e-5e80-43ed-a8cb-7bc49015ce27" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>test_sequencer = param(&apos;test_sequencer&apos;, &quot;&quot;)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="ea182c49-656e-4b74-82c2-51a27a6f646e" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>automation_modes = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="c7d3c965-3823-4b07-8917-e241516d8d2e" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>test_sequencer:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="149cbac3-c02b-44cb-9a63-8aa23f7484e0" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>sequencer_parts = test_sequencer.split(&apos;/&apos;);print(sequencer_parts)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="3c29d909-e625-415d-9e1e-b7b301f5b2e4" action="for" useFieldsInCommand="false">
+                                    <command>
+                                        <body>sequencer_part in sequencer_parts:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="e4aab8a4-cfab-4ab3-b1d2-f269b1911ff0" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_parts = sequencer_part.split(&apos;;&apos;);print(mode_parts)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="562d7ff6-faa1-4b02-81a8-a517e93935c5" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_tas_name = mode_ts_name = mode_ports = &quot;&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="73cabf02-b4a8-4505-aae0-911be0af940d" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_routing = mode_optimistic_mode = mode_rnh_mode = &quot;false&quot;;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="5862de63-537e-4d03-90fa-266f5bb04231" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>part in mode_parts:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="8983f1bf-f531-4e94-966d-83ad90c35fbf" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part.startswith(&apos;tas_name:&apos;):</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_tas_name = part.replace(&apos;tas_name:&apos;, &apos;&apos;);print(mode_tas_name)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="0d475027-b3c9-43df-a94e-3c7931888eb5" action="elif" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part.startswith(&apos;ts_name:&apos;):</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_ts_name = part.replace(&apos;ts_name:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ts_name)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="f3a8dc5f-58cd-414b-b88c-e2d1d4ae9534" action="elif" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part.startswith(&apos;ports:&apos;):</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="8bd7ac69-caea-4c2b-9943-bbf04960fd3e" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_ports = part.replace(&apos;ports:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ports)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="91562965-6a4a-45bb-be60-623b71335bad" action="elif" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part == &apos;routing&apos;:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="6846fed6-de7f-4463-84d8-701936a96feb" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_routing = &apos;true&apos;;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="95d36d18-9d20-4c18-b89c-fafe1b255fc0" action="elif" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part == &apos;optimistic_mode&apos;:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="881ac57c-c069-4c78-b175-17dc54453cb2" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_optimistic_mode = &apos;true&apos;;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="e903eec7-b002-4d59-8c06-961b2945bfc7" action="elif" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>part == &apos;rnh_mode&apos;:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="55644090-93a9-4611-8305-ec96b6a487a2" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_rnh_mode = &apos;true&apos;;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="03d3392e-c3b7-4d46-98ad-536e75e852d3" action="json" useFieldsInCommand="false">
+                                            <command>
+                                                <body>action=&apos;createJson&apos;, documentName=&apos;mode_json&apos;, fromFile=false, jsonString=&apos;{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;rnh_mode&quot;:&quot;[mode_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}&apos;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                <action inherit="false">createJson</action>
+                                                <jsonString inherit="false" sub="true">{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;rnh_mode&quot;:&quot;[mode_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}</jsonString>
+                                                <documentName inherit="false">mode_json</documentName>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="f77d607b-1633-495c-acf1-8c60c629fa6f" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>automation_modes.append(mode_json)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="abcd1059-9812-416b-815c-300527cf8fab" action="else" useFieldsInCommand="false">
+                            <nestedSteps>
+                                <item guid="42cf9e44-8db5-429a-b2cb-3d1f449954bf" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>mode_ts_name = param(&apos;ts_name&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="c649ab49-e44b-4f83-8702-62ded4e1c79d" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>mode_tas_name = param(&apos;tas_name&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="1b052cb6-d834-42bf-8e12-4328737db407" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>mode_ports = param(&apos;ports&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="9f2990b3-7865-4826-a581-62d63cb4c28a" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>mode_routing = mode_optimistic_mode = mode_include_rnh_mode = &quot;false&quot;;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="1c08d30b-fe71-43b3-92e7-3cb817b418e2" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>param(&apos;optimistic_mode&apos;):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="338d9cc2-c414-461d-ac0c-f593d806653a" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_optimistic_mode = &apos;true&apos;;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="2d103f8f-2af2-4a32-a373-87a2cd523c3d" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>param(&apos;routing&apos;):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="8e99cc2a-d29d-4ddc-8d9a-f52527ccd946" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_routing = &apos;true&apos;;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="07991485-d0f3-49fb-8803-af46bcdca9d6" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>param(&apos;include_rnh_mode&apos;):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="bfdeb5c8-07a6-4d67-9879-d74da84c74fd" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>mode_include_rnh_mode = &apos;true&apos;;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="b3955e0a-3998-4f18-a5e5-1616306446fd" action="json" useFieldsInCommand="false">
+                                    <command>
+                                        <body>action=&apos;createJson&apos;, documentName=&apos;mode_json&apos;, fromFile=false, jsonString=&apos;{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;include_rnh_mode&quot;:&quot;[mode_include_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}&apos;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                        <action inherit="false">createJson</action>
+                                        <jsonString inherit="false" sub="true">{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;include_rnh_mode&quot;:&quot;[mode_include_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}</jsonString>
+                                        <documentName inherit="false">mode_json</documentName>
+                                    </applicationProperties>
+                                </item>
+                                <item guid="2eea871e-439c-493b-805d-d08f1561b318" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>automation_modes.append(mode_json)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
@@ -199,6 +452,38 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </command>
                             <postProcessing>
                                 <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>statusCode/@value</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) == 200</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                            <message>Get Topology information from Velocity success.</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                                <actionsWhenFalse>
+                                                    <item actionId="FailTest">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                            <message>Cannot get Topology information from Velocity.</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                    <item actionId="ExitProcedure">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                    </item>
+                                                </actionsWhenFalse>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
                                     <item>
                                         <extractorInfo extractorType="query">
                                             <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
@@ -371,6 +656,14 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <body>Search testcase</body>
                     </command>
                     <nestedSteps>
+                        <item guid="42308d69-f059-4f11-a772-773e5bf0851e" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:Searching test cases...</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">Searching test cases...</message>
+                            </applicationProperties>
+                        </item>
                         <item guid="ad4f87ea-aac3-4713-8c3c-ff72ec91fd18" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>same_project = False</body>
@@ -410,13 +703,47 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             <nestedSteps>
                                 <item guid="82aeabba-5f8d-4bb9-9bc9-4ee53f12f358" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>file_name_pattern = walk_dir[walk_dir.rindex(&apos;/&apos;) + 1: len(walk_dir) - 5];print(file_name_pattern)</body>
+                                        <body>file_name = walk_dir[walk_dir.rindex(&apos;/&apos;) + 1: len(walk_dir) - 5];print(file_name)</body>
                                     </command>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>responseLine</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>file_name_pattern</storageLocation>
+                                                        <storeInAList>true</storeInAList>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="04b8fdfb-5cae-4259-a84e-d4f9bd8f8636" action="eval" useFieldsInCommand="false">
                                     <command>
                                         <body>walk_dir = walk_dir[:walk_dir.rindex(&apos;/&apos;)]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="fc95d7f4-ac4c-4330-b970-44fe8056b475" action="elif" useFieldsInCommand="false">
+                            <command>
+                                <body>info(&apos;exists&apos;, &apos;param&apos;, &apos;specified_tests&apos;):</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="2e840e81-6bb0-44f1-9cf6-fd35deeb3af1" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>file_name_pattern = param(&apos;specified_tests&apos;);print(file_name_pattern)</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -452,13 +779,10 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 </item>
                                                 <item guid="a4f2857e-8e4f-41e9-ace7-2a6f21769f0b" action="if" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>file_name_pattern and file_name_pattern not in current_tc_name:</body>
+                                                        <body>file_name_pattern and  current_tc_name not in file_name_pattern:</body>
                                                     </command>
                                                     <nestedSteps>
                                                         <item guid="f59400b4-8ebe-4168-9335-0be7c1b4f034" action="continue" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>Insert steps here for when expression is true</body>
-                                                            </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
@@ -686,6 +1010,14 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
+                        <item guid="04b0e96e-1a57-4474-829a-95f689ce1f1c" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:=============================================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">=============================================================</message>
+                            </applicationProperties>
+                        </item>
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
@@ -694,101 +1026,124 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <body>Do tests</body>
                     </command>
                     <nestedSteps>
+                        <item guid="fd47b612-f4d3-4cd3-9f5e-71f1f5a1658e" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(testcasepath_dict)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="ca670a92-6526-4420-b796-962cf0470599" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(testcase_dict)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="8fa656e7-5ac5-41bc-a217-392c891e4964" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(automation_modes)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
                         <item guid="c53d8a3a-0fa2-4eb2-badd-058da3e0a11c" action="for" useFieldsInCommand="false">
                             <command>
                                 <body>topo_id in testcase_dict:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="f40e8afe-6080-4c02-af2e-9f07dd3a64cb" action="comment" useFieldsInCommand="false">
+                                <item guid="d053be00-bb83-48b0-880a-5acc2142995b" action="for" useFieldsInCommand="false">
                                     <command>
-                                        <body>Reserve topology</body>
+                                        <body>automation_mode in automation_modes:</body>
                                     </command>
                                     <nestedSteps>
-                                        <item guid="cf3251fc-9955-4673-ad82-ecae14b655ac" action="eval" useFieldsInCommand="false">
+                                        <item guid="af28f3cc-29cc-4394-a016-59c47b59f370" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>tests = testcase_dict[topo_id]</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="2445bbd8-cb73-4fcd-b50a-7da0c61a30cc" action="if" useFieldsInCommand="false">
-                                            <command>
-                                                <body>len(tests) == 0:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="955a9c24-ad88-4c66-8062-3e49303944b5" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>reserve_time = 0</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="2974362d-c6f7-4869-a3f6-14be725ee275" action="continue" useFieldsInCommand="false">
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="36ece40b-eaf5-48d9-aeeb-a79654b63c63" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>reserve_time = len(tests) * param(&apos;reservation_timeout&apos;)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="5200142f-0087-41fc-8153-a83ab80b517f" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>ts_name = param(&apos;ts_name&apos;)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="b84beb8d-ece9-4b6f-b9dc-632a9ca33a4d" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>tas_name = param(&apos;tas_name&apos;)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="9abdb945-161a-4cb5-90ce-ff663c6fe0e1" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>ports = param(&apos;ports&apos;)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="a8017ffd-bd97-4f50-a119-445a2cdb46f0" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>topo_id_original = topo_id.replace(&quot;-RNH&quot;, &quot;&quot;);print(topo_id_original)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="085a7868-b3b9-4673-b1d4-4baaf0e2028c" action="call" useFieldsInCommand="false">
-                                            <command>
-                                                <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, reservation_time=reserve_time)</body>
+                                                <body>print(automation_mode)</body>
                                             </command>
                                             <postProcessing>
                                                 <analysisRules>
                                                     <item>
                                                         <extractorInfo extractorType="query">
                                                             <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                                                <query>isEmpty()</query>
+                                                                <query>//tas_name</query>
                                                             </extractorProperties>
                                                         </extractorInfo>
-                                                        <processorInfo ruleType="assert">
-                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
-                                                                <expression>value == &quot;true&quot;</expression>
-                                                                <actionsWhenTrue>
-                                                                    <item actionId="ExitProcedure">
-                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
-                                                                    </item>
-                                                                </actionsWhenTrue>
+                                                        <processorInfo ruleType="store">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                <storageLocation>tas_name</storageLocation>
+                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
                                                             </ruleProperties>
                                                         </processorInfo>
                                                     </item>
                                                     <item>
                                                         <extractorInfo extractorType="query">
                                                             <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                                                <query>responseLine()</query>
+                                                                <query>//ts_name</query>
                                                             </extractorProperties>
                                                         </extractorInfo>
                                                         <processorInfo ruleType="store">
                                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                                <storageLocation>reservation_id</storageLocation>
+                                                                <storageLocation>ts_name</storageLocation>
+                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>//ports</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="store">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                <storageLocation>ports</storageLocation>
+                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>//routing</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="store">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                <storageLocation>routing</storageLocation>
+                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>//optimistic_mode</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="store">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                <storageLocation>optimistic_mode</storageLocation>
+                                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                            </ruleProperties>
+                                                        </processorInfo>
+                                                    </item>
+                                                    <item>
+                                                        <extractorInfo extractorType="query">
+                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                <query>//rnh_mode</query>
+                                                            </extractorProperties>
+                                                        </extractorInfo>
+                                                        <processorInfo ruleType="store">
+                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                <storageLocation>rnh_mode</storageLocation>
                                                                 <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
                                                                 <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
                                                                 <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
@@ -799,84 +1154,242 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             </postProcessing>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                    </nestedSteps>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                                <item guid="5a8ff620-4b66-47ad-a418-e15561b02a4a" action="comment" useFieldsInCommand="false">
-                                    <command>
-                                        <body>Run tests</body>
-                                    </command>
-                                    <nestedSteps>
-                                        <item guid="f2c65d96-2c56-408a-8c6f-34f2f04b0006" action="comment" useFieldsInCommand="false">
+                                        <item guid="69c8e578-0e5a-48eb-b464-6d8f2493fea0" action="if" useFieldsInCommand="false">
                                             <command>
-                                                <body>Add parameters</body>
+                                                <body>not ts_name:</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="2bd614e5-b1ce-407c-9f3d-f5d27fcd1df9" action="if" useFieldsInCommand="false">
+                                                <item guid="f1efb618-1a86-44c2-a1ac-c0ab5a5af105" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>topo_id.endswith(&apos;-RNH&apos;):</body>
+                                                        <body>ts_name = param(&apos;ts_name&apos;)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="f2c05475-6ffd-4b44-8aee-6d895926c3d6" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>not tas_name:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="9422deba-1892-4baa-ba6b-c6bb09514ae1" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>tas_name = param(&apos;tas_name&apos;)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="4bb2994f-d53a-4143-84c1-888eb95d5a08" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>not ports:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="1c73341b-1b85-4417-8d54-884eeb87a1fa" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>ports = param(&apos;ports&apos;)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="08639115-dc46-4f0c-8505-2cb92a8130d5" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:Automation Mode: TAS &quot;[tas_name]&quot;, TS &quot;[ts_name]&quot;, Ports &quot;[ports]&quot;, Routing &quot;[routing]&quot;, Optimistic mode &quot;[optimistic_mode]&quot;, RNH &quot;[rnh_mode]&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">Automation Mode: TAS &quot;[tas_name]&quot;, TS &quot;[ts_name]&quot;, Ports &quot;[ports]&quot;, Routing &quot;[routing]&quot;, Optimistic mode &quot;[optimistic_mode]&quot;, RNH &quot;[rnh_mode]&quot;</message>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="f40e8afe-6080-4c02-af2e-9f07dd3a64cb" action="comment" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Reserve topology</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="49cebc8d-3f0a-449e-8df8-627cfacbdcab" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>topo_tags = [i for i in topologytag_dict if topologytag_dict[i]==topo_id];print(topo_tags)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="d4dca257-9fd6-4712-91ad-7cdfaaf82cbf" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>topo_tag = topo_tags[0];print(topo_tag)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="18814bc2-77ab-456b-9956-dcad324b29d9" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>(rnh_mode == &apos;true&apos; and not topo_tag.endswith(&apos;RNH&apos;)) or (rnh_mode == &apos;false&apos; and topo_tag.endswith(&apos;RNH&apos;)):</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="74c1d7cb-2ec4-4357-bfb0-f2ada26b7ad2" action="eval" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=true&apos;;print(parameters)</body>
-                                                            </command>
+                                                        <item guid="1cdf4aea-9a8c-4e01-a709-6d00e98c4a2e" action="continue" useFieldsInCommand="false">
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="cf7e4d51-118f-4c3a-a415-aef6a83761ff" action="else" useFieldsInCommand="false">
+                                                <item guid="cf3251fc-9955-4673-ad82-ecae14b655ac" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>tests = testcase_dict[topo_id];print(tests)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="2445bbd8-cb73-4fcd-b50a-7da0c61a30cc" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>len(tests) == 0:</body>
+                                                    </command>
                                                     <nestedSteps>
-                                                        <item guid="c53bbbec-d394-466f-bdde-68c5b14e1987" action="eval" useFieldsInCommand="false">
+                                                        <item guid="955a9c24-ad88-4c66-8062-3e49303944b5" action="eval" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=false&apos;;print(parameters)</body>
+                                                                <body>reserve_time = 0</body>
                                                             </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="2974362d-c6f7-4869-a3f6-14be725ee275" action="continue" useFieldsInCommand="false">
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="e6ca5675-9845-43d8-8a83-20ee484db3b2" action="if" useFieldsInCommand="false">
+                                                <item guid="36ece40b-eaf5-48d9-aeeb-a79654b63c63" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>param(&apos;optimistic_mode&apos;):</body>
-                                                    </command>
-                                                    <nestedSteps>
-                                                        <item guid="8cd5b014-391a-4f4c-bf44-54592e6edbf3" action="eval" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>parameters += &apos;\\nTC_parameters/Optimistic_Mode=true&apos;;print(parameters)</body>
-                                                            </command>
-                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                        </item>
-                                                    </nestedSteps>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="4f739064-9f12-4d2a-9a06-9ec48e9239f8" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>param_text = param(&apos;parameter_key_value&apos;)</body>
+                                                        <body>reserve_time = len(tests) * param(&apos;reservation_timeout&apos;)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="24eab31f-f0df-4f31-80bd-c9eb5b826f95" action="if" useFieldsInCommand="false">
+                                                <item guid="a8017ffd-bd97-4f50-a119-445a2cdb46f0" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>param_text:</body>
+                                                        <body>topo_id_original = topo_id.replace(&quot;-RNH&quot;, &quot;&quot;);print(topo_id_original)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="085a7868-b3b9-4673-b1d4-4baaf0e2028c" action="call" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, routing=routing, reservation_time=reserve_time)</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>isEmpty()</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="assert">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                        <expression>value == &quot;true&quot;</expression>
+                                                                        <actionsWhenTrue>
+                                                                            <item actionId="ExitProcedure">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                                            </item>
+                                                                        </actionsWhenTrue>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>responseLine()</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>reservation_id</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="5a8ff620-4b66-47ad-a418-e15561b02a4a" action="comment" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Run tests</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="f2c65d96-2c56-408a-8c6f-34f2f04b0006" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Add parameters</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="9d05c4ea-3eb9-44a3-852c-8c93f84dbe53" action="eval" useFieldsInCommand="false">
+                                                        <item guid="2bd614e5-b1ce-407c-9f3d-f5d27fcd1df9" action="if" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>params = param_text.split(&quot;;&quot;)</body>
-                                                            </command>
-                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                        </item>
-                                                        <item guid="907a813b-0f39-44a6-aa3e-3b73ebd347a3" action="for" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>param in params:</body>
+                                                                <body>topo_id.endswith(&apos;-RNH&apos;):</body>
                                                             </command>
                                                             <nestedSteps>
-                                                                <item guid="554b0231-53e5-476e-b906-7748b2028925" action="eval" useFieldsInCommand="false">
+                                                                <item guid="74c1d7cb-2ec4-4357-bfb0-f2ada26b7ad2" action="eval" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>parameters += &apos;\\n&apos;+ param;print(parameters)</body>
+                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=true&apos;;print(parameters)</body>
                                                                     </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="cf7e4d51-118f-4c3a-a415-aef6a83761ff" action="else" useFieldsInCommand="false">
+                                                            <nestedSteps>
+                                                                <item guid="c53bbbec-d394-466f-bdde-68c5b14e1987" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>parameters = &apos;TC_parameters/Enable_RemoteNetworkHost=false&apos;;print(parameters)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="e6ca5675-9845-43d8-8a83-20ee484db3b2" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>optimistic_mode == &quot;true&quot;:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="8cd5b014-391a-4f4c-bf44-54592e6edbf3" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>parameters += &apos;\\nTC_parameters/Optimistic_Mode=true&apos;;print(parameters)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="4f739064-9f12-4d2a-9a06-9ec48e9239f8" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>param_text = param(&apos;parameter_key_value&apos;)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="24eab31f-f0df-4f31-80bd-c9eb5b826f95" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>param_text:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="9d05c4ea-3eb9-44a3-852c-8c93f84dbe53" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>params = param_text.split(&quot;;&quot;)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="907a813b-0f39-44a6-aa3e-3b73ebd347a3" action="for" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>param in params:</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="554b0231-53e5-476e-b906-7748b2028925" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>parameters += &apos;\\n&apos;+ param;print(parameters)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
                                                             </nestedSteps>
@@ -885,100 +1398,96 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
+                                                <item guid="fae41976-98b4-4878-8c7d-f0a46ed908fd" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>sleep_time  = 0</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="0a5810bb-4857-48b1-884f-edeb75c000a5" action="for" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>test in tests:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="536ced96-bfe0-4905-b457-899cc108ebb8" action="sleep">
+                                                            <command>
+                                                                <body>[sleep_time]</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="106e94f2-0b28-4e64-bd2b-c91bcdc31bdc" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>test_path = testcasepath_dict[test];print(test_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="3da22c80-717d-485f-8923-2f0a97ef31ad" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>parameter_path = parameterpath_dict[test];print(parameter_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="8f3a01e6-674a-45b4-932e-e0e49d01cf82" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>topology_path = topologypath_dict[topo_id];print(topology_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="7a721be1-b255-4543-89ce-6d551ede7961" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Information:Run test &quot;[test]&quot;...</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <message inherit="false">Run test &quot;[test]&quot;...</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="f30b9fd1-5e93-4ab5-89b3-4ef0aecefb23" action="call" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>run_test(testcase_path=test_path, parameter_path=parameter_path, topology_path=topology_path, parameters=parameters)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="548adf35-6bfc-42bb-a68c-96febebb0105" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>sleep_time = 30</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="fc6a12a6-0568-477a-906f-d8fc799b4b06" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Information:-------------------------------------------------</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <message inherit="false">-------------------------------------------------</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="fae41976-98b4-4878-8c7d-f0a46ed908fd" action="eval" useFieldsInCommand="false">
+                                        <item guid="5cb68709-90d4-423f-9c8b-3afdccab6ac7" action="comment" useFieldsInCommand="false">
                                             <command>
-                                                <body>sleep_time  = 0</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="0a5810bb-4857-48b1-884f-edeb75c000a5" action="for" useFieldsInCommand="false">
-                                            <command>
-                                                <body>test in tests:</body>
+                                                <body>Release topology</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="536ced96-bfe0-4905-b457-899cc108ebb8" action="sleep">
+                                                <item guid="eb0db0c7-5e7d-4fad-a780-adc238d89fdc" action="call" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>[sleep_time]</body>
+                                                        <body>release_topology(reservation_id=reservation_id)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="106e94f2-0b28-4e64-bd2b-c91bcdc31bdc" action="eval" useFieldsInCommand="false">
+                                                <item guid="c7ec2074-eaf8-4554-bdab-d02dd35eee9a" action="message" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>test_path = testcasepath_dict[test];print(test_path)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="3da22c80-717d-485f-8923-2f0a97ef31ad" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>parameter_path = parameterpath_dict[test];print(parameter_path)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="8f3a01e6-674a-45b4-932e-e0e49d01cf82" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>topology_path = topologypath_dict[topo_id];print(topology_path)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="ce2d8e84-4d86-4c49-950f-a5aa355c6d5f" action="eval" skip="true" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ls_testsession_name = ls_session_name_dict[test];print(ls_testsession_name)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="fb382374-548e-4a24-b7a6-b68f7ad2eb64" action="call" skip="true" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>change_ts_mode(reservation_id=reservation_id, ls_testsession_name=ls_testsession_name)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="7a721be1-b255-4543-89ce-6d551ede7961" action="message" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>Information:Run test &quot;[test]&quot;...</body>
+                                                        <body>Information:===========================================================================================</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                                        <message inherit="false">Run test &quot;[test]&quot;...</message>
+                                                        <message inherit="false">===========================================================================================</message>
                                                     </applicationProperties>
-                                                </item>
-                                                <item guid="f30b9fd1-5e93-4ab5-89b3-4ef0aecefb23" action="call" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>run_test(testcase_path=test_path, parameter_path=parameter_path, topology_path=topology_path, parameters=parameters)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="548adf35-6bfc-42bb-a68c-96febebb0105" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>sleep_time = 30</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                    </nestedSteps>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                                <item guid="5cb68709-90d4-423f-9c8b-3afdccab6ac7" action="comment" useFieldsInCommand="false">
-                                    <command>
-                                        <body>Release topology</body>
-                                    </command>
-                                    <nestedSteps>
-                                        <item guid="eb0db0c7-5e7d-4fad-a780-adc238d89fdc" action="call" useFieldsInCommand="false">
-                                            <command>
-                                                <body>release_topology(reservation_id=reservation_id)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="c7ec2074-eaf8-4554-bdab-d02dd35eee9a" action="message" useFieldsInCommand="false">
-                                            <command>
-                                                <body>Information:===========================================================================================</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                                <message inherit="false">===========================================================================================</message>
-                                            </applicationProperties>
                                         </item>
                                     </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -1266,78 +1775,64 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
+                        <item guid="798cf108-fc57-44c5-b305-8ca5d83f39d7" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>ts_names = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
                         <item guid="3dd70c38-0bf2-4760-acf7-5aa0dd2b7f90" action="if" useFieldsInCommand="false">
                             <command>
                                 <body>ts_name_pattern:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="1a0991ea-48f0-4769-aceb-5e4617272746" action="eval" useFieldsInCommand="false">
+                                <item guid="8c6910d1-4f9f-483d-84a3-ec94d05f5407" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>ts_names =ts_name_pattern.split(&quot;;&quot;) </body>
+                                        <body>ts_names = ts_name_pattern.split(&quot;;&quot;) </body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
-                                <item guid="3668bdc7-da02-4da0-ab6a-1217876094a8" action="comment" useFieldsInCommand="false">
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="040b7350-796a-4d53-8788-f28603ec5ac4" action="elif" useFieldsInCommand="false">
+                            <command>
+                                <body>routing == &quot;true&quot;:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="17901498-ca66-4a91-8d4b-04e6fefbee36" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>Add condition for Emulated SUT</body>
+                                        <body>random_abc = random.sample(sorted({&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;}), 4)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="13a8c0e4-07e2-4f47-92a6-78dad8cd9c45" action="for" useFieldsInCommand="false">
+                                    <command>
+                                        <body>item in random_abc:</body>
                                     </command>
                                     <nestedSteps>
-                                        <item guid="e3872a6d-01f2-4333-b0ba-da152ee17d3e" action="if" useFieldsInCommand="false">
+                                        <item guid="0ea8393b-0965-4032-96a4-985c3ca9b32d" action="if" useFieldsInCommand="false">
                                             <command>
-                                                <body>ts_names[0]:</body>
+                                                <body>tas_name ==&quot;landslide-tas41.spirenteng.com&quot;:</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="968633f3-99cc-40ac-a378-4523ca406e47" action="json" useFieldsInCommand="false">
+                                                <item guid="afad69b0-d6ad-4cff-b7f1-9c70e66a3f07" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[emulated_id]&quot;}&apos;</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                        <action inherit="false">setJsonValue</action>
-                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[emulated_id]&quot;}</pathValue>
-                                                        <documentName inherit="false">condition</documentName>
-                                                    </applicationProperties>
-                                                </item>
-                                                <item guid="ed0ae6fe-a05e-4e90-9e11-63647b76661b" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(emulated_id)</body>
+                                                        <body>ts_names.append(&quot;kvm-ts41&quot; + item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="3ec0f5be-dbd2-40d9-9e15-0032c4bae52b" action="eval" useFieldsInCommand="false">
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="5b9284ac-5048-443e-ac6d-b9e080256ffa" action="elif" useFieldsInCommand="false">
+                                            <command>
+                                                <body>tas_name == &quot;landslide-tas3.spirenteng.com&quot; or tas_name == &quot;landslide-tas2.spirenteng.com&quot;:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="e4baebef-cbe6-419d-821d-2936405eb804" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[0]);print(modified_condition)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="4c9b87a4-3cda-4af8-bedc-1d86b72d85e9" action="json" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                        <action inherit="false">setJsonValue</action>
-                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
-                                                        <documentName inherit="false">condition</documentName>
-                                                    </applicationProperties>
-                                                </item>
-                                                <item guid="ed2ea90d-533d-48a8-832e-92f4a27af7f3" action="json" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                        <action inherit="false">addJsonNode</action>
-                                                        <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
-                                                        <documentName inherit="false">request_body</documentName>
-                                                    </applicationProperties>
-                                                </item>
-                                                <item guid="4bc8d29d-3e11-4869-9324-23515a80c530" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>condition_index += 1</body>
+                                                        <body>ts_names.append(&quot;ac-landslide-kvm-ts1&quot; +item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -1347,50 +1842,199 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
-                                <item guid="9c730a90-30dc-4e0b-8e9d-47d6c7dfd12f" action="comment" useFieldsInCommand="false">
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="3668bdc7-da02-4da0-ab6a-1217876094a8" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>Add condition for Emulated SUT</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="e3872a6d-01f2-4333-b0ba-da152ee17d3e" action="if" useFieldsInCommand="false">
                                     <command>
-                                        <body>Add condition for TS</body>
+                                        <body>len(ts_names) &gt; 0 and ts_names[0]:</body>
                                     </command>
                                     <nestedSteps>
-                                        <item guid="76698d17-5f8e-487c-9fa5-661a5ef8c093" action="if" useFieldsInCommand="false">
+                                        <item guid="968633f3-99cc-40ac-a378-4523ca406e47" action="json" useFieldsInCommand="false">
                                             <command>
-                                                <body>len(ts_names) &gt; 1:</body>
+                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[emulated_id]&quot;}&apos;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                <action inherit="false">setJsonValue</action>
+                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[emulated_id]&quot;}</pathValue>
+                                                <documentName inherit="false">condition</documentName>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="ed0ae6fe-a05e-4e90-9e11-63647b76661b" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(emulated_id)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="3ec0f5be-dbd2-40d9-9e15-0032c4bae52b" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="e4baebef-cbe6-419d-821d-2936405eb804" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[0]);print(modified_condition)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="4c9b87a4-3cda-4af8-bedc-1d86b72d85e9" action="json" useFieldsInCommand="false">
+                                            <command>
+                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                <action inherit="false">setJsonValue</action>
+                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
+                                                <documentName inherit="false">condition</documentName>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="ed2ea90d-533d-48a8-832e-92f4a27af7f3" action="json" useFieldsInCommand="false">
+                                            <command>
+                                                <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                <action inherit="false">addJsonNode</action>
+                                                <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
+                                                <documentName inherit="false">request_body</documentName>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="4bc8d29d-3e11-4869-9324-23515a80c530" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>condition_index += 1</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="9c730a90-30dc-4e0b-8e9d-47d6c7dfd12f" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>Add condition for TS</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="76698d17-5f8e-487c-9fa5-661a5ef8c093" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>len(ts_names) &gt; 1:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="c9d51a0a-a847-4fad-b165-b7b267b298d7" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>isinstance(ts_ids, str):</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="c9d51a0a-a847-4fad-b165-b7b267b298d7" action="if" useFieldsInCommand="false">
+                                                <item guid="6ee79e87-975f-4bb2-be02-4d442a4be7e0" action="json" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>isinstance(ts_ids, str):</body>
+                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}&apos;</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                        <action inherit="false">setJsonValue</action>
+                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}</pathValue>
+                                                        <documentName inherit="false">condition</documentName>
+                                                    </applicationProperties>
+                                                </item>
+                                                <item guid="eb1080a2-aafa-4d5e-9bda-b0619f62cef7" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_ids)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="4abd49be-3269-475b-882b-250aadaed8cd" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="b9a6d71b-2180-49d4-a496-e39d34c00044" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[1]);print(modified_condition)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="726fa4d6-cadb-4818-b01e-1fb35955d742" action="json" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                        <action inherit="false">setJsonValue</action>
+                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
+                                                        <documentName inherit="false">condition</documentName>
+                                                    </applicationProperties>
+                                                </item>
+                                                <item guid="baa72439-6a1d-4dfe-9fde-6ee0e2fb034e" action="json" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                        <action inherit="false">addJsonNode</action>
+                                                        <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
+                                                        <documentName inherit="false">request_body</documentName>
+                                                    </applicationProperties>
+                                                </item>
+                                                <item guid="3fc9b964-193a-42ca-a047-fbeebc2ac1ea" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>condition_index += 1</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="eb7fe4ee-5e70-4892-be93-b598912c095d" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="f3f6dc1d-bf78-4395-9af1-a2306d425dee" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>condition_length = len(ts_names) - 1 if len(ts_names) - 1 &lt; len(ts_ids) else len(ts_ids)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="c7d3540f-a6bb-431a-969a-c538088d0c75" action="for" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>i in range(0, condition_length):</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="6ee79e87-975f-4bb2-be02-4d442a4be7e0" action="json" useFieldsInCommand="false">
+                                                        <item guid="0e9c4c2d-3683-45b1-9230-e1aeca96ebbb" action="eval" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}&apos;</body>
-                                                            </command>
-                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                                <action inherit="false">setJsonValue</action>
-                                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_ids]&quot;}</pathValue>
-                                                                <documentName inherit="false">condition</documentName>
-                                                            </applicationProperties>
-                                                        </item>
-                                                        <item guid="eb1080a2-aafa-4d5e-9bda-b0619f62cef7" action="eval" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_ids)</body>
+                                                                <body>ts_id = ts_ids[i]</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="4abd49be-3269-475b-882b-250aadaed8cd" action="eval" useFieldsInCommand="false">
+                                                        <item guid="c23fc12c-d9a1-42fb-956c-606c41555525" action="json" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}&apos;</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                <action inherit="false">setJsonValue</action>
+                                                                <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}</pathValue>
+                                                                <documentName inherit="false">condition</documentName>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="0ada3eaf-56ef-4f4d-8d6c-c9c5122c5324" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_id)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="c7f793a1-89d7-420c-94a2-f2b264d64969" action="eval" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="b9a6d71b-2180-49d4-a496-e39d34c00044" action="eval" useFieldsInCommand="false">
+                                                        <item guid="07063196-4ab3-4e9a-be9c-bec1fcb40d0d" action="eval" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[1]);print(modified_condition)</body>
+                                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[i + 1]);print(modified_condition)</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="726fa4d6-cadb-4818-b01e-1fb35955d742" action="json" useFieldsInCommand="false">
+                                                        <item guid="d6ccfbd0-bcf6-4f5c-921a-cc8e968601cf" action="json" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
                                                             </command>
@@ -1400,7 +2044,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                 <documentName inherit="false">condition</documentName>
                                                             </applicationProperties>
                                                         </item>
-                                                        <item guid="baa72439-6a1d-4dfe-9fde-6ee0e2fb034e" action="json" useFieldsInCommand="false">
+                                                        <item guid="eca2d58e-672c-4e9e-a983-6f85456d282d" action="json" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
                                                             </command>
@@ -1410,89 +2054,10 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                 <documentName inherit="false">request_body</documentName>
                                                             </applicationProperties>
                                                         </item>
-                                                        <item guid="3fc9b964-193a-42ca-a047-fbeebc2ac1ea" action="eval" useFieldsInCommand="false">
+                                                        <item guid="103ab5bb-fcfd-45bb-bfd5-b16f18d8d7ac" action="eval" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>condition_index += 1</body>
                                                             </command>
-                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                        </item>
-                                                    </nestedSteps>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="eb7fe4ee-5e70-4892-be93-b598912c095d" action="else" useFieldsInCommand="false">
-                                                    <nestedSteps>
-                                                        <item guid="f3f6dc1d-bf78-4395-9af1-a2306d425dee" action="eval" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>condition_length = len(ts_names) - 1 if len(ts_names) - 1 &lt; len(ts_ids) else len(ts_ids)</body>
-                                                            </command>
-                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                        </item>
-                                                        <item guid="c7d3540f-a6bb-431a-969a-c538088d0c75" action="for" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>i in range(0, condition_length):</body>
-                                                            </command>
-                                                            <nestedSteps>
-                                                                <item guid="0e9c4c2d-3683-45b1-9230-e1aeca96ebbb" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>ts_id = ts_ids[i]</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                </item>
-                                                                <item guid="c23fc12c-d9a1-42fb-956c-606c41555525" action="json" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}&apos;</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                                        <action inherit="false">setJsonValue</action>
-                                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[ts_id]&quot;}</pathValue>
-                                                                        <documentName inherit="false">condition</documentName>
-                                                                    </applicationProperties>
-                                                                </item>
-                                                                <item guid="0ada3eaf-56ef-4f4d-8d6c-c9c5122c5324" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>query_path = &apos;//items/item[id = &quot;{0}&quot;]/condition&apos;.format(ts_id)</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                </item>
-                                                                <item guid="c7f793a1-89d7-420c-94a2-f2b264d64969" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>condition_text = query(&apos;topo_resources_xml&apos;, query_path);print(condition_text)</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                </item>
-                                                                <item guid="07063196-4ab3-4e9a-be9c-bec1fcb40d0d" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[i + 1]);print(modified_condition)</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                </item>
-                                                                <item guid="d6ccfbd0-bcf6-4f5c-921a-cc8e968601cf" action="json" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;[modified_condition]&quot;}&apos;</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                                        <action inherit="false">setJsonValue</action>
-                                                                        <pathValue inherit="false" sub="true">{&quot;condition&quot;:&quot;[modified_condition]&quot;}</pathValue>
-                                                                        <documentName inherit="false">condition</documentName>
-                                                                    </applicationProperties>
-                                                                </item>
-                                                                <item guid="eca2d58e-672c-4e9e-a983-6f85456d282d" action="json" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;request_body&apos;, pathValue=&apos;{&quot;customConditions/\\\\[[condition_index]]&quot;:\\\\[[condition]]}&apos;</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
-                                                                        <action inherit="false">addJsonNode</action>
-                                                                        <pathValue inherit="false" sub="true">{&quot;customConditions/\\[[condition_index]]&quot;:\\[[condition]]}</pathValue>
-                                                                        <documentName inherit="false">request_body</documentName>
-                                                                    </applicationProperties>
-                                                                </item>
-                                                                <item guid="103ab5bb-fcfd-45bb-bfd5-b16f18d8d7ac" action="eval" useFieldsInCommand="false">
-                                                                    <command>
-                                                                        <body>condition_index += 1</body>
-                                                                    </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                </item>
-                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>

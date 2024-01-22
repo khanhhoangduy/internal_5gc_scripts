@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ParameterTree version="9.5.0.202312192015">
+    <parameters escape="true">
+        <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+            <test_sequencer pt:description="tas_name:landslide-tas2.spirenteng.com;ts_name:ac-landslide-kvm-ts1a+ac-landslide-kvm-ts1b;ports:2,3,4+2,3,4;routing;optimistic_mode;rnh_mode/routing">ports:2,3,4+2,3,4;optimistic_mode;routing</test_sequencer>
+            <specified_tests>
+                <param1>I-AMF-3-PF-UE_Initial_Registration-5G_AKA-SUCI-NullEncr</param1>
+                <param2>S-AMF-4-SA_GutiAllocationAmfInitialRegistration</param2>
+                <param3/>
+            </specified_tests>
+        </parameters>
+    </parameters>
+</ParameterTree>
