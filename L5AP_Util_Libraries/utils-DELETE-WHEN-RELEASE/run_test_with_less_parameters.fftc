@@ -26,6 +26,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <parameter_key_value pt:description="Seperate by ;. Example: TC_parameters/Session_Capacity=10"/>
                     <include_rnh_mode pt:datatype="BOOLEAN">true</include_rnh_mode>
                     <topology_reserve_timeout pt:datatype="INTEGER">180</topology_reserve_timeout>
+                    <topology_name_or_id>5GC-5GC-b2b-B-2TS</topology_name_or_id>
                     <Official_Library_IDs>
                         <Capacity_And_Performance>-511</Capacity_And_Performance>
                         <Security>-515</Security>
@@ -188,6 +189,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <item guid="ea182c49-656e-4b74-82c2-51a27a6f646e" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>automation_modes = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="4665e5d8-2cab-42d8-9e60-c8744b0d3602" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>topology_name_or_id = param(&apos;topology_name_or_id&apos;, &apos;&apos;)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -835,10 +842,113 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                     </command>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
-                                                                <item guid="93f8c3de-519c-4e87-aaad-abf48de20834" action="eval" useFieldsInCommand="false">
+                                                                <item guid="644bfe7c-2e45-4afb-8815-fbd50096e05d" action="if" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>topo_id = topologytag_dict[tag_name];print(topo_id)</body>
+                                                                        <body>topology_name_or_id:</body>
                                                                     </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="b8fe1f18-1184-4fa5-b240-860d50adf71a" action="if" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>topology_name_or_id in topology_id_list:</body>
+                                                                            </command>
+                                                                            <nestedSteps>
+                                                                                <item guid="875efd15-7afb-404f-b886-212cc17b6b6a" action="eval" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>topo_id = topology_name_or_id</body>
+                                                                                    </command>
+                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                </item>
+                                                                            </nestedSteps>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="f9c9395e-9f53-4726-b50d-acbb92a9e751" action="elif" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>topology_name_or_id in topology_name_list:</body>
+                                                                            </command>
+                                                                            <nestedSteps>
+                                                                                <item guid="ed305235-c1f6-49d0-9945-4b3dfc927a73" action="eval" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>topo_id = topology_id_list[topology_name_list.index(topology_name_or_id)]</body>
+                                                                                    </command>
+                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                </item>
+                                                                            </nestedSteps>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="c4d43fbc-0467-46fb-b325-14ca936f1fa1" action="else" useFieldsInCommand="false">
+                                                                            <nestedSteps>
+                                                                                <item guid="9ce66d75-acf4-48db-bb20-3f4d8063b8c5" action="message" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>Error:Cannot get Topology ID for topology_name_or_id: &quot;[topology_name_or_id]&quot;</body>
+                                                                                    </command>
+                                                                                    <postProcessing>
+                                                                                        <analysisRules>
+                                                                                            <item>
+                                                                                                <extractorInfo extractorType="none">
+                                                                                                    <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                                                                                </extractorInfo>
+                                                                                                <processorInfo ruleType="assert">
+                                                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                                                        <expression>False</expression>
+                                                                                                        <actionsWhenFalse>
+                                                                                                            <item actionId="FailTest">
+                                                                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                            </item>
+                                                                                                            <item actionId="ExitExecution">
+                                                                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                                            </item>
+                                                                                                        </actionsWhenFalse>
+                                                                                                    </ruleProperties>
+                                                                                                </processorInfo>
+                                                                                            </item>
+                                                                                        </analysisRules>
+                                                                                    </postProcessing>
+                                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                        <severity inherit="false">Error</severity>
+                                                                                        <message inherit="false">Cannot get Topology ID for topology_name_or_id: &quot;[topology_name_or_id]&quot;</message>
+                                                                                    </applicationProperties>
+                                                                                </item>
+                                                                            </nestedSteps>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="190cef46-8057-491d-acb4-6fb7ec030067" action="elif" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>tag_name in topologytag_dict:</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="93f8c3de-519c-4e87-aaad-abf48de20834" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>topo_id = topologytag_dict[tag_name];print(topo_id)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="b8e9837e-b020-4e97-ad38-f997b66b1577" action="else" useFieldsInCommand="false">
+                                                                    <nestedSteps>
+                                                                        <item guid="a8367f7c-f7cb-4610-bc48-e3345166d9d8" action="message" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>Warning:Cannot get Topology ID for tag name: [tag_name]</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                                <severity inherit="false">Warning</severity>
+                                                                                <message inherit="false">Cannot get Topology ID for tag name: [tag_name]</message>
+                                                                            </applicationProperties>
+                                                                        </item>
+                                                                        <item guid="839786c1-b13c-483f-90ca-f06e5edb74e1" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>print(topologytag_dict)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="2f1f979a-3421-4a98-b285-434b7000fa84" action="continue" useFieldsInCommand="false">
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
                                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                                 </item>
                                                                 <item guid="57fca65b-b8a5-4d9d-b62c-d36ee64f2a53" action="if" useFieldsInCommand="false">
