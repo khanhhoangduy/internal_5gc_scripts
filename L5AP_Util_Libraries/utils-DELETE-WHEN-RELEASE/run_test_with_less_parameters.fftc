@@ -361,7 +361,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 </item>
                                 <item guid="9f2990b3-7865-4826-a581-62d63cb4c28a" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>mode_routing = mode_optimistic_mode = mode_include_rnh_mode = &quot;false&quot;;</body>
+                                        <body>mode_routing = mode_optimistic_mode = mode_rnh_mode = &quot;false&quot;;</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -400,7 +400,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     <nestedSteps>
                                         <item guid="bfdeb5c8-07a6-4d67-9879-d74da84c74fd" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>mode_include_rnh_mode = &apos;true&apos;;</body>
+                                                <body>mode_rnh_mode = &apos;true&apos;;</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
@@ -409,11 +409,11 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 </item>
                                 <item guid="b3955e0a-3998-4f18-a5e5-1616306446fd" action="json" useFieldsInCommand="false">
                                     <command>
-                                        <body>action=&apos;createJson&apos;, documentName=&apos;mode_json&apos;, fromFile=false, jsonString=&apos;{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;include_rnh_mode&quot;:&quot;[mode_include_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}&apos;</body>
+                                        <body>action=&apos;createJson&apos;, documentName=&apos;mode_json&apos;, fromFile=false, jsonString=&apos;{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;rnh_mode&quot;:&quot;[mode_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}&apos;</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
                                         <action inherit="false">createJson</action>
-                                        <jsonString inherit="false" sub="true">{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;include_rnh_mode&quot;:&quot;[mode_include_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}</jsonString>
+                                        <jsonString inherit="false" sub="true">{&quot;tas_name&quot;:&quot;[mode_tas_name]&quot;,&quot;routing&quot;:&quot;[mode_routing]&quot;,&quot;ts_name&quot;:&quot;[mode_ts_name]&quot;,&quot;rnh_mode&quot;:&quot;[mode_rnh_mode]&quot;,&quot;ports&quot;:&quot;[mode_ports]&quot;,&quot;optimistic_mode&quot;:&quot;[mode_optimistic_mode]&quot;}</jsonString>
                                         <documentName inherit="false">mode_json</documentName>
                                     </applicationProperties>
                                 </item>
