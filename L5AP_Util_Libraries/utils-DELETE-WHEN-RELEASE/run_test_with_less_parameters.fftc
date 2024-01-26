@@ -11,35 +11,25 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <parameters version="9.5.0.202312192015">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <velocity_url>https://terralogic-vel.spirenteng.com/</velocity_url>
-                    <username>khoang</username>
-                    <password pt:mask="true">zUgPiFuqcv6rwplOB42N+g==</password>
-                    <tc_dir>project://ai_LS_5G/testcases/</tc_dir>
-                    <tas_name>landslide-tas2.spirenteng.com</tas_name>
-                    <ts_name/>
-                    <ports pt:description="Example: 2,3;2,3,4"/>
-                    <routing pt:datatype="BOOLEAN">false</routing>
-                    <tas_username>sms</tas_username>
-                    <tas_password>a1b2c3d4</tas_password>
-                    <reservation_timeout pt:datatype="INTEGER">3600</reservation_timeout>
-                    <optimistic_mode pt:datatype="BOOLEAN">false</optimistic_mode>
-                    <parameter_key_value pt:description="Seperate by ;. Example: TC_parameters/Session_Capacity=10"/>
-                    <include_rnh_mode pt:datatype="BOOLEAN">true</include_rnh_mode>
-                    <topology_reserve_timeout pt:datatype="INTEGER">180</topology_reserve_timeout>
-                    <topology_name_or_id>5GC-5GC-b2b-B-2TS</topology_name_or_id>
-                    <Official_Library_IDs>
-                        <Capacity_And_Performance>-511</Capacity_And_Performance>
-                        <Security>-515</Security>
-                        <Compliance>-510</Compliance>
-                        <ORAN_CU_Compliance>-513</ORAN_CU_Compliance>
-                        <ORAN_DU_Compliance>-514</ORAN_DU_Compliance>
-                        <ORAN_E2E_Compliance>-516</ORAN_E2E_Compliance>
-                        <ORAN_RIC_Compliance>-517</ORAN_RIC_Compliance>
-                        <ORAN_CU_Capacity_And_Performance>-518</ORAN_CU_Capacity_And_Performance>
-                        <ORAN_DU_Capacity_And_Performance>-519</ORAN_DU_Capacity_And_Performance>
-                        <ORAN_E2E_Capacity_And_Performance>-520</ORAN_E2E_Capacity_And_Performance>
-                        <ORAN_RIC_Capacity_And_Performance>-521</ORAN_RIC_Capacity_And_Performance>
-                    </Official_Library_IDs>
+                    <velocity_url pt:description="Velocity URL">https://terralogic-vel.spirenteng.com/</velocity_url>
+                    <username pt:description="Velocity user name">khoang</username>
+                    <password pt:description="Velocity password" pt:mask="true">CaK+mWSFs84=</password>
+                    <tc_dir pt:description="Test case location or folder.">project://ai_LS_5G/testcases/</tc_dir>
+                    <tas_name pt:description="TAS host name">landslide-tas2.spirenteng.com</tas_name>
+                    <tas_username pt:description="TAS user name">sms</tas_username>
+                    <tas_password pt:description="TAS password" pt:mask="true">CaK+mWSFs84=</tas_password>
+                    <ts_name pt:description="Test Server name(s) - The following order of TS and parameter files will be assigned. Example: ac-landslide-kvm-ts1a;ac-landslide-kvm-ts1b"/>
+                    <ports pt:description="Test Server port(s). Example: 2,3;2,3,4"/>
+                    <routing pt:datatype="BOOLEAN" pt:description="Enable routing - auto using kvm if does not specify ts_name">false</routing>
+                    <reservation_time pt:datatype="INTEGER" pt:description="Reservation time for each topology for one test">3600</reservation_time>
+                    <optimistic_mode pt:datatype="BOOLEAN" pt:description="Enable optimistic mode - for CP, PF tests">false</optimistic_mode>
+                    <parameter_key_value pt:description="Additional Parameter key value for specified tests, seperated by ;. Example: TC_parameters/Session_Capacity=10"/>
+                    <include_rnh_mode pt:datatype="BOOLEAN" pt:description="Include Remote Network Host mode">true</include_rnh_mode>
+                    <topology_reserve_timeout pt:datatype="INTEGER" pt:description="Estimated wait time for reservation success">180</topology_reserve_timeout>
+                    <topology_name_or_id pt:description="Specified Velocity Topology name"/>
+                    <topology_local_folder pt:description="Local topology folder that imported from Velocity">topologies</topology_local_folder>
+                    <tas_library_name pt:description="TAS library name. Example: 5GC-5GC-b2b-B-2TS"/>
+                    <ste_file pt:description="STE file location. Example: D:/clister/5gc-aap - ste/5gc-r15/I-CUSA-66-CO_F1CplaneGnbDuConfigUpdateNrSaCellMod.ste"/>
                 </parameters>
             </parameters>
         </parameters>
@@ -80,13 +70,33 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         </item>
                         <item guid="49bc6157-15a5-4e79-b20a-c373af37b93c" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>current_path = current_path[:current_path.rindex(&apos;/&apos;) + 1];print(current_path)</body>
+                                <body>current_path = current_path[:current_path.rindex(&apos;/&apos;) + 1];print(current_path);print(current_path)</body>
                             </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="d3001c2c-66c7-4139-a8db-4ca4f7fc9375" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>topology_local_folder = param(&apos;topology_local_folder&apos;, &apos;topologies&apos;)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="cdcf31ad-e347-44ba-9434-71910dd1e9b3" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>topology_local_folder.endswith(&apos;/&apos;) or topology_local_folder.endswith(&apos;\\\\&apos;):</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="633696ba-8e4c-4707-abcc-6bb277bfff39" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>topology_local_folder = topology_local_folder[:-1]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                         <item guid="a95e2eda-387f-4b63-bd73-964344c5ff6a" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>current_topology_path = current_path + &apos;topologies/&apos;</body>
+                                <body>current_topology_path = current_path + topology_local_folder + &apos;/&apos;;print(current_topology_path)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -195,6 +205,18 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <item guid="4665e5d8-2cab-42d8-9e60-c8744b0d3602" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>topology_name_or_id = param(&apos;topology_name_or_id&apos;, &apos;&apos;)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="bb7b2edc-a18b-488a-afd4-653584b5499e" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>ste_imported_list = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="7500e4f0-c6de-45da-a6a0-cc67a9267a70" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>original_testcase_data = {}</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -472,7 +494,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 <actionsWhenTrue>
                                                     <item actionId="DeclareExecutionIssue">
                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
-                                                            <message>Get Topology information from Velocity success.</message>
+                                                            <message>Get Topology information from Velocity [param(&apos;velocity_url&apos;)] success.</message>
                                                         </actionProperties>
                                                     </item>
                                                 </actionsWhenTrue>
@@ -482,7 +504,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                     </item>
                                                     <item actionId="DeclareExecutionIssue">
                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
-                                                            <message>Cannot get Topology information from Velocity.</message>
+                                                            <message>Cannot get Topology information from Velocity [param(&apos;velocity_url&apos;)].</message>
                                                         </actionProperties>
                                                     </item>
                                                     <item actionId="ExitProcedure">
@@ -561,7 +583,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 </item>
                                 <item guid="ebd59eb7-d8d4-48db-9139-8386fe0446e9" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>topo_path = &apos;topologies/&apos; + topo_name + &apos;.tbml&apos;;print(topo_path)</body>
+                                        <body>topo_path = topology_local_folder + &apos;/&apos; + topo_name + &apos;.tbml&apos;;print(topo_path)</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -825,6 +847,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
+                                                        <item guid="2dac4af8-f9e2-423c-9c52-981bb7ecc46b" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>original_testcase_data[current_tc_name] = data</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
                                                         <item guid="1945609f-78ba-47c1-9a6c-33e0312b837e" action="eval" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>current_file.close()</body>
@@ -877,6 +905,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                         </item>
                                                                         <item guid="c4d43fbc-0467-46fb-b325-14ca936f1fa1" action="else" useFieldsInCommand="false">
                                                                             <nestedSteps>
+                                                                                <item guid="ee12ef66-26fb-4417-8f75-87a21f906649" action="eval" useFieldsInCommand="false">
+                                                                                    <command>
+                                                                                        <body>print(topology_name_list)</body>
+                                                                                    </command>
+                                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                </item>
                                                                                 <item guid="9ce66d75-acf4-48db-bb20-3f4d8063b8c5" action="message" useFieldsInCommand="false">
                                                                                     <command>
                                                                                         <body>Error:Cannot get Topology ID for topology_name_or_id: &quot;[topology_name_or_id]&quot;</body>
@@ -1368,7 +1402,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 </item>
                                                 <item guid="36ece40b-eaf5-48d9-aeeb-a79654b63c63" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>reserve_time = len(tests) * param(&apos;reservation_timeout&apos;)</body>
+                                                        <body>reserve_time = len(tests) * param(&apos;reservation_time&apos;)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -1428,6 +1462,34 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 <body>Run tests</body>
                                             </command>
                                             <nestedSteps>
+                                                <item guid="57a9e3f9-3816-43af-a6b6-142c14af0622" action="comment" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>import ste if need</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="fff15577-bb2d-4ea6-b6f4-531d7fc2c89e" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>param(&apos;ste_file&apos;) and param(&apos;tas_library_name&apos;):</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="6702e4d4-f0cd-4d7c-8021-c19dedcdfabd" action="call" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>import_ste(reservation_id=reservation_id, ste_imported_list=ste_imported_list)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                                <item guid="2a8a9216-277d-4947-a4ac-492aa3a5cf61" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>print(ste_imported_list)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
                                                 <item guid="f2c65d96-2c56-408a-8c6f-34f2f04b0006" action="comment" useFieldsInCommand="false">
                                                     <command>
                                                         <body>Add parameters</body>
@@ -1544,6 +1606,40 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
+                                                        <item guid="5832e6a1-c95e-4a6c-bed0-e0c68718800a" action="comment" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Update test data</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="bbb666a2-9364-40a5-9318-e8ac335d19c2" action="if" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>param(&apos;tas_library_name&apos;):</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="6619dfda-642c-4f4c-9970-4cc2cac23c8e" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>tas_library_name = param(&apos;tas_library_name&apos;)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="996f5a60-4f53-4f95-a535-989590d2a2ed" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>test_data = original_testcase_data[test]</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="69363d66-341e-4ebd-88e6-5cc811cf49b1" action="call" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>update_testdata(library_name=tas_library_name, test_path=test_path, test_data=test_data)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
                                                         <item guid="7a721be1-b255-4543-89ce-6d551ede7961" action="message" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>Information:Run test &quot;[test]&quot;...</body>
@@ -1556,6 +1652,40 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             <command>
                                                                 <body>run_test(testcase_path=test_path, parameter_path=parameter_path, topology_path=topology_path, parameters=parameters)</body>
                                                             </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="7137f02f-7459-437d-91dd-cff75cc9d282" action="comment" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Reset test data</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="bbb666a2-9364-40a5-9318-e8ac335d19c2" action="if" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>param(&apos;tas_library_name&apos;):</body>
+                                                                    </command>
+                                                                    <nestedSteps>
+                                                                        <item guid="6619dfda-642c-4f4c-9970-4cc2cac23c8e" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>tas_library_name = param(&apos;tas_library_name&apos;)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="996f5a60-4f53-4f95-a535-989590d2a2ed" action="eval" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>test_data = original_testcase_data[test]</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                        <item guid="69363d66-341e-4ebd-88e6-5cc811cf49b1" action="call" useFieldsInCommand="false">
+                                                                            <command>
+                                                                                <body>update_testdata(library_name=&apos;&apos;, test_path=test_path, test_data=test_data)</body>
+                                                                            </command>
+                                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                        </item>
+                                                                    </nestedSteps>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                         <item guid="548adf35-6bfc-42bb-a68c-96febebb0105" action="eval" useFieldsInCommand="false">
@@ -1604,6 +1734,20 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ea8ffa00-50e2-4d93-a911-8761c72d5e6f" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Print log</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="d64d205f-5208-4136-817d-3f5bca14ee1b" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(log)</body>
+                            </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                     </nestedSteps>
@@ -2882,36 +3026,58 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 <body>time_out &lt; 0:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="a4b71019-59e5-4569-b90c-ad4975510e82" action="message" useFieldsInCommand="false">
+                                <item guid="f2cc2fdf-8fb4-4be3-877d-2a073ee750e7" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>Error:Reserve topology [topology_name] - status: [reservation_status]</body>
+                                        <body>print(reservation_status)</body>
                                     </command>
                                     <postProcessing>
                                         <analysisRules>
                                             <item>
-                                                <extractorInfo extractorType="none">
-                                                    <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>responseLine()</query>
+                                                    </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="assert">
                                                     <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
-                                                        <expression>True</expression>
+                                                        <expression>str(value) == &quot;QUEUED&quot;</expression>
                                                         <actionsWhenTrue>
                                                             <item actionId="FailTest">
                                                                 <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                            <item actionId="DeclareExecutionIssue">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                    <message>Reserve topology [topology_name] - status: [reservation_status]</message>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="CallProcedure">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.CallProcedurePropertyGroup">
+                                                                    <command>release_topology(reservation_id=reservation_id)</command>
+                                                                </actionProperties>
                                                             </item>
                                                             <item actionId="ExitProcedure">
                                                                 <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
                                                             </item>
                                                         </actionsWhenTrue>
+                                                        <actionsWhenFalse>
+                                                            <item actionId="FailTest">
+                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                            <item actionId="DeclareExecutionIssue">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                    <message>Reserve topology [topology_name] - status: [reservation_status]</message>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="ExitProcedure">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                            </item>
+                                                        </actionsWhenFalse>
                                                     </ruleProperties>
                                                 </processorInfo>
                                             </item>
                                         </analysisRules>
                                     </postProcessing>
-                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                        <severity inherit="false">Error</severity>
-                                        <message inherit="false">Reserve topology [topology_name] - status: [reservation_status]</message>
-                                    </applicationProperties>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -3010,192 +3176,274 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                 </item>
             </arguments>
         </item>
-        <item name="change_ts_mode" isPublic="true">
+        <item name="import_ste" isPublic="true">
             <steps>
-                <item guid="03668deb-d2dc-4d3a-b9ad-bc825326a665" action="GET" session="s1">
+                <item guid="7f6300af-80ba-4103-b1ac-b824810fcfa9" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>velocity/api/reservation/v21/reservation/[reservation_id]/resources</body>
-                    </command>
-                    <postProcessing>
-                        <analysisRules>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//items/item[name = &quot;TAS&quot;]/inventoryResourceId</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>tas_resource_id</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//items/item[name = &quot;Emulated SUT&quot;]/inventoryResourceId</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>emulated_sut_resource_id</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                        </analysisRules>
-                    </postProcessing>
-                    <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="velocity/api/reservation/v21/reservation/[reservation_id]/resources" action.inherit="false"/>
-                </item>
-                <item guid="367f08a2-3af1-4d28-9000-d8920b5732d6" action="GET" session="s1">
-                    <command>
-                        <body>/velocity/api/inventory/v18/device/[tas_resource_id]</body>
-                    </command>
-                    <postProcessing>
-                        <analysisRules>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//properties/item[name = &quot;Hostname&quot;]/value</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>tas_hostname</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//properties/item[name = &quot;ipAddress&quot;]/value</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>tas_ipaddress</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                        </analysisRules>
-                    </postProcessing>
-                    <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="/velocity/api/inventory/v18/device/[tas_resource_id]" action.inherit="false"/>
-                </item>
-                <item guid="ac696821-40cb-4c87-94bb-b14c0a118610" action="GET" session="s1">
-                    <command>
-                        <body>/velocity/api/inventory/v18/device/[emulated_sut_resource_id]</body>
-                    </command>
-                    <postProcessing>
-                        <analysisRules>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//properties/item[name = &quot;TS Name&quot;]/value</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>ts_emulated_sut_name</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                        </analysisRules>
-                    </postProcessing>
-                    <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="/velocity/api/inventory/v18/device/[emulated_sut_resource_id]" action.inherit="false"/>
-                </item>
-                <item guid="76979bcb-7a88-44f0-92ab-7aa09155d2b2" action="eval" useFieldsInCommand="false">
-                    <command>
-                        <body>tas_api_url = &quot;{0}:8080/api&quot;.format(tas_hostname if tas_hostname else tas_ipaddress)</body>
+                        <body>ste_file = param(&apos;ste_file&apos;, &apos;&apos;).replace(&apos; &apos;,&apos;%20&apos;)</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="da36e9f4-e5e4-4dbe-935a-46511f814140" action="if" useFieldsInCommand="false">
+                <item guid="59247ffe-499b-496a-ba34-bb85b09eb77f" action="if" useFieldsInCommand="false">
                     <command>
-                        <body>not tas_api_url.startswith(&quot;http&quot;):</body>
+                        <body>not ste_file.startswith(&quot;file:/&quot;) and not ste_file.startswith(&quot;project:/&quot;):</body>
                     </command>
                     <nestedSteps>
-                        <item guid="dc87ce1b-001b-46b5-9381-8f106627efa0" action="eval" useFieldsInCommand="false">
+                        <item guid="6a710a92-ef33-4c84-9675-33748ffc5fb0" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>tas_api_url = &quot;http://{0}&quot;.format(tas_api_url)</body>
+                                <body>ste_file = &apos;file:/&apos; + ste_file</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="022d1d26-5a31-4366-b7f1-40ece4c8b5f5" action="call" useFieldsInCommand="false">
+                <item guid="ae1ef6ed-0b0d-4472-b530-c606e6d0e989" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>get_library_id(ls_testsession_name=ls_testsession_name)</body>
+                        <body>library_name = param(&apos;tas_library_name&apos;, &apos;&apos;)</body>
                     </command>
-                    <postProcessing>
-                        <storeResponseAt>library_id</storeResponseAt>
-                        <storeResponseText>true</storeResponseText>
-                    </postProcessing>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="e9efac6e-6e6e-493f-ba06-35dd8fe30eaf" action="open" session="s2">
+                <item guid="2dd79c04-10ad-4918-9e8d-ae960ffa5d40" action="if" useFieldsInCommand="false">
                     <command>
-                        <body>application:com.spirent.itest.applications.landsliderest</body>
+                        <body>ste_file and library_name:</body>
                     </command>
-                    <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
-                        <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="[tas_api_url]" landslideRESTAPI.inherit="false">
-                            <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="[param(&apos;tas_username&apos;)]" user.inherit="false" password.masked="false" password="[param(&apos;tas_password&apos;)]" password.inherit="false"/>
-                        </sessionProperties>
-                        <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                    </applicationProperties>
-                </item>
-                <item guid="8984942f-ffec-4621-862d-dfd7e09d23a8" action="Custom" session="s2">
-                    <command>
-                        <body>-requestMethod GET -dataType json -rawResponse true -url libraries/[library_id]/testsessions</body>
-                    </command>
-                    <postProcessing>
-                        <analysisRules>
-                            <item>
-                                <extractorInfo extractorType="query">
-                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query sub="true">//testSessions/item\\[name = &quot;[ls_testsession_name]&quot;]/keywords</query>
-                                    </extractorProperties>
-                                </extractorInfo>
-                                <processorInfo ruleType="store">
-                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                        <storageLocation>ls_session_keywords</storageLocation>
-                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
-                                    </ruleProperties>
-                                </processorInfo>
-                            </item>
-                        </analysisRules>
-                        <storeResponseAt>available_test_sessions</storeResponseAt>
-                    </postProcessing>
-                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="libraries/[library_id]/testsessions" url.inherit="false"/>
-                </item>
-                <item guid="fe150ed3-b02c-44bc-9b28-2b5cc0e6b682" action="Custom" session="s2">
-                    <command>
-                        <body>-requestMethod GET -dataType json -rawResponse true -url testServers</body>
-                    </command>
-                    <postProcessing>
-                        <storeResponseAt>test_servers_xml</storeResponseAt>
-                    </postProcessing>
-                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" rawResponse="true" rawResponse.inherit="false" url="testServers" url.inherit="false"/>
-                </item>
-                <item guid="7c492162-75ef-47b5-abf5-7b8330f143bd" action="close" session="s2">
+                    <nestedSteps>
+                        <item guid="ded527d1-8164-4c34-9d16-7df3e062b7d4" action="GET" session="s1">
+                            <command>
+                                <body>velocity/api/reservation/v21/reservation/[reservation_id]/resources</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>//items/item[name=&quot;TAS&quot;]/inventoryResourceId</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>resource_id</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="velocity/api/reservation/v21/reservation/[reservation_id]/resources" action.inherit="false"/>
+                        </item>
+                        <item guid="aa20cae5-85ad-4007-ac4d-5ecb7c0e71af" action="GET" session="s1">
+                            <command>
+                                <body>velocity/api/inventory/v18/device/[resource_id]</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>//properties/item[name = &quot;Hostname&quot;]/value</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>tas_name</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>//properties/item[name = &quot;username&quot;]/value</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>tas_username</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>//properties/item[name = &quot;password&quot;]/value</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>tas_password</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.fnfr.itest.applications.webservices.restful" transferableType="com.fnfr.itest.applications.webservices.properties.restful.RESTfulInvokeProperties" action="velocity/api/inventory/v18/device/[resource_id]" action.inherit="false"/>
+                        </item>
+                        <item guid="b1ee4ffb-6e1e-4939-8f24-15b81b1b4a6b" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>not tas_name:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="a3d4f762-f8cf-47da-9bfa-9c4120100863" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_name = param(&apos;tas_name&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="68e12f12-c1c2-4551-848e-ca0e2bf9701f" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>not tas_username:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="a3d4f762-f8cf-47da-9bfa-9c4120100863" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_username = param(&apos;tas_username&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="2e3667f6-a189-4a67-94eb-2ae715788086" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>not tas_password:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="a3d4f762-f8cf-47da-9bfa-9c4120100863" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>tas_password = param(&apos;tas_password&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="37fa700b-d353-4554-bed4-15f895d46c6a" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>tas_password and tas_username and tas_name and tas_name not in ste_imported_list:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="c4429b07-4dc1-41ca-be45-ed4f470c88d9" action="open" session="landslide">
+                                    <command>
+                                        <body>application:com.spirent.itest.applications.landsliderest</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                                        <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="http://[tas_name]:8080/api" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                                            <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="[tas_username]" user.inherit="false" password.masked="false" password="[tas_password]" password.inherit="false" acceptAllCertificates="true" acceptAllCertificates.inherit="false"/>
+                                        </sessionProperties>
+                                        <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                    </applicationProperties>
+                                </item>
+                                <item guid="f975003c-d045-46b8-86f4-5c49b910d913" action="ImportTestSuite" session="landslide">
+                                    <command>
+                                        <body>-filePath [ste_file] -library [library_name] -suts Clear</body>
+                                    </command>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>success</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="assert">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                        <expression>str(value) == &quot;true&quot;</expression>
+                                                        <actionsWhenTrue>
+                                                            <item actionId="DeclareExecutionIssue">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                                    <message>Test Suite Uploaded and Imported to &quot;[tas_name]&quot; - [library_name]</message>
+                                                                </actionProperties>
+                                                            </item>
+                                                        </actionsWhenTrue>
+                                                        <actionsWhenFalse>
+                                                            <item actionId="FailTest">
+                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                            <item actionId="DeclareExecutionIssue">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                    <message>Cannot import ste - click here to see error</message>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="Eval">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                    <statement>ste_url = &quot;&quot;</statement>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="SkipRemainingRules">
+                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                        </actionsWhenFalse>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//url</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>ste_url</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="ImportTestSuite" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" filePath="[ste_file]" filePath.inherit="false" library="[library_name]" library.inherit="false"/>
+                                </item>
+                                <item guid="8e2a711c-4e1b-42b3-92ef-48e1f6a6c895" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ste_url:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="3792ad20-ba3a-41d2-923b-52c2c0f6fb3d" action="eval" skip="true" useFieldsInCommand="false">
+                                            <command>
+                                                <body> ste_url = ste_url[ste_url.index(&apos;testSuites/&apos;):];print( ste_url)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="38200c3f-848e-4df2-afdd-bd6b42fbafa9" action="Custom" session="landslide">
+                                            <command>
+                                                <body>-requestMethod DELETE -dataType json -url [ste_url]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" requestMethod="DELETE" requestMethod.inherit="false" url="[ste_url]" url.inherit="false"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="eec10c38-c38c-4210-b284-33e99515070e" action="close" session="landslide">
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="d1eb8d4d-34ce-4b34-b0d9-4dce541226d2" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ste_imported_list.append(not tas_name)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
@@ -3203,179 +3451,54 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                 <item name="reservation_id">
                     <isMandatory>true</isMandatory>
                 </item>
-                <item name="ls_testsession_name">
+                <item name="ste_imported_list">
                     <isMandatory>true</isMandatory>
                 </item>
             </arguments>
         </item>
-        <item name="get_library_id" isPublic="true">
+        <item name="update_testdata" isPublic="true">
             <steps>
-                <item guid="e45a8e2e-df67-4996-a3fb-9f26b50d91e8" action="eval" useFieldsInCommand="false">
+                <item guid="5c6ac224-453a-4340-ab1d-269da3e03176" action="if" useFieldsInCommand="false">
                     <command>
-                        <body>testcase_name = ls_testsession_name;print(testcase_name)</body>
-                    </command>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="69c797d7-7735-4712-8db6-88642d72e0b3" action="eval" useFieldsInCommand="false">
-                    <command>
-                        <body>library_id = &quot;&quot;</body>
-                    </command>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="13385850-7c6c-41aa-aaec-e20b944b2cba" action="comment" useFieldsInCommand="false">
-                    <command>
-                        <body>Get test type</body>
+                        <body>library_name:</body>
                     </command>
                     <nestedSteps>
-                        <item guid="63500cce-a391-41d6-a8f3-62c72149e9b5" action="eval" useFieldsInCommand="false">
+                        <item guid="3f3ac999-f290-426a-899c-50dda9729d1a" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>is_cp_pf = &quot;-CP_&quot; in testcase_name or &quot;-CP-&quot; in testcase_name or &quot;-PF_&quot; in testcase_name or &quot;-PF-&quot; in testcase_name</body>
+                                <body>source = test_data[test_data.index(&apos;get_library_id&apos;): test_data.index(&apos;get_library_id&apos;) + 135];print(source)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
-                        <item guid="a6a93ca9-ee40-4912-b2cf-9c79a8c7b31a" action="eval" useFieldsInCommand="false">
+                        <item guid="1e1dfdcd-3cab-4c6b-930f-da55a01e5d8d" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>is_cusa_test = &quot;-CUSA-&quot; in testcase_name or &quot;-CUSA_&quot; in testcase_name</body>
+                                <body>replacement = source.replace(&apos;()&apos;, &quot;(libraryName=&apos;{0}&apos;)&quot;).format(library_name);print(replacement)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
-                        <item guid="0586fac4-15be-4dc9-b1a5-4388acea4577" action="eval" useFieldsInCommand="false">
+                        <item guid="127b6cd9-6d7e-4527-a844-ee1efb8e2a2c" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>is_compliance = &quot;-CO_&quot; in testcase_name or &quot;-CO-&quot; in testcase_name</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                        <item guid="0387e78a-35bf-4e9d-b537-2923fcb6435a" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>is_dusa_test = &quot;-DUSA-&quot; in testcase_name or &quot;-DUSA_&quot; in testcase_name</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                        <item guid="5371c12d-b55d-4104-bb56-355127ff12cd" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>is_security = testcase_name.startswith(&quot;S-&quot;)</body>
+                                <body>test_data = test_data.replace(source, replacement);print(test_data)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="2097243f-11b6-4d1e-96e4-39e514f7d0f6" action="if" useFieldsInCommand="false">
+                <item guid="6e071e5f-837b-4210-96bd-916cecc2d57a" action="writeFile" useFieldsInCommand="false">
                     <command>
-                        <body>is_cusa_test and is_cp_pf:</body>
+                        <body>[test_path] [test_data]</body>
                     </command>
-                    <nestedSteps>
-                        <item guid="5c049291-55d3-4e68-80d2-42768bd37560" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/ORAN_CU_Capacity_And_Performance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="9d3dcd7e-74d3-4ff6-b47b-d0cdc2429ad7" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_cusa_test and is_compliance:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="818d6628-6cfe-4202-ac3e-5d2156054a57" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/ORAN_CU_Compliance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="9c5c69ac-c997-4799-90cf-34b4693421e8" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_dusa_test and is_cp_pf:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="7ce66046-1f21-4ae7-a2e3-96123a2b0d1a" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/ORAN_DU_Capacity_And_Performance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="520efefe-2375-4c8e-8024-2571f3b62168" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_dusa_test and is_compliance:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="e327bcb6-5f38-478f-8c8c-573eac274b71" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/ORAN_DU_Compliance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="9c2398ae-d852-44a6-8ca2-a851a27f50ba" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_security:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="2362aab2-c7c9-46e2-a3b8-1a0c2a00b4b8" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/Security&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="0cc007b3-83b6-4100-9a25-8fbbac6914e3" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_cp_pf:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="86f2ec38-aceb-4521-9a70-c40990eb3e01" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/Capacity_And_Performance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="94dcc96f-a04f-418a-87bb-fe7e17e9b252" action="elif" useFieldsInCommand="false">
-                    <command>
-                        <body>is_compliance:</body>
-                    </command>
-                    <nestedSteps>
-                        <item guid="463cd728-60be-47cb-b050-e81d56c95e57" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>library_id = param(&apos;Official_Library_IDs/Compliance&apos;)</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                    </nestedSteps>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="91408df6-9da7-43b0-bb80-0c2998f03900" action="comment" useFieldsInCommand="false">
-                    <command>
-                        <body>// TODO for ORAN E2E and ORAN RIC</body>
-                    </command>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
-                <item guid="a5ebf022-a51e-49a6-8fbf-dcabadcbef34" action="return">
-                    <command>
-                        <body>[library_id]</body>
-                    </command>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.WriteFilePropertyGroup">
+                        <appendMode>Overwrite</appendMode>
+                    </applicationProperties>
                 </item>
             </steps>
-            <multilineDescription>Auto-generates the official library ID based on the test name.</multilineDescription>
             <arguments>
-                <item name="ls_testsession_name">
+                <item name="library_name"/>
+                <item name="test_path">
                     <isMandatory>true</isMandatory>
                 </item>
+                <item name="test_data"/>
             </arguments>
         </item>
     </procedures>
