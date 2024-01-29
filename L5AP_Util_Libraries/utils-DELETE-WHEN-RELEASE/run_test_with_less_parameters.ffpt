@@ -1,11 +1,28 @@
 <?xml version="1.0"?>
-<ParameterTree version="9.5.0.202312192015">
+<ParameterTree version="9.5.0.202401240823">
     <parameters escape="true">
         <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-            <test_sequencer pt:description="tas_name:landslide-tas2.spirenteng.com;ts_name:ac-landslide-kvm-ts1a+ac-landslide-kvm-ts1b;ports:2,3,4+2,3,4;routing;optimistic_mode;rnh_mode/routing">ports:2,3,4+2,3,4;optimistic_mode;routing</test_sequencer>
+            <test_sequencer>
+                <param1>
+                    <tas_name pt:description="TAS host name">landslide-tas2.spirenteng.com</tas_name>
+                    <ts_name pt:description="Test Server name(s) - The following order of TS and parameter files will be assigned. Example: ac-landslide-kvm-ts1a;ac-landslide-kvm-ts1b"/>
+                    <ports pt:description="Test Server port(s). Example: 2,3;2,3,4">2,3,4;5,6,7</ports>
+                    <routing pt:datatype="BOOLEAN" pt:description="Enable routing - auto using kvm if does not specify ts_name">false</routing>
+                    <optimistic_mode pt:datatype="BOOLEAN" pt:description="Enable optimistic mode - for CP, PF tests">false</optimistic_mode>
+                    <rnh_mode pt:datatype="BOOLEAN" pt:description="Remote Network Host mode">false</rnh_mode>
+                </param1>
+                <param2>
+                    <tas_name pt:description="TAS host name">landslide-tas3.spirenteng.com</tas_name>
+                    <ts_name pt:description="Test Server name(s) - The following order of TS and parameter files will be assigned. Example: ac-landslide-kvm-ts1a;ac-landslide-kvm-ts1b"/>
+                    <ports pt:description="Test Server port(s). Example: 2,3;2,3,4"/>
+                    <routing pt:datatype="BOOLEAN" pt:description="Enable routing - auto using kvm if does not specify ts_name">true</routing>
+                    <optimistic_mode pt:datatype="BOOLEAN" pt:description="Enable optimistic mode - for CP, PF tests">false</optimistic_mode>
+                    <rnh_mode pt:datatype="BOOLEAN" pt:description="Remote Network Host mode">false</rnh_mode>
+                </param2>
+            </test_sequencer>
             <specified_tests>
-                <param1>I-AMF-3-PF-UE_Initial_Registration-5G_AKA-SUCI-NullEncr</param1>
-                <param2>S-AMF-4-SA_GutiAllocationAmfInitialRegistration</param2>
+                <param1/>
+                <param2/>
                 <param3/>
             </specified_tests>
         </parameters>

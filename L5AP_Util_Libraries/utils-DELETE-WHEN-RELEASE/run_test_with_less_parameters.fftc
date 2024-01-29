@@ -17,7 +17,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <tc_dir pt:description="Test case location or folder.">project://ai_LS_5G/testcases/</tc_dir>
                     <tas_name pt:description="TAS host name">landslide-tas2.spirenteng.com</tas_name>
                     <tas_username pt:description="TAS user name">sms</tas_username>
-                    <tas_password pt:description="TAS password" pt:mask="true">CaK+mWSFs84=</tas_password>
+                    <tas_password pt:description="TAS password" pt:mask="true">R4CPLwlDFA4Jor6ZZIWzzg==</tas_password>
                     <ts_name pt:description="Test Server name(s) - The following order of TS and parameter files will be assigned. Example: ac-landslide-kvm-ts1a;ac-landslide-kvm-ts1b"/>
                     <ports pt:description="Test Server port(s). Example: 2,3;2,3,4"/>
                     <routing pt:datatype="BOOLEAN" pt:description="Enable routing - auto using kvm if does not specify ts_name">false</routing>
@@ -26,9 +26,9 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <parameter_key_value pt:description="Additional Parameter key value for specified tests, seperated by ;. Example: TC_parameters/Session_Capacity=10"/>
                     <include_rnh_mode pt:datatype="BOOLEAN" pt:description="Include Remote Network Host mode">true</include_rnh_mode>
                     <topology_reserve_timeout pt:datatype="INTEGER" pt:description="Estimated wait time for reservation success">180</topology_reserve_timeout>
-                    <topology_name_or_id pt:description="Specified Velocity Topology name"/>
+                    <topology_name_or_id pt:description="Specified Velocity Topology name">5GC-5GC-b2b-B-2TS</topology_name_or_id>
                     <topology_local_folder pt:description="Local topology folder that imported from Velocity">topologies</topology_local_folder>
-                    <tas_library_name pt:description="TAS library name or ID"/>
+                    <tas_library_name pt:description="TAS library name"/>
                     <ste_file pt:description="STE file location. Example: D:/clister/5gc-aap - ste/5gc-r15/I-CUSA-66-CO_F1CplaneGnbDuConfigUpdateNrSaCellMod.ste"/>
                 </parameters>
             </parameters>
@@ -214,15 +214,46 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
-                        <item guid="c7d3c965-3823-4b07-8917-e241516d8d2e" action="if" useFieldsInCommand="false">
+                        <item guid="470e5b17-af4b-4105-a304-99f71aa795cd" action="if" useFieldsInCommand="false">
                             <command>
                                 <body>test_sequencer:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="149cbac3-c02b-44cb-9a63-8aa23f7484e0" action="eval" useFieldsInCommand="false">
+                                <item guid="05719975-2630-41fb-baa2-9a44ae8fd9be" action="if" useFieldsInCommand="false">
                                     <command>
-                                        <body>sequencer_parts = test_sequencer.split(&apos;/&apos;);print(sequencer_parts)</body>
+                                        <body>isinstance(test_sequencer, (list, tuple)):</body>
                                     </command>
+                                    <nestedSteps>
+                                        <item guid="b042648d-30df-4c00-a15b-b86c8f132922" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>sequencer_parts = test_sequencer</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="809ec249-9fe7-42f0-89c9-80d15e31a59e" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>is_list = True</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="248413e9-dc3f-47d3-87b8-e51c8c3eed2b" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="149cbac3-c02b-44cb-9a63-8aa23f7484e0" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>sequencer_parts = test_sequencer.split(&apos;/&apos;);print(sequencer_parts)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="3aaaddfc-fcba-4a60-9b1e-75fbd85fc0f0" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>is_list = False</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="3c29d909-e625-415d-9e1e-b7b301f5b2e4" action="for" useFieldsInCommand="false">
@@ -230,108 +261,185 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                         <body>sequencer_part in sequencer_parts:</body>
                                     </command>
                                     <nestedSteps>
-                                        <item guid="e4aab8a4-cfab-4ab3-b1d2-f269b1911ff0" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>mode_parts = sequencer_part.split(&apos;;&apos;);print(mode_parts)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="562d7ff6-faa1-4b02-81a8-a517e93935c5" action="eval" useFieldsInCommand="false">
+                                        <item guid="3036338c-1e75-4536-895c-5df1a62b2602" action="eval" useFieldsInCommand="false">
                                             <command>
                                                 <body>mode_tas_name = mode_ts_name = mode_ports = &quot;&quot;</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="73cabf02-b4a8-4505-aae0-911be0af940d" action="eval" useFieldsInCommand="false">
+                                        <item guid="dee7684d-3313-42db-aa3d-c0048591f0b6" action="eval" useFieldsInCommand="false">
                                             <command>
                                                 <body>mode_routing = mode_optimistic_mode = mode_rnh_mode = &quot;false&quot;;</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="5862de63-537e-4d03-90fa-266f5bb04231" action="for" useFieldsInCommand="false">
+                                        <item guid="551f3f1c-f0e6-4bdf-98bf-5e3291d91ae2" action="if" useFieldsInCommand="false">
                                             <command>
-                                                <body>part in mode_parts:</body>
+                                                <body>is_list:</body>
                                             </command>
                                             <nestedSteps>
-                                                <item guid="8983f1bf-f531-4e94-966d-83ad90c35fbf" action="if" useFieldsInCommand="false">
+                                                <item guid="bc41405b-ccc4-4f53-9c5c-7d9dabec0133" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>part.startswith(&apos;tas_name:&apos;):</body>
+                                                        <body>print(sequencer_part)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="f877e3eb-be6b-4c6d-a65c-230d94d2c62e" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>not isinstance(sequencer_part, (list, tuple)) or len(sequencer_part) != 6:</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
+                                                        <item guid="f76e424d-5da3-4bd2-9c29-b1e8b7ea5d95" action="message" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>mode_tas_name = part.replace(&apos;tas_name:&apos;, &apos;&apos;);print(mode_tas_name)</body>
+                                                                <body>Warning:Your input &quot;test_sequencer/item\\[[sequencer_parts.index(sequencer_part)]]&quot; doesn&apos;t match the expected format. To avoid errors, I&apos;ll use the default setting.</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <severity inherit="false">Warning</severity>
+                                                                <message inherit="false">Your input &quot;test_sequencer/item\\[[sequencer_parts.index(sequencer_part)]]&quot; doesn&apos;t match the expected format. To avoid errors, I&apos;ll use the default setting.</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="525df72e-18ae-48eb-a42a-6ccb233d3357" action="else" useFieldsInCommand="false">
+                                                    <nestedSteps>
+                                                        <item guid="68e4aaca-3f8d-43f0-b8aa-ff5962fbd71f" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_tas_name = sequencer_part[0];print(mode_tas_name)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="f78697d4-056e-46b7-98b1-a96adccc49d2" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_ts_name = sequencer_part[1];print(mode_ts_name)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="60494b0c-b09d-4c0d-a268-df49a5a238fa" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_ports = sequencer_part[2];print(mode_ports)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="31ab330e-fb35-44e0-9fff-d2459e7c1ac1" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_routing = str(sequencer_part[3]).lower();print(mode_routing)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="4482891a-7028-4549-90a5-d67eba17a461" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_optimistic_mode = str(sequencer_part[4]).lower();print(mode_optimistic_mode)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="67b5c5e1-0b87-4f9f-930a-0673c03c3ebf" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>mode_rnh_mode = str(sequencer_part[5]).lower();print(mode_rnh_mode)</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="0d475027-b3c9-43df-a94e-3c7931888eb5" action="elif" useFieldsInCommand="false">
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="f59825c5-61e3-433d-91d6-5d46bbd10b54" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="e4aab8a4-cfab-4ab3-b1d2-f269b1911ff0" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>part.startswith(&apos;ts_name:&apos;):</body>
+                                                        <body>mode_parts = sequencer_part.split(&apos;;&apos;);print(mode_parts)</body>
                                                     </command>
-                                                    <nestedSteps>
-                                                        <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
-                                                            <command>
-                                                                <body>mode_ts_name = part.replace(&apos;ts_name:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ts_name)</body>
-                                                            </command>
-                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                        </item>
-                                                    </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="f3a8dc5f-58cd-414b-b88c-e2d1d4ae9534" action="elif" useFieldsInCommand="false">
+                                                <item guid="5862de63-537e-4d03-90fa-266f5bb04231" action="for" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>part.startswith(&apos;ports:&apos;):</body>
+                                                        <body>part in mode_parts:</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="8bd7ac69-caea-4c2b-9943-bbf04960fd3e" action="eval" useFieldsInCommand="false">
+                                                        <item guid="8983f1bf-f531-4e94-966d-83ad90c35fbf" action="if" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>mode_ports = part.replace(&apos;ports:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ports)</body>
+                                                                <body>part.startswith(&apos;tas_name:&apos;):</body>
                                                             </command>
+                                                            <nestedSteps>
+                                                                <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_tas_name = part.replace(&apos;tas_name:&apos;, &apos;&apos;);print(mode_tas_name)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                    </nestedSteps>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="91562965-6a4a-45bb-be60-623b71335bad" action="elif" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>part == &apos;routing&apos;:</body>
-                                                    </command>
-                                                    <nestedSteps>
-                                                        <item guid="6846fed6-de7f-4463-84d8-701936a96feb" action="eval" useFieldsInCommand="false">
+                                                        <item guid="0d475027-b3c9-43df-a94e-3c7931888eb5" action="elif" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>mode_routing = &apos;true&apos;;</body>
+                                                                <body>part.startswith(&apos;ts_name:&apos;):</body>
                                                             </command>
+                                                            <nestedSteps>
+                                                                <item guid="e64b8f73-e07e-4cea-bbd6-a2be33306bf0" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_ts_name = part.replace(&apos;ts_name:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ts_name)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                    </nestedSteps>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="95d36d18-9d20-4c18-b89c-fafe1b255fc0" action="elif" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>part == &apos;optimistic_mode&apos;:</body>
-                                                    </command>
-                                                    <nestedSteps>
-                                                        <item guid="881ac57c-c069-4c78-b175-17dc54453cb2" action="eval" useFieldsInCommand="false">
+                                                        <item guid="f3a8dc5f-58cd-414b-b88c-e2d1d4ae9534" action="elif" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>mode_optimistic_mode = &apos;true&apos;;</body>
+                                                                <body>part.startswith(&apos;ports:&apos;):</body>
                                                             </command>
+                                                            <nestedSteps>
+                                                                <item guid="8bd7ac69-caea-4c2b-9943-bbf04960fd3e" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_ports = part.replace(&apos;ports:&apos;, &apos;&apos;).replace(&apos;+&apos;, &apos;;&apos;);print(mode_ports)</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                    </nestedSteps>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="e903eec7-b002-4d59-8c06-961b2945bfc7" action="elif" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>part == &apos;rnh_mode&apos;:</body>
-                                                    </command>
-                                                    <nestedSteps>
-                                                        <item guid="55644090-93a9-4611-8305-ec96b6a487a2" action="eval" useFieldsInCommand="false">
+                                                        <item guid="91562965-6a4a-45bb-be60-623b71335bad" action="elif" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>mode_rnh_mode = &apos;true&apos;;</body>
+                                                                <body>part == &apos;routing&apos;:</body>
                                                             </command>
+                                                            <nestedSteps>
+                                                                <item guid="6846fed6-de7f-4463-84d8-701936a96feb" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_routing = &apos;true&apos;;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="95d36d18-9d20-4c18-b89c-fafe1b255fc0" action="elif" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>part == &apos;optimistic_mode&apos;:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="881ac57c-c069-4c78-b175-17dc54453cb2" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_optimistic_mode = &apos;true&apos;;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="e903eec7-b002-4d59-8c06-961b2945bfc7" action="elif" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>part == &apos;rnh_mode&apos;:</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="55644090-93a9-4611-8305-ec96b6a487a2" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>mode_rnh_mode = &apos;true&apos;;</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
@@ -1131,6 +1239,14 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
+                                                        <item guid="5e4313ff-2cb8-4fdc-8a1f-4939246eb665" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>Information:     + [current_tc_name]</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <message inherit="false">     + [current_tc_name]</message>
+                                                            </applicationProperties>
+                                                        </item>
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -1287,7 +1403,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             </postProcessing>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="69c8e578-0e5a-48eb-b464-6d8f2493fea0" action="if" useFieldsInCommand="false">
+                                        <item guid="69c8e578-0e5a-48eb-b464-6d8f2493fea0" action="if" skip="true" useFieldsInCommand="false">
                                             <command>
                                                 <body>not ts_name:</body>
                                             </command>
@@ -1301,7 +1417,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="f2c05475-6ffd-4b44-8aee-6d895926c3d6" action="if" useFieldsInCommand="false">
+                                        <item guid="f2c05475-6ffd-4b44-8aee-6d895926c3d6" action="if" skip="true" useFieldsInCommand="false">
                                             <command>
                                                 <body>not tas_name:</body>
                                             </command>
@@ -1315,7 +1431,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="4bb2994f-d53a-4143-84c1-888eb95d5a08" action="if" useFieldsInCommand="false">
+                                        <item guid="4bb2994f-d53a-4143-84c1-888eb95d5a08" action="if" skip="true" useFieldsInCommand="false">
                                             <command>
                                                 <body>not ports:</body>
                                             </command>
@@ -3007,7 +3123,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         </item>
                         <item guid="792b54aa-51af-4ffb-aebc-eacb0b5e0d66" action="if" useFieldsInCommand="false">
                             <command>
-                                <body>time_out &lt; 0 and reservation_status != &quot;ACTIVE&quot;:</body>
+                                <body>time_out &lt; 0:</body>
                             </command>
                             <nestedSteps>
                                 <item guid="f2cc2fdf-8fb4-4be3-877d-2a073ee750e7" action="eval" useFieldsInCommand="false">
@@ -3061,6 +3177,17 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="86eca976-727a-46d2-ae3a-15f7c6262ff8" action="return">
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="c8171fc0-d548-487b-a377-7afc2a99012e" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>reservation_status != &quot;ACTIVE&quot;:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="e551081b-a721-4135-b120-cf6f1c1a6940" action="return">
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
