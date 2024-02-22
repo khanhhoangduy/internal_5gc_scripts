@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<testCase version="9.5.0.202401251837">
+<testCase version="9.5.0.202402062035">
     <general>
         <notes>Copy or move this test to &apos;ai_LS_5G&apos; project.
 Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocity to.</notes>
@@ -8,7 +8,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.5.0.202401251837">
+        <parameters version="9.5.0.202402062035">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url pt:description="Velocity URL">https://terralogic-vel.spirenteng.com/</velocity_url>
@@ -551,6 +551,32 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 <item guid="2eea871e-439c-493b-805d-d08f1561b318" action="eval" useFieldsInCommand="false">
                                     <command>
                                         <body>automation_modes.append(mode_json)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="35b6bbb4-c631-4b02-8b6b-1d46eee25cd1" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>KVM prefix</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="b2a37c00-3784-47a5-b0f2-1ad1a064c4f7" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>kvm_tas2_prefix = &quot;kvm-ts1&quot;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="2721fe5c-52ef-47e7-bdf9-58960707df27" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>kvm_tas3_prefix = &quot;kvm-ts3&quot;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="22e05822-a17d-4373-92fc-283dac37f269" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>kvm_tas4_prefix = &quot;kvm-ts41&quot;</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -2165,7 +2191,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             <nestedSteps>
                                                 <item guid="afad69b0-d6ad-4cff-b7f1-9c70e66a3f07" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>ts_names.append(&quot;kvm-ts41&quot; + item)</body>
+                                                        <body>ts_names.append(kvm_tas41_prefix + item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -2179,7 +2205,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             <nestedSteps>
                                                 <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>ts_names.append(&quot;ac-landslide-kvm-ts1&quot; +item)</body>
+                                                        <body>ts_names.append(kvm_tas2_prefix +item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
@@ -2193,7 +2219,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                             <nestedSteps>
                                                 <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>ts_names.append(&quot;landslide-kvm-ts3&quot; +item)</body>
+                                                        <body>ts_names.append(kvm_tas3_prefix +item)</body>
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
