@@ -1536,7 +1536,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 </item>
                                                 <item guid="085a7868-b3b9-4673-b1d4-4baaf0e2028c" action="call" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, routing=routing, reservation_time=reserve_time)</body>
+                                                        <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, routing=routing, reservation_time=reserve_time, kvm_tas2_prefix=kvm_tas2_prefix, kvm_tas3_prefix=kvm_tas3_prefix, kvm_tas4_prefix=kvm_tas4_prefix)</body>
                                                     </command>
                                                     <postProcessing>
                                                         <analysisRules>
@@ -3239,6 +3239,9 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <defaultValue>1800</defaultValue>
                     <isMandatory>true</isMandatory>
                 </item>
+                <item name="kvm_tas2_prefix"/>
+                <item name="kvm_tas3_prefix"/>
+                <item name="kvm_tas4_prefix"/>
             </arguments>
         </item>
         <item name="release_topology" isPublic="true">
