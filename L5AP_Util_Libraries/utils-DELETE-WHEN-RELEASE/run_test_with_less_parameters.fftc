@@ -11,11 +11,11 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <parameters version="9.5.0.202402062035">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <velocity_url pt:description="Velocity URL">https://terralogic-vel.spirenteng.com/</velocity_url>
-                    <username pt:description="Velocity user name">khoang</username>
+                    <velocity_url pt:description="Velocity URL">https://terralogic-vel.itest-dev.lwd.int.spirent.io/</velocity_url>
+                    <username pt:description="Velocity user name"/>
                     <password pt:description="Velocity password" pt:mask="true">CaK+mWSFs84=</password>
                     <tc_dir pt:description="Test case location or folder.">project://ai_LS_5G/testcases/</tc_dir>
-                    <tas_name pt:description="TAS host name">landslide-tas2.spirenteng.com</tas_name>
+                    <tas_name pt:description="TAS host name">10.71.20.167</tas_name>
                     <tas_username pt:description="TAS user name">sms</tas_username>
                     <tas_password pt:description="TAS password" pt:mask="true">R4CPLwlDFA4Jor6ZZIWzzg==</tas_password>
                     <ts_name pt:description="Test Server name(s) - The following order of TS and parameter files will be assigned. Example: ac-landslide-kvm-ts1a;ac-landslide-kvm-ts1b"/>
@@ -551,32 +551,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 <item guid="2eea871e-439c-493b-805d-d08f1561b318" action="eval" useFieldsInCommand="false">
                                     <command>
                                         <body>automation_modes.append(mode_json)</body>
-                                    </command>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                            </nestedSteps>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                        <item guid="35b6bbb4-c631-4b02-8b6b-1d46eee25cd1" action="comment" useFieldsInCommand="false">
-                            <command>
-                                <body>KVM prefix</body>
-                            </command>
-                            <nestedSteps>
-                                <item guid="b2a37c00-3784-47a5-b0f2-1ad1a064c4f7" action="eval" useFieldsInCommand="false">
-                                    <command>
-                                        <body>kvm_tas2_prefix = &quot;kvm-ts1&quot;</body>
-                                    </command>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                                <item guid="2721fe5c-52ef-47e7-bdf9-58960707df27" action="eval" useFieldsInCommand="false">
-                                    <command>
-                                        <body>kvm_tas3_prefix = &quot;kvm-ts3&quot;</body>
-                                    </command>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                                <item guid="22e05822-a17d-4373-92fc-283dac37f269" action="eval" useFieldsInCommand="false">
-                                    <command>
-                                        <body>kvm_tas4_prefix = &quot;kvm-ts41&quot;</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
@@ -1536,7 +1510,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 </item>
                                                 <item guid="085a7868-b3b9-4673-b1d4-4baaf0e2028c" action="call" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, routing=routing, reservation_time=reserve_time, kvm_tas2_prefix=kvm_tas2_prefix, kvm_tas3_prefix=kvm_tas3_prefix, kvm_tas4_prefix=kvm_tas4_prefix)</body>
+                                                        <body>reserve_topology(topology_id=topo_id_original, tas_name=tas_name, ts_name_pattern=ts_name, ts_ports=ports, routing=routing, reservation_time=reserve_time)</body>
                                                     </command>
                                                     <postProcessing>
                                                         <analysisRules>
@@ -2066,17 +2040,63 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <body>Add Tas condition</body>
                     </command>
                     <nestedSteps>
-                        <item guid="091ba9b1-840f-4908-815f-bc58bf544dc6" action="eval" useFieldsInCommand="false">
-                            <command>
-                                <body>tas_condition_suffix = &quot; AND [Hostname]=&apos;{0}&apos;&quot;</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
                         <item guid="608882ec-934f-423e-9ee5-d25ad654a31c" action="if" useFieldsInCommand="false">
                             <command>
                                 <body>tas_name:</body>
                             </command>
                             <nestedSteps>
+                                <item guid="85756fb0-9261-4e59-b2e1-57ade69ff478" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>import ipaddress</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="902793c9-b9d9-455e-953b-41a9cc6f6fb6" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>isIP = True</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="7de72d30-11bd-4fd3-ae58-4ffcae6add92" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ipaddress.ip_address(tas_name)</body>
+                                    </command>
+                                    <eventHandlers>
+                                        <item name="OnInterpreterError">
+                                            <item actionId="Eval">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                    <statement>isIP = False</statement>
+                                                </actionProperties>
+                                            </item>
+                                        </item>
+                                    </eventHandlers>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="8e90c90d-a332-4f27-90c4-36e2578f016f" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>isIP:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="c046ad67-d9d2-427e-8ba8-3e0371dfdfc6" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>tas_condition_suffix = &quot; AND [ipAddress] LIKE &apos;%{0}%&apos;&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="1796ed14-3746-41e4-8056-4ea7fd7a48e0" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="2eceb7e7-e50d-4c5d-b373-2ed82449aa76" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>tas_condition_suffix = &quot; AND [Hostname] LIKE &apos;%{0}%&apos;&quot;</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
                                 <item guid="6123a863-f5e3-4bfb-8536-942890dea50e" action="json" useFieldsInCommand="false">
                                     <command>
                                         <body>action=&apos;setJsonValue&apos;, editResponseStructure=false, documentName=&apos;condition&apos;, pathValue=&apos;{&quot;condition&quot;:&quot;&quot;,&quot;topologyResourceId&quot;:&quot;[tas_id]&quot;}&apos;</body>
@@ -2144,13 +2164,19 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <nestedSteps>
                         <item guid="7701a259-8dbd-4230-a56d-2cfe352f3629" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>ts_condition_suffix = &quot; AND [TS Name]=&apos;{0}&apos;&quot;</body>
+                                <body>ts_condition_suffix = &quot; AND [TS Name] LIKE &apos;%{0}%&apos;&quot;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                         <item guid="798cf108-fc57-44c5-b305-8ca5d83f39d7" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>ts_names = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="54f3d304-fbef-468f-9c33-445bd56a8a3f" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>routing_ts_name = &apos;kvm&apos;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -2175,58 +2201,8 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             <nestedSteps>
                                 <item guid="17901498-ca66-4a91-8d4b-04e6fefbee36" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>random_abc = random.sample(sorted({&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;}), 4)</body>
+                                        <body>ts_names = [&quot;kvm&quot;, &quot;kvm&quot;, &quot;kvm&quot;, &quot;kvm&quot;]</body>
                                     </command>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
-                                <item guid="13a8c0e4-07e2-4f47-92a6-78dad8cd9c45" action="for" useFieldsInCommand="false">
-                                    <command>
-                                        <body>item in random_abc:</body>
-                                    </command>
-                                    <nestedSteps>
-                                        <item guid="0ea8393b-0965-4032-96a4-985c3ca9b32d" action="if" useFieldsInCommand="false">
-                                            <command>
-                                                <body>tas_name ==&quot;landslide-tas41.spirenteng.com&quot;:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="afad69b0-d6ad-4cff-b7f1-9c70e66a3f07" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ts_names.append(kvm_tas41_prefix + item)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="5b9284ac-5048-443e-ac6d-b9e080256ffa" action="elif" useFieldsInCommand="false">
-                                            <command>
-                                                <body>tas_name == &quot;landslide-tas2.spirenteng.com&quot;:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ts_names.append(kvm_tas2_prefix +item)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="1cca6c11-5f10-42e7-9af3-9a691b9db6a5" action="elif" useFieldsInCommand="false">
-                                            <command>
-                                                <body>tas_name == &quot;landslide-tas3.spirenteng.com&quot;:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="5d28226a-eb7d-42af-b67c-8e96e09fcfe0" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ts_names.append(kvm_tas3_prefix +item)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                    </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
@@ -2266,7 +2242,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                         </item>
                                         <item guid="e4baebef-cbe6-419d-821d-2936405eb804" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[0]);print(modified_condition)</body>
+                                                <body>modified_condition = condition_text + ts_condition_suffix.format(routing_ts_name);print(modified_condition)</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
@@ -2417,7 +2393,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                         </item>
                                                         <item guid="07063196-4ab3-4e9a-be9c-bec1fcb40d0d" action="eval" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[i + 1]);print(modified_condition)</body>
+                                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[i+1]);print(modified_condition)</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
@@ -3239,9 +3215,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <defaultValue>1800</defaultValue>
                     <isMandatory>true</isMandatory>
                 </item>
-                <item name="kvm_tas2_prefix"/>
-                <item name="kvm_tas3_prefix"/>
-                <item name="kvm_tas4_prefix"/>
             </arguments>
         </item>
         <item name="release_topology" isPublic="true">
