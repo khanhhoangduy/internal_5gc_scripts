@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<testCase version="9.5.0.202402062035">
+<testCase version="24.3.0.202402281100">
     <general>
         <notes>Copy or move this test to &apos;ai_LS_5G&apos; project.
 Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocity to.</notes>
@@ -8,11 +8,11 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.5.0.202402062035">
+        <parameters version="24.3.0.202402281100">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <velocity_url pt:description="Velocity URL">https://terralogic-vel.itest-dev.lwd.int.spirent.io/</velocity_url>
-                    <username pt:description="Velocity user name"/>
+                    <velocity_url pt:description="Velocity URL"/>
+                    <username pt:description="Velocity user name">spirent</username>
                     <password pt:description="Velocity password" pt:mask="true">CaK+mWSFs84=</password>
                     <tc_dir pt:description="Test case location or folder.">project://ai_LS_5G/testcases/</tc_dir>
                     <tas_name pt:description="TAS host name">10.71.20.167</tas_name>
@@ -109,6 +109,18 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <item guid="3c66f43e-aa65-4798-85fc-903e7e47eb22" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>current_project_uri = current_path[:current_path.index(current_project_name) + len(current_project_name) + 1];print(current_project_uri)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="36060807-af4e-4996-8ba3-4d586b101cbc" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>current_testcase_location = info(&apos;testCaseFile&apos;, &apos;main&apos;, &apos;path&apos;);print(current_testcase_location)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="fdc901e8-5301-49e3-9bea-00dddc2e32c0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>current_folder_location = current_testcase_location[:current_testcase_location.rindex(&apos;\\\\&apos;)].replace(&quot;\\\\&quot;, &quot;/&quot;);print(current_folder_location)</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -595,8 +607,8 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                 <expression>int(value) == 200</expression>
                                                 <actionsWhenTrue>
                                                     <item actionId="DeclareExecutionIssue">
-                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
-                                                            <message>Get Topology information from Velocity [param(&apos;velocity_url&apos;)] success.</message>
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="Information">
+                                                            <message>Get Topology information from Velocity [param(&apos;velocity_url&apos;)]</message>
                                                         </actionProperties>
                                                     </item>
                                                 </actionsWhenTrue>
@@ -687,6 +699,33 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     <command>
                                         <body>topo_path = topology_local_folder + &apos;/&apos; + topo_name + &apos;.tbml&apos;;print(topo_path)</body>
                                     </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="222f0a9f-6700-4d89-aa8a-88241306566c" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>not os.path.exists(current_folder_location + &apos;/&apos; + topo_path):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="0ad4319e-23c6-43a6-b9ea-b1ccb4face83" action="continue" useFieldsInCommand="false">
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="313fce22-d514-459f-b73c-8c576af11cce" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="12e2998c-7de8-4470-a5f9-a50c6dbd9b6f" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:     + [topo_name]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">     + [topo_name]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="aef62e68-d4e7-4564-9d1c-d37eb4e5bcb3" action="eval" useFieldsInCommand="false">
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="5490f3f4-9aa3-4628-910d-3dc4257d86f5" action="eval" useFieldsInCommand="false">
@@ -1456,18 +1495,26 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                     </command>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                 </item>
-                                                <item guid="d4dca257-9fd6-4712-91ad-7cdfaaf82cbf" action="eval" useFieldsInCommand="false">
+                                                <item guid="4ce3e573-d51a-4420-904a-de837f777a4b" action="if" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>topo_tag = topo_tags[0];print(topo_tag)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                                <item guid="18814bc2-77ab-456b-9956-dcad324b29d9" action="if" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>(rnh_mode == &apos;false&apos; and topo_tag.endswith(&apos;RNH&apos;)):</body>
+                                                        <body>len(topo_tags) &gt; 0:</body>
                                                     </command>
                                                     <nestedSteps>
-                                                        <item guid="1cdf4aea-9a8c-4e01-a709-6d00e98c4a2e" action="continue" useFieldsInCommand="false">
+                                                        <item guid="d4dca257-9fd6-4712-91ad-7cdfaaf82cbf" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>topo_tag = topo_tags[0];print(topo_tag)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="18814bc2-77ab-456b-9956-dcad324b29d9" action="if" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>(rnh_mode == &apos;false&apos; and topo_tag.endswith(&apos;RNH&apos;)):</body>
+                                                            </command>
+                                                            <nestedSteps>
+                                                                <item guid="1cdf4aea-9a8c-4e01-a709-6d00e98c4a2e" action="continue" useFieldsInCommand="false">
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                     </nestedSteps>
@@ -2185,6 +2232,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                 <body>ts_name_pattern:</body>
                             </command>
                             <nestedSteps>
+                                <item guid="c4c701f5-d909-42de-9571-21ecb011011d" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ts_condition_suffix = &quot; AND [TS Name]=&apos;{0}&apos;&quot;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
                                 <item guid="8c6910d1-4f9f-483d-84a3-ec94d05f5407" action="eval" useFieldsInCommand="false">
                                     <command>
                                         <body>ts_names = ts_name_pattern.split(&quot;;&quot;) </body>
