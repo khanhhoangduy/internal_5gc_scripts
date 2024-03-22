@@ -2242,7 +2242,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                         </item>
                                         <item guid="e4baebef-cbe6-419d-821d-2936405eb804" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>modified_condition = condition_text + ts_condition_suffix.format(routing_ts_name);print(modified_condition)</body>
+                                                <body>modified_condition = condition_text + ts_condition_suffix.format(ts_names[0]);print(modified_condition)</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
