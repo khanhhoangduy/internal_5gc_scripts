@@ -11,9 +11,9 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <parameters version="24.3.0.202402281100">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <velocity_url pt:description="Velocity URL"/>
+                    <velocity_url pt:description="Velocity URL">https://10.71.20.155/</velocity_url>
                     <username pt:description="Velocity user name">spirent</username>
-                    <password pt:description="Velocity password" pt:mask="true">CaK+mWSFs84=</password>
+                    <password pt:description="Velocity password" pt:mask="true">AiRWju4XCF4yE1MRmRsaTQ==</password>
                     <tc_dir pt:description="Test case location or folder.">project://ai_LS_5G/testcases/</tc_dir>
                     <tas_name pt:description="TAS host name">10.71.20.167</tas_name>
                     <tas_username pt:description="TAS user name">sms</tas_username>
@@ -169,6 +169,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                         <item guid="1017a7af-9114-41c2-9ea9-0c514e5f4c7b" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>parameterpath_dict = dict()</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="29cc397a-e399-40d2-82bd-56a67f90f9af" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>test_resullt_dict = dict()</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -976,16 +982,24 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="992ee9e2-7f4c-48fc-8af1-635a8de69321" action="eval" useFieldsInCommand="false">
+                                                        <item guid="992ee9e2-7f4c-48fc-8af1-635a8de69321" action="eval" useFieldsInCommand="false" skippReporting="false">
                                                             <command>
-                                                                <body>data = current_file.read(); print(data)</body>
+                                                                <body>data = current_file.read();</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
-                                                        <item guid="2dac4af8-f9e2-423c-9c52-981bb7ecc46b" action="eval" useFieldsInCommand="false">
+                                                        <item guid="6bcaa376-d3d7-4b6e-aa2a-2168e7ad0db6" action="if" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>original_testcase_data[current_tc_name] = data</body>
+                                                                <body>param(&apos;tas_library_name&apos;):</body>
                                                             </command>
+                                                            <nestedSteps>
+                                                                <item guid="2dac4af8-f9e2-423c-9c52-981bb7ecc46b" action="eval" useFieldsInCommand="false">
+                                                                    <command>
+                                                                        <body>original_testcase_data[current_tc_name] = data</body>
+                                                                    </command>
+                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                </item>
+                                                            </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                         <item guid="1945609f-78ba-47c1-9a6c-33e0312b837e" action="eval" useFieldsInCommand="false">
@@ -1270,12 +1284,24 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
+                                                        <item guid="2ac927e3-50fb-45de-8ca7-48e65956719c" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>test_resullt_dict[current_tc_name] = []</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="da2d0935-eb6f-4199-8864-d541afd422c4" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>number = len(test_resullt_dict)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
                                                         <item guid="5e4313ff-2cb8-4fdc-8a1f-4939246eb665" action="message" useFieldsInCommand="false">
                                                             <command>
-                                                                <body>Information:     + [current_tc_name]</body>
+                                                                <body>Information:     [number]. [current_tc_name]</body>
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                                                <message inherit="false">     + [current_tc_name]</message>
+                                                                <message inherit="false">     [number]. [current_tc_name]</message>
                                                             </applicationProperties>
                                                         </item>
                                                     </nestedSteps>
@@ -1432,48 +1458,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                     </item>
                                                 </analysisRules>
                                             </postProcessing>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="69c8e578-0e5a-48eb-b464-6d8f2493fea0" action="if" skip="true" useFieldsInCommand="false">
-                                            <command>
-                                                <body>not ts_name:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="f1efb618-1a86-44c2-a1ac-c0ab5a5af105" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ts_name = param(&apos;ts_name&apos;)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="f2c05475-6ffd-4b44-8aee-6d895926c3d6" action="if" skip="true" useFieldsInCommand="false">
-                                            <command>
-                                                <body>not tas_name:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="9422deba-1892-4baa-ba6b-c6bb09514ae1" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>tas_name = param(&apos;tas_name&apos;)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                        <item guid="4bb2994f-d53a-4143-84c1-888eb95d5a08" action="if" skip="true" useFieldsInCommand="false">
-                                            <command>
-                                                <body>not ports:</body>
-                                            </command>
-                                            <nestedSteps>
-                                                <item guid="1c73341b-1b85-4417-8d54-884eeb87a1fa" action="eval" useFieldsInCommand="false">
-                                                    <command>
-                                                        <body>ports = param(&apos;ports&apos;)</body>
-                                                    </command>
-                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                </item>
-                                            </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
                                         <item guid="08639115-dc46-4f0c-8505-2cb92a8130d5" action="message" useFieldsInCommand="false">
@@ -1813,6 +1797,45 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             <command>
                                                                 <body>run_test(testcase_path=test_path, parameter_path=parameter_path, topology_path=topology_path, parameters=parameters)</body>
                                                             </command>
+                                                            <eventHandlers>
+                                                                <item name="OnExecRunResultMismatch">
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>      + &quot;{testcase}&quot; FAILED</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="Eval">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                            <statement>test_resullt_dict[test].append(&quot;Fail&quot;)</statement>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="FailTest">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="OnExecRunResultMatch">
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                            <message>      + &quot;{testcase}&quot; PASSED</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="Eval">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                            <statement>test_resullt_dict[test].append(&quot;Pass&quot;)</statement>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    </item>
+                                                                </item>
+                                                                <item name="OnFailedTestResult">
+                                                                    <item actionId="DeclareExecutionIssue">
+                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                            <message>There are tests that have failed.</message>
+                                                                        </actionProperties>
+                                                                    </item>
+                                                                </item>
+                                                            </eventHandlers>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
                                                         <item guid="7137f02f-7459-437d-91dd-cff75cc9d282" action="comment" useFieldsInCommand="false">
@@ -1893,6 +1916,82 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
                 <item guid="d7043035-ff46-473b-8539-d06ab27d008e" action="close" session="s1">
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ff372015-20ac-4963-ba02-06a7c1275815" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Summarize</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="bb4f5472-3430-4f33-9f8e-66a514150d95" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>idx = 1</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="d8f2c001-640b-48a5-a001-05926f87de34" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>key, value in test_resullt_dict.items():</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="47a1f554-9de0-479a-b45f-3b0dd7125a0f" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>&apos;Fail&apos; in value:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="be882065-799a-490e-85a9-c9bf6b202d12" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Error: [idx]. [key] - [value]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Error</severity>
+                                                <message inherit="false"> [idx]. [key] - [value]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="4137f18e-03cd-4f11-8cb9-db9ba060d9fe" action="elif" useFieldsInCommand="false">
+                                    <command>
+                                        <body>&apos;Pass&apos; in value:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="193b0438-f21d-4dfd-88a4-d4d2108604c1" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>OK: [idx]. [key] - [value]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">OK</severity>
+                                                <message inherit="false"> [idx]. [key] - [value]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="04a4cbd8-a191-4cb7-82cf-30f711fdc9d4" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="08475e07-be53-4c7e-a1ee-08700cf50def" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Warning: [idx]. [key] - [value]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Warning</severity>
+                                                <message inherit="false"> [idx]. [key] - [value]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="ffa03b90-1da8-4da3-b917-6e54327dd6ee" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>idx += 1</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
