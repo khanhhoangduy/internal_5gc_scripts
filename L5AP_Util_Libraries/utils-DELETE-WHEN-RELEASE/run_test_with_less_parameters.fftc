@@ -26,7 +26,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <parameter_key_value pt:description="Additional Parameter key value for specified tests, seperated by ;. Example: TC_parameters/Session_Capacity=10"/>
                     <include_rnh_mode pt:datatype="BOOLEAN" pt:description="Include Remote Network Host mode">true</include_rnh_mode>
                     <topology_reserve_timeout pt:datatype="INTEGER" pt:description="Estimated wait time for reservation success">180</topology_reserve_timeout>
-                    <topology_name_or_id pt:description="Specified Velocity Topology name"/>
+                    <topology_name_or_id pt:description="Specified Velocity Topology name">5GC-Auto-5GC-b2b-W-2TS</topology_name_or_id>
                     <topology_local_folder pt:description="Local topology folder that imported from Velocity">topologies</topology_local_folder>
                     <tas_library_name pt:description="TAS library name"/>
                     <ste_file pt:description="STE file location. Example: D:/clister/5gc-aap - ste/5gc-r15/I-CUSA-66-CO_F1CplaneGnbDuConfigUpdateNrSaCellMod.ste"/>
@@ -718,6 +718,17 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
+                                <item guid="9b6c06d7-d364-45f3-8395-33c6f4e90a86" action="elif" useFieldsInCommand="false">
+                                    <command>
+                                        <body>topology_name_or_id and topology_name_or_id != topo_name:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="1ccf8093-36dd-450c-bc7d-077ed9c21972" action="continue" useFieldsInCommand="false">
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
                                 <item guid="313fce22-d514-459f-b73c-8c576af11cce" action="else" useFieldsInCommand="false">
                                     <nestedSteps>
                                         <item guid="12e2998c-7de8-4470-a5f9-a50c6dbd9b6f" action="message" useFieldsInCommand="false">
@@ -746,17 +757,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
-                                <item guid="735d3d39-5bcb-49d2-944d-7d5f69f0028f" action="if" useFieldsInCommand="false">
-                                    <command>
-                                        <body>not topo_tags:</body>
-                                    </command>
-                                    <nestedSteps>
-                                        <item guid="e36cd5bd-ead8-434a-8e00-dc4bbc0d82f5" action="continue" useFieldsInCommand="false">
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
-                                    </nestedSteps>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                </item>
                                 <item guid="d4e7a555-81d8-4767-91f3-1e890390cc8d" action="eval" useFieldsInCommand="false">
                                     <command>
                                         <body>topologypath_dict[topo_id] = topo_path</body>
@@ -767,6 +767,17 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                     <command>
                                         <body>topology_dict[topo_id] = topo_name</body>
                                     </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="735d3d39-5bcb-49d2-944d-7d5f69f0028f" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>not topo_tags:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="e36cd5bd-ead8-434a-8e00-dc4bbc0d82f5" action="continue" useFieldsInCommand="false">
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                                 <item guid="b2e05ee9-2d34-447f-9c9b-3de0cafa048b" action="if" useFieldsInCommand="false">
