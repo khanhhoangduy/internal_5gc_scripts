@@ -1,28 +1,49 @@
 <?xml version="1.0"?>
-<testCase version="9.3.0.202303231235">
+<testCase version="9.4.0.202308191630">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.3.0.202303231235">
+        <parameters version="9.4.0.202308191630">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <repo_parent_dir pt:description="Path to folder containing 5gc-aap and 5gc-aap-ls-ste repositories">C:\\Users\\quang.vo\\Documents\\Spirent</repo_parent_dir>
-                    <current_release pt:datatype="INTEGER" pt:description="R12">12</current_release>
-                    <check_param_or_ste pt:datatype="BOOLEAN" pt:description="true: param, false: ste">true</check_param_or_ste>
+                    <current_release pt:datatype="Release">R15</current_release>
+                    <check_for pt:datatype="Type">Param</check_for>
                     <Param>
                         <file_extension>ffpt</file_extension>
-                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">3ef3e1a1..b56c936</from_to_commits>
+                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">2597a27b..HEAD</from_to_commits>
                         <repo_name>5gc-aap</repo_name>
                     </Param>
                     <STE>
                         <file_extension>ste</file_extension>
-                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">cc038e8..c89b434</from_to_commits>
+                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">d816339..HEAD</from_to_commits>
                         <repo_name>5gc-aap-ls-ste</repo_name>
                     </STE>
                 </parameters>
             </parameters>
+            <parametersTypes>
+                <item name="Type">
+                    <items>
+                        <item name="Param"/>
+                        <item name="Ste"/>
+                    </items>
+                </item>
+                <item name="Release">
+                    <items>
+                        <item name="R10"/>
+                        <item name="R11"/>
+                        <item name="R12"/>
+                        <item name="R13"/>
+                        <item name="R14"/>
+                        <item name="R15"/>
+                        <item name="R16"/>
+                        <item name="R17"/>
+                        <item name="R18"/>
+                    </items>
+                </item>
+            </parametersTypes>
         </parameters>
     </execution>
     <procedures>
@@ -48,7 +69,7 @@
                 </item>
                 <item guid="8fc6efda-0e80-43e2-84fe-47a5e1d98275" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>should_check_param = True if str(param(&quot;check_param_or_ste&quot;)).lower() == &quot;true&quot; else False</body>
+                        <body>should_check_param = param(&quot;check_for&quot;) == &quot;Param&quot;</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
@@ -222,7 +243,7 @@
                                         </item>
                                         <item guid="a7714092-ef44-470e-952a-f4f236f3abf8" action="if" useFieldsInCommand="false">
                                             <command>
-                                                <body>f&quot;5gc-r{release}&quot; == test_release:</body>
+                                                <body>f&quot;5gc-{release}&quot;.lower() == test_release:</body>
                                             </command>
                                             <nestedSteps>
                                                 <item guid="d36b03f0-482f-45e8-92ae-64f9d639762d" action="message" useFieldsInCommand="false">
@@ -278,7 +299,7 @@
                 </item>
                 <item guid="99e063c6-0575-4117-b440-55dc3f49e453" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>release = int(param(&quot;current_release&quot;))</body>
+                        <body>release = int(param(&quot;current_release&quot;)[1:])</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>

@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<testCase version="9.4.0.202308191630">
+<testCase version="9.5.0.202402062035">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.4.0.202308191630">
+        <parameters version="9.5.0.202402062035">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <tas_url>http://10.140.68.124:8080/api</tas_url>
-                    <check_number_test_session pt:datatype="BOOLEAN">false</check_number_test_session>
+                    <tas_url>http://10.71.20.167:8080/api</tas_url>
+                    <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">false</check_number_test_session>
                 </parameters>
             </parameters>
         </parameters>
@@ -33,6 +33,12 @@
                 <item guid="0de6664c-1729-43fd-a909-cad1f2c1f0d3" action="eval" useFieldsInCommand="false">
                     <command>
                         <body>import re</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="f6b5f8d9-9721-4169-a172-26dabb2b1ff5" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>total = 0</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
@@ -84,12 +90,16 @@
                                                 <query>count(mapped/yaml/document/child::node())</query>
                                             </extractorProperties>
                                         </extractorInfo>
-                                        <processorInfo ruleType="store">
-                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                <storageLocation>cp_pf_count</storageLocation>
-                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -99,7 +109,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ Capacity and Performance: [cp_pf_count] tests</message>
+                                                <message>+ Capacity and Performance: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -159,12 +169,16 @@
                                                 <query>count(mapped/yaml/document/child::node())</query>
                                             </extractorProperties>
                                         </extractorInfo>
-                                        <processorInfo ruleType="store">
-                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                <storageLocation>cu_co_count</storageLocation>
-                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -174,7 +188,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ CU Compliance: [cu_co_count] tests</message>
+                                                <message>+ CU Compliance: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -234,12 +248,16 @@
                                                 <query>count(mapped/yaml/document/child::node())</query>
                                             </extractorProperties>
                                         </extractorInfo>
-                                        <processorInfo ruleType="store">
-                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                <storageLocation>cu_cp_pf_count</storageLocation>
-                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -249,7 +267,350 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ CU Capacity and Performance: [cu_cp_pf_count] tests</message>
+                                                <message>+ CU Capacity and Performance: [value] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="24cd570e-4541-4e55-a3d7-7070b0e1f2d8" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>RIC CO</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
+                            <command>
+                                <body>-requestMethod GET -dataType json -url libraries/-517/testsessions</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>mapped/Json/testSessions/item/name</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>test_session_list</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <eventHandlers>
+                                <item name="OnNoMatchesFound">
+                                    <item actionId="Eval">
+                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                            <statement>test_session_list = []</statement>
+                                        </actionProperties>
+                                    </item>
+                                </item>
+                            </eventHandlers>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-517/testsessions" url.inherit="false"/>
+                        </item>
+                        <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>pattern = &quot;-(CO)[_-]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="9ee74675-ef90-4b29-a560-ca524a1fdc7a" action="call" useFieldsInCommand="false">
+                            <command>
+                                <body>get_test_list(pattern=pattern, test_session_list=test_session_list)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>count(mapped/yaml/document/child::node())</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ RIC Compliance: [value] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="d6e2c28b-4b7d-427f-b10a-dc4bc1c90194" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>RIC CP-PF</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
+                            <command>
+                                <body>-requestMethod GET -dataType json -url libraries/-521/testsessions</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>mapped/Json/testSessions/item/name</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>test_session_list</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-521/testsessions" url.inherit="false"/>
+                        </item>
+                        <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>pattern = &quot;-(CP|PF)[_-]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="928a6d62-3d12-45ec-a717-675fea8b5a45" action="call" useFieldsInCommand="false">
+                            <command>
+                                <body>get_test_list(pattern=pattern, test_session_list=test_session_list)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>count(mapped/yaml/document/child::node())</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ RIC Capacity and Performance: [value] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ed2067c3-4c46-4ab2-acfa-f3a1e01b829e" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>ORAN CO</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
+                            <command>
+                                <body>-requestMethod GET -dataType json -url libraries/-516/testsessions</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>mapped/Json/testSessions/item/name</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>test_session_list</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <eventHandlers>
+                                <item name="OnNoMatchesFound">
+                                    <item actionId="Eval">
+                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                            <statement>test_session_list = []</statement>
+                                        </actionProperties>
+                                    </item>
+                                </item>
+                            </eventHandlers>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-516/testsessions" url.inherit="false"/>
+                        </item>
+                        <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>pattern = &quot;-(CO)[_-]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="9ee74675-ef90-4b29-a560-ca524a1fdc7a" action="call" useFieldsInCommand="false">
+                            <command>
+                                <body>get_test_list(pattern=pattern, test_session_list=test_session_list)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>count(mapped/yaml/document/child::node())</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ ORAN Compliance: [value] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="57b7058d-7257-43d4-9366-318e2e484dbe" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>ORAN CP-PF/FN</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
+                            <command>
+                                <body>-requestMethod GET -dataType json -url libraries/-520/testsessions</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>mapped/Json/testSessions/item/name</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>test_session_list</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <eventHandlers>
+                                <item name="OnNoMatchesFound">
+                                    <item actionId="Eval">
+                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                            <statement>test_session_list = []</statement>
+                                        </actionProperties>
+                                    </item>
+                                </item>
+                            </eventHandlers>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-520/testsessions" url.inherit="false"/>
+                        </item>
+                        <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>pattern = &quot;-(CP|PF|FN)[_-]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="928a6d62-3d12-45ec-a717-675fea8b5a45" action="call" useFieldsInCommand="false">
+                            <command>
+                                <body>get_test_list(pattern=pattern, test_session_list=test_session_list)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>count(mapped/yaml/document/child::node())</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ ORAN Capacity and Performance/Functional: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -309,12 +670,16 @@
                                                 <query>count(mapped/yaml/document/child::node())</query>
                                             </extractorProperties>
                                         </extractorInfo>
-                                        <processorInfo ruleType="store">
-                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                <storageLocation>co_count</storageLocation>
-                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -324,7 +689,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ Compliance: [co_count] tests</message>
+                                                <message>+ Compliance: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -384,12 +749,16 @@
                                                 <query>count(mapped/yaml/document/child::node())</query>
                                             </extractorProperties>
                                         </extractorInfo>
-                                        <processorInfo ruleType="store">
-                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
-                                                <storageLocation>sa_count</storageLocation>
-                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
-                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
-                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -399,7 +768,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ Security: [sa_count] tests</message>
+                                                <message>+ Security: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -411,15 +780,9 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="8972697d-3b8f-466f-9f97-85136bcdac49" action="eval" useFieldsInCommand="false">
-                    <command>
-                        <body>count = int(co_count) + int(sa_count) + int(cp_pf_count) + int(cu_co_count) + int(cu_cp_pf_count);print(str(count))</body>
-                    </command>
-                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                </item>
                 <item guid="ce7117a1-7db8-474a-a214-1f505650562f" action="message" useFieldsInCommand="false">
                     <command>
-                        <body>Information:Total test items: [count]</body>
+                        <body>Information:Total test items: [total]</body>
                     </command>
                     <postProcessing>
                         <analysisRules>
@@ -441,7 +804,7 @@
                         </analysisRules>
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                        <message inherit="false">Total test items: [count]</message>
+                        <message inherit="false">Total test items: [total]</message>
                     </applicationProperties>
                 </item>
                 <item guid="baa0318d-4938-442a-815b-17950599c91d" action="close" session="s1">
@@ -484,13 +847,13 @@
                     <nestedSteps>
                         <item guid="ee4c06cd-6722-491b-8624-07b4c5b99e1d" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>print(item)</body>
+                                <body>print(item.strip())</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                         <item guid="4ea95d78-0e6b-46b0-8414-f2fd14e5cb4e" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>m = re.finditer(pattern, item);</body>
+                                <body>m = re.finditer(pattern, item.strip());</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -505,9 +868,9 @@
                                     </command>
                                     <eventHandlers>
                                         <item name="OnInterpreterError">
-                                            <item actionId="DeclareExecutionIssue">
-                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
-                                                    <message> Found [item]</message>
+                                            <item actionId="CallProcedure">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.CallProcedurePropertyGroup">
+                                                    <command>print_for_rnh(name=item)</command>
                                                 </actionProperties>
                                             </item>
                                             <item actionId="Continue">
@@ -618,6 +981,12 @@
                                                 <body>item in test_session_list:</body>
                                             </command>
                                             <nestedSteps>
+                                                <item guid="ea580aa0-e146-4c66-920d-c3d982100f66" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>print(item)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
                                                 <item guid="4fee25d4-eaab-4d8b-bafa-6dbf7b962906" action="if" useFieldsInCommand="false">
                                                     <command>
                                                         <body>item.startswith(key):</body>
@@ -662,6 +1031,32 @@
             <arguments>
                 <item name="pattern"/>
                 <item name="test_session_list"/>
+            </arguments>
+        </item>
+        <item name="print_for_rnh" isPublic="true">
+            <steps>
+                <item guid="e8b58c00-2479-46f5-8b22-1db3090104a3" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>name.strip() == &quot;RemoteNetworkHost&quot;:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="5fb64386-fb19-4ce2-a0d2-75708cf37844" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>OK:Found [name]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <severity inherit="false">OK</severity>
+                                <message inherit="false">Found [name]</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="name">
+                    <isMandatory>true</isMandatory>
+                </item>
             </arguments>
         </item>
     </procedures>
