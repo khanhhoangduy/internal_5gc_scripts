@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<testCase version="24.3.0.202402281100">
+<testCase version="24.3.0.202405082330">
     <general>
         <notes>Copy or move this test to &apos;ai_LS_5G&apos; project.
 Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocity to.</notes>
@@ -8,7 +8,7 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="24.3.0.202402281100">
+        <parameters version="24.3.0.202405082330">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <velocity_url pt:description="Velocity URL">https://10.71.20.155/</velocity_url>
@@ -1804,41 +1804,54 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                                 <message inherit="false">Run test &quot;[test]&quot;...</message>
                                                             </applicationProperties>
                                                         </item>
-                                                        <item guid="f30b9fd1-5e93-4ab5-89b3-4ef0aecefb23" action="call" useFieldsInCommand="false">
+                                                        <item guid="e94b0928-1905-40d8-82bf-84771dced3ab" action="call" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>run_test(testcase_path=test_path, parameter_path=parameter_path, topology_path=topology_path, parameters=parameters)</body>
                                                             </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="query">
+                                                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                                <query>responseLine</query>
+                                                                            </extractorProperties>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="assert">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                                <expression>str(value) == &quot;Pass&quot;</expression>
+                                                                                <actionsWhenTrue>
+                                                                                    <item actionId="DeclareExecutionIssue">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                                            <message>      + PASSED</message>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                    <item actionId="Eval">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                            <statement>test_resullt_dict[test].append(&quot;Pass&quot;)</statement>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                </actionsWhenTrue>
+                                                                                <actionsWhenFalse>
+                                                                                    <item actionId="DeclareExecutionIssue">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                                            <message>      + FAILED</message>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                    <item actionId="Eval">
+                                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                            <statement>test_resullt_dict[test].append(&quot;Fail&quot;)</statement>
+                                                                                        </actionProperties>
+                                                                                    </item>
+                                                                                    <item actionId="FailTestIfPassing">
+                                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                    </item>
+                                                                                </actionsWhenFalse>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
+                                                                    </item>
+                                                                </analysisRules>
+                                                            </postProcessing>
                                                             <eventHandlers>
-                                                                <item name="OnExecRunResultMismatch">
-                                                                    <item actionId="DeclareExecutionIssue">
-                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
-                                                                            <message>      + &quot;{testcase}&quot; FAILED</message>
-                                                                        </actionProperties>
-                                                                    </item>
-                                                                    <item actionId="Eval">
-                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
-                                                                            <statement>test_resullt_dict[test].append(&quot;Fail&quot;)</statement>
-                                                                        </actionProperties>
-                                                                    </item>
-                                                                    <item actionId="FailTest">
-                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                    </item>
-                                                                </item>
-                                                                <item name="OnExecRunResultMatch">
-                                                                    <item actionId="DeclareExecutionIssue">
-                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
-                                                                            <message>      + &quot;{testcase}&quot; PASSED</message>
-                                                                        </actionProperties>
-                                                                    </item>
-                                                                    <item actionId="Eval">
-                                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
-                                                                            <statement>test_resullt_dict[test].append(&quot;Pass&quot;)</statement>
-                                                                        </actionProperties>
-                                                                    </item>
-                                                                    <item actionId="PassTestIfNotAlreadyFailed">
-                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                                                    </item>
-                                                                </item>
                                                                 <item name="OnFailedTestResult">
                                                                     <item actionId="DeclareExecutionIssue">
                                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
@@ -2009,15 +2022,52 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
         </item>
         <item name="run_test" isPublic="true">
             <steps>
-                <item guid="482a4bfe-e21c-4a37-b090-f8e39103e4ba" action="run">
+                <item guid="7aed9757-cc25-43e5-b747-ed8314ce9ba0" action="run">
                     <command>
                         <body>[testcase_path]</body>
                     </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>TestResult</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>testResult</storageLocation>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <eventHandlers>
+                        <item name="OnExecRunResultMatch">
+                            <item actionId="PassTestIfNotAlreadyFailed">
+                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                            </item>
+                        </item>
+                        <item name="OnExecRunResultMismatch">
+                            <item actionId="FailTest">
+                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                            </item>
+                        </item>
+                    </eventHandlers>
                     <applicationProperties type="com.fnfr.svt.execution.kernel.ExecRunPropertyGroup" testbedSelection="UseSpecified">
                         <specifiedTestbed sub="true">[topology_path]</specifiedTestbed>
                         <specifiedParameters sub="true">[parameter_path]</specifiedParameters>
                         <params>[parameters]</params>
                     </applicationProperties>
+                </item>
+                <item guid="edd93428-5664-4900-b8ea-013ceccddc8c" action="return">
+                    <command>
+                        <body>[testResult]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
             <arguments>
