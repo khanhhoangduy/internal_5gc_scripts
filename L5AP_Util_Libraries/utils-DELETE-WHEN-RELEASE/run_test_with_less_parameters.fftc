@@ -938,6 +938,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
+                        <item guid="f61a4b6e-38b7-421b-9cc8-848eab14fb00" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>not_found_files = [x for x in file_name_pattern if x]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
                         <item guid="d9f2f1fa-8313-4b38-a046-593faef3aa9b" action="for" useFieldsInCommand="false">
                             <command>
                                 <body>root, subdirs, files in os.walk(walk_dir):</body>
@@ -1307,6 +1313,12 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                             </command>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                                         </item>
+                                                        <item guid="68f92441-1077-4e4f-be7e-5294dfec88e3" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>not_found_files.remove(current_tc_name)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
                                                         <item guid="5e4313ff-2cb8-4fdc-8a1f-4939246eb665" action="message" useFieldsInCommand="false">
                                                             <command>
                                                                 <body>Information:     [number]. [current_tc_name]</body>
@@ -1317,6 +1329,68 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                                                         </item>
                                                     </nestedSteps>
                                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="b2002d68-95d5-444f-be17-3419940ddacd" action="comment" useFieldsInCommand="false">
+                            <command>
+                                <body>Show the not found tests</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="9d061a12-93b1-4c7f-891b-4e134f6d884e" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>len(not_found_files) &gt; 0:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="108d0da5-3099-4bc6-818c-3ee171e15db8" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Warning:The tests were not found:</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Warning</severity>
+                                                <message inherit="false">The tests were not found:</message>
+                                            </applicationProperties>
+                                        </item>
+                                        <item guid="eb225d15-647e-4360-abcb-3f7257ad4811" action="if" useFieldsInCommand="false">
+                                            <command>
+                                                <body>&apos;number&apos; not in locals():</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="78988c42-01b8-48f4-a9cc-c5620ca95e6d" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>number = 0</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="7692f57a-f733-4b1a-946f-09df68db366f" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>tc_name in not_found_files:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="7fd7a1b3-c2ad-4c39-8a43-87b826fcbaaa" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>number += 1</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="63227f5d-aa00-4f8f-93ef-e9b06a7221ee" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Warning:     [number]. [tc_name]</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Warning</severity>
+                                                        <message inherit="false">     [number]. [tc_name]</message>
+                                                    </applicationProperties>
                                                 </item>
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -2048,11 +2122,6 @@ Create &apos;topologies&apos; folder then import all 5GC Topologies from Velocit
                     <eventHandlers>
                         <item name="OnExecRunResultMatch">
                             <item actionId="PassTestIfNotAlreadyFailed">
-                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                            </item>
-                        </item>
-                        <item name="OnExecRunResultMismatch">
-                            <item actionId="FailTest">
                                 <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                             </item>
                         </item>
