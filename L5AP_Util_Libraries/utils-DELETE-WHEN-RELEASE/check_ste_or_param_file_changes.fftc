@@ -345,7 +345,7 @@
                                             <nestedSteps>
                                                 <item guid="b5a0e64a-4b5b-4cb5-bff4-8946c34286bd" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>print(commit_id)</body>
+                                                        <body>print(&quot;https://git-ito.spirenteng.com/aap/5gc-aap/-/commit/&quot; + commit_id)</body>
                                                     </command>
                                                     <postProcessing>
                                                         <analysisRules>
