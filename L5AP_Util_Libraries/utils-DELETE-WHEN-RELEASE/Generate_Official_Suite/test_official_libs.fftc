@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
-<testCase version="9.5.0.202402062035">
+<testCase version="24.3.0.202407221413">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.5.0.202402062035">
+        <parameters version="24.3.0.202407221413">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <tas_url>http://10.71.20.167:8080/api</tas_url>
-                    <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">false</check_number_test_session>
+                    <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">true</check_number_test_session>
+                    <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">false</use_official_libs>
                 </parameters>
             </parameters>
         </parameters>
@@ -42,6 +43,39 @@
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
+                <item guid="974b7f58-d1b3-4872-8c0e-76509ad82d4c" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Get libraries</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="120b3c79-4a9e-421f-abdb-c9e05634f720" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>str(param(&apos;use_official_libs&apos;)) == &quot;true&quot;:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="f18a9c6b-bd32-452f-ac58-2d5f049dcacf" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>libs = [-511, -513, -518, -517, -521, -510]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="33b139a2-8eb2-449a-97e5-d2e39a3e9fa6" action="else" useFieldsInCommand="false">
+                            <nestedSteps>
+                                <item guid="9600ff58-d37f-4894-ab50-db6a4af229f3" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>libs = [-42, -45, -44, -47, -46, -43]</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
                 <item guid="5e3eb266-6114-4e18-9f42-c0136a6083ca" action="comment" useFieldsInCommand="false">
                     <command>
                         <body>CP PF</body>
@@ -49,7 +83,7 @@
                     <nestedSteps>
                         <item guid="796e350c-3d2d-4b64-ac25-ff529dce69ad" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-511/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[libs[0]]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -70,7 +104,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-511/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[0]]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="21f0c10b-683d-45d4-90ed-3148dfdd02bc" action="eval" useFieldsInCommand="false">
                             <command>
@@ -128,7 +162,7 @@
                     <nestedSteps>
                         <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-513/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[libs[1]]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -149,7 +183,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-513/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[1]]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
                             <command>
@@ -207,7 +241,7 @@
                     <nestedSteps>
                         <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-518/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[libs[2]]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -228,7 +262,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-518/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[2]]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
                             <command>
@@ -446,7 +480,7 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="ed2067c3-4c46-4ab2-acfa-f3a1e01b829e" action="comment" useFieldsInCommand="false">
+                <item guid="ed2067c3-4c46-4ab2-acfa-f3a1e01b829e" action="comment" skip="true" useFieldsInCommand="false">
                     <command>
                         <body>ORAN CO</body>
                     </command>
@@ -534,9 +568,9 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="57b7058d-7257-43d4-9366-318e2e484dbe" action="comment" useFieldsInCommand="false">
+                <item guid="57b7058d-7257-43d4-9366-318e2e484dbe" action="comment" skip="true" useFieldsInCommand="false">
                     <command>
-                        <body>ORAN CP-PF/FN</body>
+                        <body>ORAN CP-PF</body>
                     </command>
                     <nestedSteps>
                         <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
@@ -597,10 +631,17 @@
                                                 <actionsWhenTrue>
                                                     <item actionId="Eval">
                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
-                                                            <statement>total += int(value)</statement>
+                                                            <statement>value = int(value) + 1</statement>
                                                         </actionProperties>
                                                     </item>
                                                 </actionsWhenTrue>
+                                                <actionsWhenFalse>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>value = 1</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenFalse>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -617,6 +658,12 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="6e685eaf-b5e8-4f7e-a27f-6b2c693f1713" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>total += value</body>
+                            </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                     </nestedSteps>
@@ -782,7 +829,7 @@
                 </item>
                 <item guid="ce7117a1-7db8-474a-a214-1f505650562f" action="message" useFieldsInCommand="false">
                     <command>
-                        <body>Information:Total test items: [total]</body>
+                        <body>Information:TOTAL TEST ITEMS: [total]</body>
                     </command>
                     <postProcessing>
                         <analysisRules>
@@ -804,7 +851,7 @@
                         </analysisRules>
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                        <message inherit="false">Total test items: [total]</message>
+                        <message inherit="false">TOTAL TEST ITEMS: [total]</message>
                     </applicationProperties>
                 </item>
                 <item guid="baa0318d-4938-442a-815b-17950599c91d" action="close" session="s1">
@@ -888,7 +935,7 @@
                                 </item>
                                 <item guid="a7373a4e-5ffb-4578-bf3b-ff35f2ab1fbf" action="if" useFieldsInCommand="false">
                                     <command>
-                                        <body>str(param(&apos;check_number_test_session&apos;, &apos;true&apos;)).lower() == &apos;true&apos;:</body>
+                                        <body>str(param(&apos;check_number_test_session&apos;, &apos;false&apos;)).lower() == &apos;true&apos;:</body>
                                     </command>
                                     <nestedSteps>
                                         <item guid="d0bec76a-6eaa-464a-8ee4-97f64fda7b54" action="if" useFieldsInCommand="false">
@@ -997,11 +1044,14 @@
                                                                 <body>item.endswith(&quot;5GC&quot;) or item.endswith(&quot;SBA&quot;) or item.endswith(&quot;UP&quot;):</body>
                                                             </command>
                                                             <nestedSteps>
-                                                                <item guid="914797c3-a6cf-4a51-9b37-bfb82986b574" action="eval" useFieldsInCommand="false">
+                                                                <item guid="914797c3-a6cf-4a51-9b37-bfb82986b574" action="message" useFieldsInCommand="false">
                                                                     <command>
-                                                                        <body>print(item)</body>
+                                                                        <body>Warning:[key] has 2 test sessions. Need double check.</body>
                                                                     </command>
-                                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                        <severity inherit="false">Warning</severity>
+                                                                        <message inherit="false">[key] has 2 test sessions. Need double check.</message>
+                                                                    </applicationProperties>
                                                                 </item>
                                                             </nestedSteps>
                                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
