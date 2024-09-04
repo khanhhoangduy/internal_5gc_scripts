@@ -1,0 +1,511 @@
+<?xml version="1.0"?>
+<testCase version="24.3.0.202408140559">
+    <general>
+        <language>Python</language>
+        <xPathVersion>XPATH31</xPathVersion>
+    </general>
+    <execution>
+        <parameters version="24.3.0.202408140559">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <ste_dir pt:description="ste folder. Ex: C:\\5GC-STE\\5gc-aap-ls-ste">C:\\trung\\Spirent-5GC\\5GC-STE\\5GC-STE\\5gc-aap-ls-ste</ste_dir>
+                    <modified_ste_dir pt:description="modified ste folder. Ex: C:\\">C:\\trung\\Spirent-5GC\\moditied_ste</modified_ste_dir>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
+    <procedures>
+        <item name="main">
+            <steps>
+                <item guid="98b220bb-1d11-43f6-bf34-eb90985a330c" action="call" useFieldsInCommand="false">
+                    <command>
+                        <body>clean_unuse_ste_default_information()</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="2f553a86-f375-4bfc-9705-22fb6e9dac16" action="call" skip="true" useFieldsInCommand="false">
+                    <command>
+                        <body>move_ste_to_git_folder()</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+        <item name="clean_unuse_ste_default_information" isPublic="true">
+            <steps>
+                <item guid="b30e7170-7adc-4861-a83a-d6b9376c93a6" action="open" session="s1">
+                    <command>
+                        <body>project://di_Landslide/session_profiles/landslide_rest.ffsp</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                        <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="http://10.71.20.167:8080/api" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                            <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="sms" user.inherit="false" password.masked="true" password="R4CPLwlDFA4Jor6ZZIWzzg==" password.inherit="false"/>
+                        </sessionProperties>
+                        <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    </applicationProperties>
+                </item>
+                <item guid="56be7796-f248-4b61-88d0-d9be2ad71985" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import re</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="3ee2ae30-a838-47e2-ab5a-a87301f25f51" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Lib ste to clean</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="3e81d42e-eb5a-414e-904f-87bb4d0847b3" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>libs=[-37]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="a042cea4-c728-4856-a471-156c0e6295f3" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>ts_id to reassign (ts2a)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1875bd3e-e372-48b7-a241-29e72b4713b9" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ts_id=1</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="2b4f3e55-4720-4cf0-9fb5-ac3ce4819d4e" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Modify test on the expected test Library</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="956ac438-3ab1-4615-9a4b-0d321551076f" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>lib in libs:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="dc4994c6-12ce-4599-9b21-e9b6a1073698" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>OK: Modifying test Case in the lib: &quot;[lib]&quot;---------------------------------------------------------------------------------------------------</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <severity inherit="false">OK</severity>
+                                        <message inherit="false"> Modifying test Case in the lib: &quot;[lib]&quot;---------------------------------------------------------------------------------------------------</message>
+                                    </applicationProperties>
+                                </item>
+                                <item guid="58edfbe5-0024-4dd7-b2f7-ccfb0f1201a6" action="Custom" session="s1" skippReporting="false">
+                                    <command>
+                                        <body>-requestMethod GET -dataType json -url libraries/[lib]/testsessions</body>
+                                    </command>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>count(mapped/Json/testSessions/item/name)</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="assert">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                        <expression>int(value) &lt; 1</expression>
+                                                        <actionsWhenTrue>
+                                                            <item actionId="DeclareExecutionIssue">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                    <message> Library is empty</message>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="FailTest">
+                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                            <item actionId="Eval">
+                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                    <statement>test_session_list=&quot;&quot;</statement>
+                                                                </actionProperties>
+                                                            </item>
+                                                            <item actionId="SkipRemainingRules">
+                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                            </item>
+                                                        </actionsWhenTrue>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>mapped/Json/testSessions/item/name</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>test_session_list</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[lib]/testsessions" url.inherit="false"/>
+                                </item>
+                                <item guid="1b8558f6-81d1-4613-ac4c-74f20ddc40c8" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>str(test_session_list):</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="913e1b1b-c427-4bca-80ce-300358af28a2" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>print(test_session_list)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="db9246b7-e08a-4597-8e93-f40565edc92d" action="for" useFieldsInCommand="false">
+                                            <command>
+                                                <body>item in test_session_list:</body>
+                                            </command>
+                                            <nestedSteps>
+                                                <item guid="3e365eaa-d597-47cb-ac5e-809792b0fab4" action="Custom" session="s1" skippReporting="false">
+                                                    <command>
+                                                        <body>-requestMethod GET -dataType json -url libraries/[lib]/testsessions/[item]</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>count(mapped/Json/portCapture/item)</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="store">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                                        <storageLocation>num_ports</storageLocation>
+                                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>mapped/Json/reservePorts</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="assert">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                        <expression>str(value).lower()==&quot;true&quot;</expression>
+                                                                        <actionsWhenTrue>
+                                                                            <item actionId="Eval">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                    <statement>is_reservation=True</statement>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                        </actionsWhenTrue>
+                                                                        <actionsWhenFalse>
+                                                                            <item actionId="Eval">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                                                    <statement>is_reservation=False</statement>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                        </actionsWhenFalse>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[lib]/testsessions/[item]" url.inherit="false"/>
+                                                </item>
+                                                <item guid="a228c6d1-9ea1-4441-a03f-2b9dd10196fc" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>ports_capture=[{&quot;tsId&quot;: ts_id} for _ in range(int(num_ports))]</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="4b031a13-803f-4112-a2d5-e918cd0b7c6c" action="eval" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>ports_capture=json.dumps(ports_capture, indent=2, ensure_ascii=False);print(ports_capture)</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="8caa80f2-7594-4c9d-a764-3d28411c866d" action="json" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>action=&apos;createJson&apos;, documentName=&apos;post_data&apos;, fromFile=false, jsonString=&apos;{&quot;library&quot;:[lib],&quot;name&quot;: &quot;[item]&quot;,&quot;tsGroups&quot;:\\\\[{&quot;tsId&quot;:[ts_id]}],&quot;portCapture&quot;:[ports_capture]}&apos;</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <storeResponseAt>post_data</storeResponseAt>
+                                                        <storeResponseText>true</storeResponseText>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                        <action inherit="false">createJson</action>
+                                                        <jsonString inherit="false" sub="true">{&quot;library&quot;:[lib],&quot;name&quot;: &quot;[item]&quot;,&quot;tsGroups&quot;:\\[{&quot;tsId&quot;:[ts_id]}],&quot;portCapture&quot;:[ports_capture]}</jsonString>
+                                                        <documentName inherit="false">post_data</documentName>
+                                                    </applicationProperties>
+                                                </item>
+                                                <item guid="f3b7df7d-56e0-4816-9264-0dcfe55f958e" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>is_reservation:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="1402ebc8-0d97-4a8c-a6b0-e49b189761f7" action="json" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>action=&apos;addJsonNode&apos;, editResponseStructure=false, documentName=&apos;post_data&apos;, pathValue=&apos;{&quot;/&quot;:{&quot;reservations&quot;:\\\\[{&quot;tsId&quot;:[ts_id]}]}}&apos;</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <storeResponseAt>post_data</storeResponseAt>
+                                                                <storeResponseText>true</storeResponseText>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                                <action inherit="false">addJsonNode</action>
+                                                                <pathValue inherit="false" sub="true">{&quot;/&quot;:{&quot;reservations&quot;:\\[{&quot;tsId&quot;:[ts_id]}]}}</pathValue>
+                                                                <documentName inherit="false">post_data</documentName>
+                                                            </applicationProperties>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                                <item guid="3168cf28-71b9-4a34-b915-ddcfedcbf052" action="Custom" session="s1">
+                                                    <command>
+                                                        <body>-requestMethod POST -dataType json -requestBody [post_data] -rawResponse true -url libraries/[lib]/testsessions/[item]?action=overrideAndSaveAs</body>
+                                                    </command>
+                                                    <postProcessing>
+                                                        <analysisRules>
+                                                            <item>
+                                                                <extractorInfo extractorType="query">
+                                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                                        <query>result()</query>
+                                                                    </extractorProperties>
+                                                                </extractorInfo>
+                                                                <processorInfo ruleType="assert">
+                                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                        <expression>&quot;Test Modified&quot; in value</expression>
+                                                                        <actionsWhenTrue>
+                                                                            <item actionId="DeclareExecutionIssue">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                                                    <message>[item] Modified</message>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                            <item actionId="PassTestIfNotAlreadyFailed">
+                                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                            </item>
+                                                                        </actionsWhenTrue>
+                                                                        <actionsWhenFalse>
+                                                                            <item actionId="DeclareExecutionIssue">
+                                                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                                                    <message>[item] Not modified as expected</message>
+                                                                                </actionProperties>
+                                                                            </item>
+                                                                            <item actionId="FailTest">
+                                                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                            </item>
+                                                                        </actionsWhenFalse>
+                                                                    </ruleProperties>
+                                                                </processorInfo>
+                                                            </item>
+                                                        </analysisRules>
+                                                    </postProcessing>
+                                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" requestMethod="POST" requestMethod.inherit="false" requestBody="[post_data]" requestBody.inherit="false" rawResponse="true" rawResponse.inherit="false" url="libraries/[lib]/testsessions/[item]?action=overrideAndSaveAs" url.inherit="false"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="fb505fb3-b5f0-4597-8e17-4c230a2935a5" action="close" session="s1">
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+        <item name="move_ste_to_git_folder" isPublic="true">
+            <steps>
+                <item guid="d288829b-7d8a-44f1-bf17-58ce6ded8001" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>root_dir =param(&apos;ste_dir&apos;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="4e7a1c2d-1c93-4af2-a954-d2ad55ce6c3f" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ste_name_map= {}</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="5db7cc32-fe09-4504-a426-310f1924bfeb" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body># Get the list of directories in the root directory</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="0b2d56de-7826-41e2-af86-2b16dcc92f46" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>directories = [d for d in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, d))]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="d69820ef-fe84-4a98-82b5-e9b5a5e7dcd3" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body># Iterate through the directories</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1d497706-7285-47cf-a33e-9397ac11dd83" action="for" useFieldsInCommand="false">
+                    <command>
+                        <body>directory in directories:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="0cd3b209-ce10-4a90-a1cc-a8896aa661f9" action="if" useFieldsInCommand="false">
+                            <command>
+                                <body>directory.startswith(&apos;5gc&apos;):</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="47e804e0-0fdc-4eba-b847-7cf56b2f740d" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>directory_path = os.path.join(root_dir, directory)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="f0aac4bb-9911-46a2-9139-a15b946e4358" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ste_files = [f for f in os.listdir(directory_path) if f.endswith(&apos;.ste&apos;)]  </body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="b361e71b-d799-41d4-b013-4e8d0bd7db59" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ste_name_map[directory_path] = ste_files</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1aa12e45-7b03-47b5-97c7-e5402012d39c" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>print(ste_name_map)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="7d379899-b07f-4b64-9b40-e58143be6ff3" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>root_modified_dir = param(&apos;modified_ste_dir&apos;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="f433413f-32a5-4d7f-83d8-e00c54db3e8b" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ste_files_list = {}</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="408ac866-15a6-4dba-96d4-28dd696d3f3e" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>ste_files_list = [f for f in os.listdir(root_modified_dir) if f.endswith(&apos;.ste&apos;)]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="0663405a-a944-48d9-a76a-bf302eb4399c" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>print(ste_files_list)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="3f0c424c-e01a-4898-954b-70bb50f392a9" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>dest_dir=[]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="7e24b834-5455-4177-b38b-7da909b664d0" action="for" useFieldsInCommand="false">
+                    <command>
+                        <body>ste_name in ste_files_list:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="aceae748-22df-4bef-b223-8b88ba4c4101" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>key, value_list in ste_name_map.items():</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="5e815346-8b06-48a4-880b-242da2870374" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ste_name in  [v for v in value_list]:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="c854ef9b-3986-48b4-8d29-3b8d660f35e2" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>dest_dir.append(key)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="e9cb56af-a2fa-495a-b2bb-e108a42780e4" action="break" useFieldsInCommand="false">
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="e46089e2-65be-49b0-86bc-01fc0b2e6c3a" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import shutil</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="cb936921-fcd1-4474-8310-35b63be3ff23" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>source_dir = root_modified_dir</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="b9228a53-4bae-4b31-a2d2-298a3f20d9da" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>print(dest_dir)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="859ea445-deb1-4c94-89ec-d8d7d2098a7f" action="for" useFieldsInCommand="false">
+                    <command>
+                        <body>idx,ste in enumerate(ste_files_list):</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="289f3589-db7b-443d-944b-c52474679082" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>os.remove(os.path.join(dest_dir[idx], ste))</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="2d22b84a-592d-443c-91ba-d24a28029427" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>shutil.copy2(os.path.join(source_dir, ste), os.path.join(dest_dir[idx], ste))</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="9ef75cf3-50f2-4120-87f5-59a08bdea2ee" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information:moved [ste]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false">moved [ste]</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+    </procedures>
+</testCase>
