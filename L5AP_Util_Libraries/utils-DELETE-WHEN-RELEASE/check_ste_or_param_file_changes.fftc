@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<testCase version="9.4.0.202308191630">
+<testCase version="24.3.0.202407221413">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.4.0.202308191630">
+        <parameters version="24.3.0.202407221413">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <repo_parent_dir pt:description="Path to folder containing 5gc-aap and 5gc-aap-ls-ste repositories">C:\\Users\\quang.vo\\Documents\\Spirent</repo_parent_dir>
-                    <current_release pt:datatype="Release">R15</current_release>
+                    <current_release pt:datatype="Release">R17</current_release>
                     <check_for pt:datatype="Type">Param</check_for>
                     <Param>
                         <file_extension>ffpt</file_extension>
-                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">2597a27b..HEAD</from_to_commits>
+                        <from_to_commits pt:description="[Obsolete] git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">bbd86aab..HEAD</from_to_commits>
                         <repo_name>5gc-aap</repo_name>
                     </Param>
                     <STE>
                         <file_extension>ste</file_extension>
-                        <from_to_commits pt:description="git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">d816339..HEAD</from_to_commits>
+                        <from_to_commits pt:description="[Obsolete] git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">864d5dd..HEAD</from_to_commits>
                         <repo_name>5gc-aap-ls-ste</repo_name>
                     </STE>
                 </parameters>
@@ -41,6 +41,8 @@
                         <item name="R16"/>
                         <item name="R17"/>
                         <item name="R18"/>
+                        <item name="R19"/>
+                        <item name="R20"/>
                     </items>
                 </item>
             </parametersTypes>
@@ -103,22 +105,69 @@
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="01747ac2-acd2-4515-953a-89133ed88aeb" action="eval" useFieldsInCommand="false">
+                <item guid="43d7b448-9ccc-49eb-abd6-eb20f6840717" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>from_to_commits = param(f&quot;{param_path}/from_to_commits&quot;)</body>
+                        <body>current_release = param(&quot;current_release&quot;).lower()</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="642b5085-e495-4e78-a564-44fd13d22142" action="eval" useFieldsInCommand="false">
+                <item guid="2e936bfa-008a-4041-838a-d25a94d69240" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>ffpt_logs = repo.git.log(from_to_commits, &quot;--oneline&quot;, f&quot;*.{file_extension}&quot;);print(ffpt_logs)</body>
+                        <body>previous_release = f&quot;r{int(current_release[1:])-1}&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="15e14041-e349-4ad1-a4cf-09b004a38f0e" action="eval" responseMap="project://L5AP_Util_Libraries/response_maps/git_commit_list.ffrm" useResponseMapLibraryApplicability="false" useFieldsInCommand="false">
+                    <command>
+                        <body>commit_list = repo.git.log(f&quot;5gc-{previous_release}..5gc-{current_release}&quot;, oneline=True); print(commit_list)</body>
                     </command>
                     <postProcessing>
                         <analysisRules>
                             <item>
                                 <extractorInfo extractorType="query">
                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                        <query>//table/row/key</query>
+                                        <query>count(//table/row)</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>count</storageLocation>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query sub="true">(mapped/Tabular/list/table/row)\\[[count]]/commit_id</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>first_commit</storageLocation>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    <useResponseMapLibraryFromSession>false</useResponseMapLibraryFromSession>
+                </item>
+                <item guid="642b5085-e495-4e78-a564-44fd13d22142" action="eval" responseMap="project://L5AP_Util_Libraries/response_maps/git_commit_list.ffrm" useResponseMapLibraryApplicability="false" useFieldsInCommand="false">
+                    <command>
+                        <body>ffpt_logs = repo.git.log(f&quot;{first_commit}..HEAD&quot;, &quot;--oneline&quot;, f&quot;*.{file_extension}&quot;);print(ffpt_logs)</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query>//table/row/commit_id</query>
                                     </extractorProperties>
                                 </extractorInfo>
                                 <processorInfo ruleType="store">
@@ -133,6 +182,7 @@
                         </analysisRules>
                     </postProcessing>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    <useResponseMapLibraryFromSession>false</useResponseMapLibraryFromSession>
                 </item>
                 <item guid="c61b606d-a6d1-416b-891a-9f6d12d1ef57" action="for" useFieldsInCommand="false">
                     <command>
@@ -235,15 +285,9 @@
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="2dc9e567-a238-4e4d-a7fe-456b292797ab" action="eval" useFieldsInCommand="false">
-                                            <command>
-                                                <body>release = param(&quot;current_release&quot;)</body>
-                                            </command>
-                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                                        </item>
                                         <item guid="a7714092-ef44-470e-952a-f4f236f3abf8" action="if" useFieldsInCommand="false">
                                             <command>
-                                                <body>f&quot;5gc-{release}&quot;.lower() == test_release:</body>
+                                                <body>f&quot;5gc-{current_release}&quot;.lower() == test_release:</body>
                                             </command>
                                             <nestedSteps>
                                                 <item guid="d36b03f0-482f-45e8-92ae-64f9d639762d" action="message" useFieldsInCommand="false">
@@ -345,7 +389,7 @@
                                             <nestedSteps>
                                                 <item guid="b5a0e64a-4b5b-4cb5-bff4-8946c34286bd" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>print(&quot;https://git-ito.spirenteng.com/aap/5gc-aap/-/commit/&quot; + commit_id)</body>
+                                                        <body>print(&quot;https://git.spirent.io/aap/5gc-aap/-/commit/&quot; + commit_id)</body>
                                                     </command>
                                                     <postProcessing>
                                                         <analysisRules>

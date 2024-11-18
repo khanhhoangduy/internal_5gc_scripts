@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<testCase version="24.3.0.202407221413">
+<testCase version="24.4.0.202410280023">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="24.3.0.202407221413">
+        <parameters version="24.4.0.202410280023">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <tas_url>http://10.71.20.167:8080/api</tas_url>
+                    <tas_url>http://10.71.20.168:8080/api</tas_url>
                     <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">true</check_number_test_session>
-                    <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">false</use_official_libs>
+                    <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">true</use_official_libs>
                 </parameters>
             </parameters>
         </parameters>
@@ -50,25 +50,186 @@
                     <nestedSteps>
                         <item guid="120b3c79-4a9e-421f-abdb-c9e05634f720" action="if" useFieldsInCommand="false">
                             <command>
-                                <body>str(param(&apos;use_official_libs&apos;)) == &quot;true&quot;:</body>
+                                <body>str(param(&apos;use_official_libs&apos;)) == &quot;True&quot;:</body>
                             </command>
                             <nestedSteps>
-                                <item guid="f18a9c6b-bd32-452f-ac58-2d5f049dcacf" action="eval" useFieldsInCommand="false">
+                                <item guid="92e82a7c-54ee-4d48-8e6b-b2b7092df957" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>libs = [-511, -513, -518, -517, -521, -510]</body>
+                                        <body>cusa_id = -518</body>
                                     </command>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="dcc9a57e-ad50-4224-938e-a7111534fe7f" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>cusa_co_id = -513</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="dfdade5c-ad31-4661-a85b-52ed67220243" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>cppf_id = -511</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="3396c339-cdaa-4078-9006-43eab9465e69" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ric_co_id = -517</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="ef95596b-ab88-4857-b6fd-bc45e3da8b8e" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>ric_id = -521</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="a0584612-e018-4e64-a311-2e9c6388f870" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>co_id = -510</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="9b60f1b0-1d86-4478-b426-857ad88d5b2d" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>sa_id = -515</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="5103fa83-037a-4136-988b-081d45b1a4b9" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Information:Using Official Libs</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <message inherit="false">Using Official Libs</message>
+                                    </applicationProperties>
                                 </item>
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                         <item guid="33b139a2-8eb2-449a-97e5-d2e39a3e9fa6" action="else" useFieldsInCommand="false">
                             <nestedSteps>
-                                <item guid="9600ff58-d37f-4894-ab50-db6a4af229f3" action="eval" useFieldsInCommand="false">
+                                <item guid="93c3ad30-dff5-405a-98f2-325dbc47f22f" action="Custom" session="s1">
                                     <command>
-                                        <body>libs = [-42, -45, -44, -47, -46, -43]</body>
+                                        <body>-requestMethod GET -dataType json -url libraries</body>
                                     </command>
-                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-CUSA}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>cusa_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-CUSA-CO}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>cusa_co_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-CAPACITY}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>cppf_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-RIC-CO}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>ric_co_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-RIC}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>ric_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-CO}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>co_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
+                                                        <query>//libraries/item[name = &quot;{Z-SECURITY}&quot;]/id</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>sa_id</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries" url.inherit="false"/>
+                                </item>
+                                <item guid="2ffcacb9-22d5-4171-874a-24988272f774" action="message" useFieldsInCommand="false">
+                                    <command>
+                                        <body>Information:NOT using Official Libs</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                        <message inherit="false">NOT using Official Libs</message>
+                                    </applicationProperties>
                                 </item>
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -83,7 +244,7 @@
                     <nestedSteps>
                         <item guid="796e350c-3d2d-4b64-ac25-ff529dce69ad" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/[libs[0]]/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[cppf_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -104,7 +265,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[0]]/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[cppf_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="21f0c10b-683d-45d4-90ed-3148dfdd02bc" action="eval" useFieldsInCommand="false">
                             <command>
@@ -162,7 +323,7 @@
                     <nestedSteps>
                         <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/[libs[1]]/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[cusa_co_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -183,11 +344,11 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[1]]/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[cusa_co_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>pattern = &quot;-(CO)[_-]&quot;</body>
+                                <body>pattern = &quot;-(CO|SA)[_-]&quot;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -241,7 +402,7 @@
                     <nestedSteps>
                         <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/[libs[2]]/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[cusa_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -262,7 +423,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[libs[2]]/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[cusa_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
                             <command>
@@ -320,7 +481,7 @@
                     <nestedSteps>
                         <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-517/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[ric_co_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -350,7 +511,7 @@
                                     </item>
                                 </item>
                             </eventHandlers>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-517/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[ric_co_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
                             <command>
@@ -408,7 +569,7 @@
                     <nestedSteps>
                         <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-521/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[ric_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -429,7 +590,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-521/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[ric_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
                             <command>
@@ -487,7 +648,7 @@
                     <nestedSteps>
                         <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-516/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[...]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -517,7 +678,7 @@
                                     </item>
                                 </item>
                             </eventHandlers>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-516/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[...]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
                             <command>
@@ -676,7 +837,7 @@
                     <nestedSteps>
                         <item guid="7891790c-466c-452b-9693-8dedcfbe65bf" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-510/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[co_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -697,7 +858,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-510/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[co_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="a13ef4ca-fb71-4315-9bdd-b6c16b2d1079" action="eval" useFieldsInCommand="false">
                             <command>
@@ -755,7 +916,7 @@
                     <nestedSteps>
                         <item guid="58edfbe5-0024-4dd7-b2f7-ccfb0f1201a6" action="Custom" session="s1">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-515/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/[sa_id]/testsessions</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
@@ -776,7 +937,7 @@
                                     </item>
                                 </analysisRules>
                             </postProcessing>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-515/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[sa_id]/testsessions" url.inherit="false"/>
                         </item>
                         <item guid="b869b21c-f559-4a04-813f-9908b5184d46" action="eval" useFieldsInCommand="false">
                             <command>
@@ -1061,6 +1222,39 @@
                                                 </item>
                                             </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="afa7d770-d7bb-4011-a8c7-11a22ebdf048" action="elif" useFieldsInCommand="false">
+                                    <command>
+                                        <body>val == 4:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="5b6dfaa1-b784-42aa-b774-37e06ed9e0d0" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Information:4 test session item: [key]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <message inherit="false">4 test session item: [key]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="6cbf0e7d-fd13-440a-beb2-da2243e0beec" action="elif" useFieldsInCommand="false">
+                                    <command>
+                                        <body>val &gt; 4:</body>
+                                    </command>
+                                    <nestedSteps>
+                                        <item guid="e5ca6120-e879-4079-90e4-39d14ae4787e" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Warning:Test has more than 4 test sessions: [key].</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Warning</severity>
+                                                <message inherit="false">Test has more than 4 test sessions: [key].</message>
+                                            </applicationProperties>
                                         </item>
                                     </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
