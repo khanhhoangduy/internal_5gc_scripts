@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
-<testCase version="24.4.0.202410280023">
+<testCase version="25.1.0.202504041635">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="24.4.0.202410280023">
+        <parameters version="25.1.0.202504041635">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <tas_url>http://10.71.20.168:8080/api</tas_url>
+                    <tas_url>http://10.71.20.167:8080/api</tas_url>
                     <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">true</check_number_test_session>
                     <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">true</use_official_libs>
+                    <libs_prefix pt:description="The lib prefix in case not using official libraries">G</libs_prefix>
                 </parameters>
             </parameters>
         </parameters>
@@ -108,6 +109,12 @@
                         </item>
                         <item guid="33b139a2-8eb2-449a-97e5-d2e39a3e9fa6" action="else" useFieldsInCommand="false">
                             <nestedSteps>
+                                <item guid="028be81e-d53a-4344-8d4a-c08ac9ee8464" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>libs_prefix = param(&apos;libs_prefix&apos;)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
                                 <item guid="93c3ad30-dff5-405a-98f2-325dbc47f22f" action="Custom" session="s1">
                                     <command>
                                         <body>-requestMethod GET -dataType json -url libraries</body>
@@ -117,7 +124,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-CUSA}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CUSA}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -132,7 +139,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-CUSA-CO}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CUSA-CO}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -147,7 +154,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-CAPACITY}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CAPACITY}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -162,7 +169,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-RIC-CO}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-RIC-CO}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -177,7 +184,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-RIC}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-RIC}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -192,7 +199,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-CO}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CO}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -207,7 +214,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query>//libraries/item[name = &quot;{Z-SECURITY}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-SECURITY}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -941,7 +948,7 @@
                         </item>
                         <item guid="b869b21c-f559-4a04-813f-9908b5184d46" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>pattern = &quot;-(SA|VA)[_-]&quot;</body>
+                                <body>pattern = &quot;-(SA|VA|FZ)[_-]&quot;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
