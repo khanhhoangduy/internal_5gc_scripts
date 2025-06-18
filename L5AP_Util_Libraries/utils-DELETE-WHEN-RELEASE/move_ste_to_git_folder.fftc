@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<testCase version="24.3.0.202407221413">
+<testCase version="25.1.0.202504041635">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="24.3.0.202407221413">
+        <parameters version="25.1.0.202504041635">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <ste_dir pt:description="Local folder saving current STE GIT repo. Ex: C:\\5GC-STE\\5gc-aap-ls-ste">C:\\Users\\quang.vo\\Documents\\Spirent\\5gc-aap-ls-ste</ste_dir>
-                    <modified_ste_dir pt:description="Local folder saving newly updated STEs. Ex: C:\\">C:\\Users\\quang.vo\\Desktop\\ste</modified_ste_dir>
+                    <modified_ste_dir pt:description="Local folder saving newly updated STEs. Ex: C:\\">C:\\Users\\quang.vo\\Desktop</modified_ste_dir>
                 </parameters>
             </parameters>
         </parameters>
@@ -256,9 +256,8 @@
                                                                 <storeResponseAt>post_data</storeResponseAt>
                                                                 <storeResponseText>true</storeResponseText>
                                                             </postProcessing>
-                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup">
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.json.JsonPropertiesGroup" pathValue="{&quot;/&quot;:{&quot;reservations&quot;:\\[{&quot;tsId&quot;:[ts_id]}]}}" pathValue.inherit="false" pathValue.sub="true">
                                                                 <action inherit="false">addJsonNode</action>
-                                                                <pathValue inherit="false" sub="true">{&quot;/&quot;:{&quot;reservations&quot;:\\[{&quot;tsId&quot;:[ts_id]}]}}</pathValue>
                                                                 <documentName inherit="false">post_data</documentName>
                                                             </applicationProperties>
                                                         </item>
@@ -409,6 +408,16 @@
                     <command>
                         <body>print(ste_name_map)</body>
                     </command>
+                    <postProcessing>
+                        <storeResponseAt>all_stes</storeResponseAt>
+                        <storeResponseText>true</storeResponseText>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="23a019a9-f17f-4fd5-8da1-3eebc3aae168" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>all_stes = all_stes.replace(&apos; &apos;, &apos;\\n&apos;)</body>
+                    </command>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
                 <item guid="7d379899-b07f-4b64-9b40-e58143be6ff3" action="eval" useFieldsInCommand="false">
@@ -461,87 +470,169 @@
                         <body>ste_name in modified_ste_list:</body>
                     </command>
                     <nestedSteps>
-                        <item guid="aceae748-22df-4bef-b223-8b88ba4c4101" action="for" useFieldsInCommand="false">
+                        <item guid="d9153d5d-446c-4280-b270-dd5376a8b72a" action="comment" useFieldsInCommand="false">
                             <command>
-                                <body>path, ste_list in ste_name_map.items():</body>
+                                <body>Rename</body>
                             </command>
                             <nestedSteps>
-                                <item guid="5e815346-8b06-48a4-880b-242da2870374" action="if" useFieldsInCommand="false">
+                                <item guid="ec28c101-31f3-43fc-b005-e937f8f8e5af" action="eval" useFieldsInCommand="false">
                                     <command>
-                                        <body>ste_name in  [ste for ste in ste_list]:</body>
+                                        <body>import re</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="9b1d5ae0-ac40-4fca-b6bf-455558c57ef2" action="call" useFieldsInCommand="false">
+                                    <command>
+                                        <body>get_test_short_name(test_name=ste_name)</body>
+                                    </command>
+                                    <postProcessing>
+                                        <storeResponseAt>short_ste_name</storeResponseAt>
+                                        <storeResponseText>true</storeResponseText>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="f29e1ffe-2e6a-4133-9002-11a26a91e274" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>pattern = f&quot;&apos;({short_ste_name}.*.ste)&apos;&quot;</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="f7e7c2b9-03fb-4ad0-b77a-d36b1d277437" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>match = re.search(pattern, all_stes)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                                <item guid="08e5aad4-25b2-4c23-bea2-e86e408d59f8" action="if" useFieldsInCommand="false">
+                                    <command>
+                                        <body>match:</body>
                                     </command>
                                     <nestedSteps>
-                                        <item guid="d2d730a6-b325-4d43-85a5-f61f6405b970" action="eval" useFieldsInCommand="false">
+                                        <item guid="dbf8b563-1a3a-4c0e-b22a-9f8e62d80f57" action="eval" useFieldsInCommand="false">
+                                            <command>
+                                                <body>full_ste_name = match.group(1)</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                        </item>
+                                        <item guid="a5996bde-505e-4aec-bc83-2f0437835418" action="eval" useFieldsInCommand="false">
                                             <command>
                                                 <body>src_file_path = os.path.join(root_modified_dir, ste_name);print(src_file_path)</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="47f39e7d-efd3-4dbd-adb1-7a08ef245a2c" action="eval" useFieldsInCommand="false">
+                                        <item guid="dce63c88-a430-411b-8bfe-bcd9fe357b5b" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>dst_file_path = os.path.join(path, ste_name);print(dst_file_path)</body>
+                                                <body>new_src_file_path = os.path.join(root_modified_dir, full_ste_name);print(new_src_file_path)</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="94e6583c-4d8b-4ad0-81ba-ff567285311b" action="eval" useFieldsInCommand="false">
+                                        <item guid="941ae6aa-3bd7-483f-9c32-b60cb8bdbc92" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>os.remove(dst_file_path)</body>
+                                                <body>import os</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="f572763a-603b-4295-be21-7235b7555636" action="eval" useFieldsInCommand="false">
+                                        <item guid="1dadfee1-d87d-47c9-b873-52013846b0ee" action="eval" useFieldsInCommand="false">
                                             <command>
-                                                <body>shutil.copy2(src_file_path, dst_file_path)</body>
+                                                <body>os.rename(src_file_path, new_src_file_path)</body>
                                             </command>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="79aa1c8c-8dac-40b2-985e-9e6ed5ac3776" action="message" useFieldsInCommand="false">
+                                        <item guid="9aa8d146-aa02-43e6-92c9-75419708e857" action="for" useFieldsInCommand="false">
                                             <command>
-                                                <body>OK:Copied &quot;[src_file_path]&quot; to &quot;[dst_file_path]&quot;</body>
+                                                <body>path, ste_list in ste_name_map.items():</body>
                                             </command>
-                                            <postProcessing>
-                                                <analysisRules>
-                                                    <item>
-                                                        <extractorInfo extractorType="none">
-                                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
-                                                        </extractorInfo>
-                                                        <processorInfo ruleType="assert">
-                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
-                                                                <expression>True</expression>
-                                                                <actionsWhenTrue>
-                                                                    <item actionId="PassTestIfNotAlreadyFailed">
-                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                            <nestedSteps>
+                                                <item guid="5e815346-8b06-48a4-880b-242da2870374" action="if" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>full_ste_name in [ste for ste in ste_list]:</body>
+                                                    </command>
+                                                    <nestedSteps>
+                                                        <item guid="47f39e7d-efd3-4dbd-adb1-7a08ef245a2c" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>dst_file_path = os.path.join(path, full_ste_name);print(dst_file_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="94e6583c-4d8b-4ad0-81ba-ff567285311b" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>os.remove(dst_file_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="f572763a-603b-4295-be21-7235b7555636" action="eval" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>shutil.copy2(new_src_file_path, dst_file_path)</body>
+                                                            </command>
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                        <item guid="79aa1c8c-8dac-40b2-985e-9e6ed5ac3776" action="message" useFieldsInCommand="false">
+                                                            <command>
+                                                                <body>OK:Copied &quot;[new_src_file_path]&quot; to &quot;[dst_file_path]&quot;</body>
+                                                            </command>
+                                                            <postProcessing>
+                                                                <analysisRules>
+                                                                    <item>
+                                                                        <extractorInfo extractorType="none">
+                                                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                                                        </extractorInfo>
+                                                                        <processorInfo ruleType="assert">
+                                                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                                                <expression>True</expression>
+                                                                                <actionsWhenTrue>
+                                                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                                                    </item>
+                                                                                </actionsWhenTrue>
+                                                                            </ruleProperties>
+                                                                        </processorInfo>
                                                                     </item>
-                                                                </actionsWhenTrue>
-                                                            </ruleProperties>
-                                                        </processorInfo>
-                                                    </item>
-                                                </analysisRules>
-                                            </postProcessing>
-                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                                <severity inherit="false">OK</severity>
-                                                <message inherit="false">Copied &quot;[src_file_path]&quot; to &quot;[dst_file_path]&quot;</message>
-                                            </applicationProperties>
+                                                                </analysisRules>
+                                                            </postProcessing>
+                                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                                <severity inherit="false">OK</severity>
+                                                                <message inherit="false">Copied &quot;[new_src_file_path]&quot; to &quot;[dst_file_path]&quot;</message>
+                                                            </applicationProperties>
+                                                        </item>
+                                                        <item guid="e9cb56af-a2fa-495a-b2bb-e108a42780e4" action="break" useFieldsInCommand="false">
+                                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                        </item>
+                                                    </nestedSteps>
+                                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                </item>
+                                            </nestedSteps>
+                                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
-                                        <item guid="e9cb56af-a2fa-495a-b2bb-e108a42780e4" action="break" useFieldsInCommand="false">
+                                        <item guid="2abafa1e-170a-4437-bac4-e547e99b41bf" action="else" useFieldsInCommand="false">
+                                            <nestedSteps>
+                                                <item guid="f7c5e8ac-12a8-4b8e-b710-b77862443801" action="message" useFieldsInCommand="false">
+                                                    <command>
+                                                        <body>Warning:Cannot find &quot;[ste_name]&quot; in any sub-directories for &quot;[root_dir]&quot;</body>
+                                                    </command>
+                                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                        <severity inherit="false">Warning</severity>
+                                                        <message inherit="false">Cannot find &quot;[ste_name]&quot; in any sub-directories for &quot;[root_dir]&quot;</message>
+                                                    </applicationProperties>
+                                                </item>
+                                            </nestedSteps>
                                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                         </item>
                                     </nestedSteps>
                                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
-                            </nestedSteps>
-                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
-                        </item>
-                        <item guid="3fe01d1f-23b3-41b2-86ff-e387c36664a2" action="else" useFieldsInCommand="false">
-                            <nestedSteps>
-                                <item guid="f7c5e8ac-12a8-4b8e-b710-b77862443801" action="message" useFieldsInCommand="false">
-                                    <command>
-                                        <body>Warning:Cannot find &quot;[ste_name]&quot; in any sub-directories for &quot;[root_dir]&quot;</body>
-                                    </command>
-                                    <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                        <severity inherit="false">Warning</severity>
-                                        <message inherit="false">Cannot find &quot;[ste_name]&quot; in any sub-directories for &quot;[root_dir]&quot;</message>
-                                    </applicationProperties>
+                                <item guid="6edb38b3-3a6d-4a27-8d1e-c169f002b0e4" action="else" useFieldsInCommand="false">
+                                    <nestedSteps>
+                                        <item guid="fbe3f89e-78b2-446f-9864-64636f051efe" action="message" useFieldsInCommand="false">
+                                            <command>
+                                                <body>Warning:Cannot find any test that matches [short_name]</body>
+                                            </command>
+                                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                                <severity inherit="false">Warning</severity>
+                                                <message inherit="false">Cannot find any test that matches [short_name]</message>
+                                            </applicationProperties>
+                                        </item>
+                                    </nestedSteps>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                                 </item>
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -550,6 +641,51 @@
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
+        </item>
+        <item name="get_test_short_name" isPublic="true">
+            <steps>
+                <item guid="c1771967-150f-46a9-b01b-d9586d8b7416" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import re</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="b60020ac-199b-4270-a98d-5a581273f7fa" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>pattern = r&quot;([IAES]-[0-9A-Z]+-(?:[A-Z]+-)?\\d+(?:[ab])?-(?:CP|PF|CO|SA|VA|FZ))&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="76feb07d-ca8a-443b-93cf-acb9c2f482e2" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>match = re.search(pattern, test_name)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="32d624af-bd08-4a5c-aab7-3ad64ce6687e" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>match:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="5f96836c-0861-45b4-bdb5-73b1714620ad" action="return">
+                            <command>
+                                <body>[match.group(1)]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="0f33704e-50d1-472d-b49f-edc19177bef4" action="return">
+                    <command>
+                        <body>[test_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="test_name"/>
+            </arguments>
         </item>
     </procedures>
 </testCase>
