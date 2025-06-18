@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
-<testCase version="9.3.0.202303231235">
+<testCase version="25.1.0.202503061247">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="9.3.0.202303231235">
+        <parameters version="25.1.0.202503061247">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
-                    <library_names pt:description="Seperated by &apos;;&apos;. Map with &apos;ste_name_filters&apos; parameter.">iTest Automation</library_names>
-                    <ste_name_filters pt:description="Seperated by &apos;;&apos;. Empty for remaining tests apply for PF and CP test. Support &apos;&amp;&apos; for multiple matching"/>
+                    <library_names pt:description="Seperated by &apos;;&apos;. Map with &apos;ste_name_filters&apos; parameter.">G-RIC-CO;G-RIC;G-CUSA-CO;G-CUSA;G-CO;G-SECURITY;G-CAPACITY</library_names>
+                    <ste_name_filters pt:description="Seperated by &apos;;&apos;. Empty for remaining tests apply for PF and CP test. Support &apos;&amp;&apos; for multiple matching">ric&amp;co;-ric-;cusa&amp;-co_:cusa&amp;-sa_;-cusa-:-cusa_:_cusa_:_cusa-;-co-:-co_:_co-:_co_;-sa-:-sa_:_sa_:_sa-:-va-:-va_:_va_:_va-:-fz_;</ste_name_filters>
                     <delete_library pt:datatype="BOOLEAN" pt:description="Delete existed library">true</delete_library>
                     <ste_dir>C:/Users/quang.vo/Documents/Spirent/5gc-aap-ls-ste</ste_dir>
-                    <tas_url>http://landslide-tas2.spirenteng.com:8080/api/</tas_url>
+                    <tas_url>http://10.71.20.167:8080/api/</tas_url>
                     <tas_user>sms</tas_user>
                     <tas_password>a1b2c3d4</tas_password>
                     <export pt:datatype="BOOLEAN">false</export>
-                    <library_names_backup pt:description="Seperated by &apos;;&apos;. Map with &apos;ste_name_filters&apos; parameter.">G-CUSA-CO;G-CUSA;G-CO;G-SECURITY;G-CAPACITY</library_names_backup>
-                    <ste_name_filters_backup pt:description="Seperated by &apos;;&apos;. Empty for remaining tests apply for PF and CP test. Support &apos;&amp;&apos; for multiple matching">cusa&amp;co;-cusa-:-cusa_:_cusa_:_cusa-;-co-:-co_:_co-:_co_;-sa-:-sa_:_sa_:_sa-:-va-:-va_:_va_:_va-;</ste_name_filters_backup>
+                    <library_names_backup pt:description="Seperated by &apos;;&apos;. Map with &apos;ste_name_filters&apos; parameter.">G-RIC-CO;G-RIC;G-CUSA-CO;G-CUSA;G-CO;G-SECURITY;G-CAPACITY</library_names_backup>
+                    <ste_name_filters_backup pt:description="Seperated by &apos;;&apos;. Empty for remaining tests apply for PF and CP test. Support &apos;&amp;&apos; for multiple matching">ric&amp;co;-ric-;cusa&amp;co;-cusa-:-cusa_:_cusa_:_cusa-;-co-:-co_:_co-:_co_;-sa-:-sa_:_sa_:_sa-:-va-:-va_:_va_:_va-:-fz_;</ste_name_filters_backup>
                 </parameters>
             </parameters>
         </parameters>
@@ -504,13 +504,41 @@
                             </nestedSteps>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
-                        <item guid="96889b7c-2f7d-418b-9acc-93fc43cb7975" action="message" useFieldsInCommand="false">
-                            <command>
-                                <body>Information: ======================= Import ste ==================================</body>
-                            </command>
-                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
-                                <message inherit="false"> ======================= Import ste ==================================</message>
-                            </applicationProperties>
+                        <item guid="78d81dcc-3ca8-4726-8450-5fdfd396e4e7" action="ShowAllLibraries" session="s1">
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>success</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>str(value) == &quot;true&quot;</expression>
+                                                <actionsWhenFalse>
+                                                    <item actionId="FailTest">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="DeclareExecutionIssue">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                            <message>\\[ERROR] Can not get all library names</message>
+                                                        </actionProperties>
+                                                    </item>
+                                                    <item actionId="ExitProcedure">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExitProcedurePropertyGroup"/>
+                                                    </item>
+                                                    <item actionId="SkipRemainingRules">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                </actionsWhenFalse>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                                <storeResponseAt>all_libraries_xml</storeResponseAt>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="ShowAllLibraries" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main"/>
                         </item>
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -520,6 +548,14 @@
                         <body>Import ste</body>
                     </command>
                     <nestedSteps>
+                        <item guid="d116289f-b3bb-4fb4-8a65-c3d8f28708f5" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Information: ======================= Import ste ==================================</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <message inherit="false"> ======================= Import ste ==================================</message>
+                            </applicationProperties>
+                        </item>
                         <item guid="eb08ff2f-871a-48a7-97a5-e933f0444c74" action="eval" useFieldsInCommand="false">
                             <command>
                                 <body>walk_dir = param(&apos;ste_dir&apos;)</body>
