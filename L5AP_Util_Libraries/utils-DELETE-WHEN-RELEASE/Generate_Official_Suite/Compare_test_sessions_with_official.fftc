@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+<testCase version="25.1.0.202504041635">
+    <general>
+        <rendering tclNamespace="my_namespace" testCaseId="ID001" testCaseName="&lt;test case General - Script Rendering - Test case name&gt;"/>
+        <documentation>&lt;test case General - Documentation&gt;</documentation>
+        <notes>&lt;test case General - Notes&gt;
+(These can be multi-line.)</notes>
+        <language>Python</language>
+        <xPathVersion>XPATH31</xPathVersion>
+    </general>
+    <execution>
+        <parameters version="25.1.0.202504041635">
+            <parameters escape="true">
+                <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
+                    <lib_prefix>{Z-</lib_prefix>
+                </parameters>
+            </parameters>
+        </parameters>
+    </execution>
+    <procedures>
+        <item name="main">
+            <description>The main procedure is not rendered</description>
+            <steps>
+                <item guid="c97dc0f7-f60c-43c4-9881-783aa1655ff4" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>tas = &quot;10.71.20.167&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="f8ba1cc7-9086-4c55-806d-04bf7d0617f3" action="open" session="s1">
+                    <command>
+                        <body>application:com.spirent.itest.applications.landsliderest</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                        <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="http://[tas]:8080/api" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                            <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="sms" user.inherit="false" password.masked="true" password="R4CPLwlDFA4Jor6ZZIWzzg==" password.inherit="false"/>
+                        </sessionProperties>
+                        <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    </applicationProperties>
+                </item>
+                <item guid="7a13407c-4c31-439e-b2f2-e22768079ff7" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>custom_lib_prefix = param(&quot;lib_prefix&quot;)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="784a72f1-1722-474c-ad8b-4b764389295f" action="Custom" session="s1">
+                    <command>
+                        <body>-requestMethod GET -dataType json -url libraries</body>
+                    </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="query">
+                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                        <query sub="true">//libraries/item\\[starts-with(name, &apos;[custom_lib_prefix]&apos;)]/id</query>
+                                    </extractorProperties>
+                                </extractorInfo>
+                                <processorInfo ruleType="store">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                        <storageLocation>custom_libs</storageLocation>
+                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                    </postProcessing>
+                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries" url.inherit="false"/>
+                </item>
+                <item guid="da46a8a4-add5-43a3-9f59-f4d72ab34ace" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>ID list</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="6557f905-febd-4aa7-bb36-b00377db1aab" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>cusa_id = -518</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="16ac7a98-ebb6-43cc-a885-1caec813876d" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>cusa_co_id = -513</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="8e63b335-8822-4f7e-b477-eb43424d2666" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>cppf_id = -511</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="4a29f33c-9e60-433a-9f5b-ee2b562f6f75" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>ric_co_id = -517</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="27e550f6-c742-4dc3-a14e-e0588c119867" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>ric_id = -521</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="c1051de7-5613-4ef0-8b44-c07f5e104c43" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>co_id = -510</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="585dee08-be41-4bdd-b4cb-81eb3b01b00a" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>sa_id = -515</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="92c0d133-b2d8-4c4f-8518-2a18ee17575d" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>official_lib = [cusa_id, cusa_co_id, cppf_id, ric_co_id, ric_id, co_id, sa_id]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="2b1a6b0c-98f5-484c-b9aa-44434b774d98" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import re</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="54920c2c-4e9f-4e44-9475-97ff033c4bda" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>from collections import Counter</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="c34b39cc-202f-4a20-a9f4-3523e028197d" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>pattern = r&quot;([IAES]-[0-9A-Z]+-(?:[A-Z]+-)?\\d+(?:[ab])?-(?:CP|PF|CO|SA|VA|FZ))&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="a6ce4ad9-14e6-40f8-b110-67b1bb804ae7" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Official lib test sessions</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="d900435b-005c-49d0-a46a-0ae960ba1fe0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>official_test_session_list = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="ede1390e-4ae0-42bd-b377-404b3520fcfd" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>id in official_lib:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="796e350c-3d2d-4b64-ac25-ff529dce69ad" action="Custom" session="s1">
+                                    <command>
+                                        <body>-requestMethod GET -dataType json -url libraries/[id]/testsessions</body>
+                                    </command>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>mapped/Json/testSessions/item/name</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>lst</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[id]/testsessions" url.inherit="false"/>
+                                </item>
+                                <item guid="04b7676d-313c-424e-94ca-6868c82d5738" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>official_test_session_list.extend(lst)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="c602c60b-7ece-436f-88d1-e213f9c48e84" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>matches = [re.search(pattern, ts).group() for ts in official_test_session_list if re.search(pattern, ts)]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="902e07bb-1b6b-4eb2-8bcc-5ad4a50d2354" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>official_counts = Counter(matches)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="60a5c1fd-116d-40ba-be10-3e4e11d5979a" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(official_counts)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="0ce48549-5799-4b9f-9e8f-bdb960751237" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>Custom lib test sessions</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="037cdbae-aa3c-4c2d-9394-3380029d80a0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>custom_test_session_list = []</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="7016b537-3833-4502-a9e5-8c7d448e0ab2" action="for" useFieldsInCommand="false">
+                            <command>
+                                <body>id in custom_libs:</body>
+                            </command>
+                            <nestedSteps>
+                                <item guid="796e350c-3d2d-4b64-ac25-ff529dce69ad" action="Custom" session="s1">
+                                    <command>
+                                        <body>-requestMethod GET -dataType json -url libraries/[id]/testsessions</body>
+                                    </command>
+                                    <postProcessing>
+                                        <analysisRules>
+                                            <item>
+                                                <extractorInfo extractorType="query">
+                                                    <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                        <query>mapped/Json/testSessions/item/name</query>
+                                                    </extractorProperties>
+                                                </extractorInfo>
+                                                <processorInfo ruleType="store">
+                                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                        <storageLocation>lst</storageLocation>
+                                                        <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                        <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                        <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                                    </ruleProperties>
+                                                </processorInfo>
+                                            </item>
+                                        </analysisRules>
+                                    </postProcessing>
+                                    <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[id]/testsessions" url.inherit="false"/>
+                                </item>
+                                <item guid="04b7676d-313c-424e-94ca-6868c82d5738" action="eval" useFieldsInCommand="false">
+                                    <command>
+                                        <body>custom_test_session_list.extend(lst)</body>
+                                    </command>
+                                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                </item>
+                            </nestedSteps>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="57179428-64df-4fc7-ad7b-570af9b6a2a9" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>matches = [re.search(pattern, ts).group() for ts in custom_test_session_list if re.search(pattern, ts)]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="fdd5c0cf-1158-4906-be27-e0df22d8f31b" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>custom_counts = Counter(matches)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="e6a4a02f-a26e-41a8-93ec-61e8c7bf4a02" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>print(custom_counts)</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="731f9647-c8f0-435b-b58c-0286c7c7a002" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>official_counts == custom_counts:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="16deb279-2906-4bc8-a3e9-3c858aeb5129" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>OK:Congrats! All matches!!</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>True</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="PassTestIfNotAlreadyFailed">
+                                                        <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <severity inherit="false">OK</severity>
+                                <message inherit="false">Congrats! All matches!!</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ebc1ff0c-7f16-4fb9-a112-28796fdd331b" action="else" useFieldsInCommand="false">
+                    <nestedSteps>
+                        <item guid="5be82387-4f85-4592-a448-5a1ca139f316" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>diff = official_counts - custom_counts</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="6e3f41de-8d18-4f6e-8c93-e21304f293d5" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Warning:Test sessions in Official libraries which does not exist in custom libraries: [diff]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <severity inherit="false">Warning</severity>
+                                <message inherit="false">Test sessions in Official libraries which does not exist in custom libraries: [diff]</message>
+                            </applicationProperties>
+                        </item>
+                        <item guid="17c1dcda-dcf2-4a2f-a456-424fc2ffb97a" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>diff = custom_counts - official_counts</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="f4478076-aec7-4aee-a8c2-e9c8d8ac8fad" action="message" useFieldsInCommand="false">
+                            <command>
+                                <body>Warning:Test sessions in Custom libraries which does not exist in official libraries: [diff]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.execution.builtin.exec.MessagePropertyGroup">
+                                <severity inherit="false">Warning</severity>
+                                <message inherit="false">Test sessions in Custom libraries which does not exist in official libraries: [diff]</message>
+                            </applicationProperties>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="ab5a83e2-862c-4b6c-a4a5-08f5a1ba761e" action="close" session="s1" useFieldsInCommand="false">
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+        </item>
+        <item name="get_test_short_name" isPublic="true">
+            <steps>
+                <item guid="1f89825f-b534-4b6a-ac30-c76a5ef6b234" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>import re</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="827f3c6b-afc8-41b2-a713-d1df0d2a4725" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>pattern = r&quot;([IAES]-[0-9A-Z]+-(?:[A-Z]+-)?\\d+(?:[ab])?-(?:CP|PF|CO|SA|VA|FZ))&quot;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="7368ad57-a27f-41c1-9840-894bbeb6e948" action="eval" useFieldsInCommand="false">
+                    <command>
+                        <body>match = re.search(pattern, test_name)</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1f4707b6-e6d0-4646-8b67-7e05e3feaf8c" action="if" useFieldsInCommand="false">
+                    <command>
+                        <body>match:</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="d340f23e-a06e-4d22-b6d9-51267b3831d1" action="return">
+                            <command>
+                                <body>[match.group(1)]</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="b680c88d-f06d-4a92-8bad-da79b53e94eb" action="return">
+                    <command>
+                        <body>[test_name]</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+            </steps>
+            <arguments>
+                <item name="test_name"/>
+            </arguments>
+        </item>
+    </procedures>
+</testCase>
