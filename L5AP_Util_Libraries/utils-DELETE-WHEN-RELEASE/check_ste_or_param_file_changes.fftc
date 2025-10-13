@@ -1,24 +1,22 @@
 <?xml version="1.0"?>
-<testCase version="24.3.0.202407221413">
+<testCase version="25.4.0.202508171620">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="24.3.0.202407221413">
+        <parameters version="25.4.0.202508171620">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <repo_parent_dir pt:description="Path to folder containing 5gc-aap and 5gc-aap-ls-ste repositories">C:\\Users\\quang.vo\\Documents\\Spirent</repo_parent_dir>
-                    <current_release pt:datatype="Release">R17</current_release>
+                    <current_release pt:datatype="Release">R21</current_release>
                     <check_for pt:datatype="Type">Param</check_for>
                     <Param>
                         <file_extension>ffpt</file_extension>
-                        <from_to_commits pt:description="[Obsolete] git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">bbd86aab..HEAD</from_to_commits>
                         <repo_name>5gc-aap</repo_name>
                     </Param>
                     <STE>
                         <file_extension>ste</file_extension>
-                        <from_to_commits pt:description="[Obsolete] git command to retrieve the first commit of a branch (i.e: 5gc-r12): git log 5gc-r11..5gc-r12 --oneline | tail -1">864d5dd..HEAD</from_to_commits>
                         <repo_name>5gc-aap-ls-ste</repo_name>
                     </STE>
                 </parameters>
@@ -43,6 +41,11 @@
                         <item name="R18"/>
                         <item name="R19"/>
                         <item name="R20"/>
+                        <item name="R21"/>
+                        <item name="R22"/>
+                        <item name="R23"/>
+                        <item name="R24"/>
+                        <item name="R25"/>
                     </items>
                 </item>
             </parametersTypes>
@@ -389,7 +392,7 @@
                                             <nestedSteps>
                                                 <item guid="b5a0e64a-4b5b-4cb5-bff4-8946c34286bd" action="eval" useFieldsInCommand="false">
                                                     <command>
-                                                        <body>print(&quot;https://git.spirent.io/aap/5gc-aap/-/commit/&quot; + commit_id)</body>
+                                                        <body>print(&quot;https://git.spirenteng.com/aap/5gc-aap/-/commit/&quot; + commit_id)</body>
                                                     </command>
                                                     <postProcessing>
                                                         <analysisRules>
