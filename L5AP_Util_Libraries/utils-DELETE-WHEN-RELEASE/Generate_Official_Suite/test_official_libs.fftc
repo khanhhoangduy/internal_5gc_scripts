@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
-<testCase version="25.1.0.202504041635">
+<testCase version="25.4.0.202508171620">
     <general>
         <language>Python</language>
         <xPathVersion>XPATH31</xPathVersion>
     </general>
     <execution>
-        <parameters version="25.1.0.202504041635">
+        <parameters version="25.4.0.202508171620">
             <parameters escape="true">
                 <parameters xmlns:pt="http://www.fnfr.com/schemas/parameterTree">
                     <tas_url>http://10.71.20.167:8080/api</tas_url>
                     <check_number_test_session pt:datatype="BOOLEAN" pt:description="A test with SBA/UP/CP test session should have at least 3 test sessions in total (SUT/SBA/Nodal). Setting this to true will ensure the assumption but will increase the execution duration.">true</check_number_test_session>
-                    <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">true</use_official_libs>
-                    <libs_prefix pt:description="The lib prefix in case not using official libraries">G</libs_prefix>
+                    <use_official_libs pt:datatype="BOOLEAN" pt:description="Set to true for testing test sessions in official libs. Otherwise, it tests test sessions in G- prefix libs.">false</use_official_libs>
+                    <libs_prefix pt:description="The lib prefix in case not using official libraries">Q</libs_prefix>
                 </parameters>
             </parameters>
         </parameters>
@@ -26,6 +26,19 @@
                     <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
                         <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="[param(&quot;tas_url&quot;)]" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
+                            <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="sms" user.inherit="false" password.masked="true" password="R4CPLwlDFA4Jor6ZZIWzzg==" password.inherit="false"/>
+                        </sessionProperties>
+                        <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                    </applicationProperties>
+                </item>
+                <item guid="47a29268-45f6-4537-80f2-01164f2d70c3" action="open" session="tas38" useFieldsInCommand="false">
+                    <command>
+                        <body>application:com.spirent.itest.applications.landsliderest</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
+                        <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        <sessionProperties type="com.fnfr.svt.adapter.automation.tools.common.documents.TransferableDocumentObject" transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestSessionProperties" landslideRESTAPI="http://10.71.39.38:8080/api" landslideRESTAPI.inherit="false" returnRawResponseText="true" returnRawResponseText.inherit="false">
                             <authentication transferableToolId="com.spirent.itest.applications.landsliderest" transferableType="com.spirent.itest.applications.landsliderest.properties.LandslideRestAuthenticationProperties" user="sms" user.inherit="false" password.masked="true" password="R4CPLwlDFA4Jor6ZZIWzzg==" password.inherit="false"/>
                         </sessionProperties>
                         <sessionClass type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -154,7 +167,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CAPACITY}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-CP-PF}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -214,7 +227,7 @@
                                             <item>
                                                 <extractorInfo extractorType="query">
                                                     <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup" declareNoMatchIssue="false">
-                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-SECURITY}&quot;]/id</query>
+                                                        <query sub="true">//libraries/item\\[name = &quot;{[libs_prefix]-SA}&quot;]/id</query>
                                                     </extractorProperties>
                                                 </extractorInfo>
                                                 <processorInfo ruleType="store">
@@ -648,21 +661,21 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="ed2067c3-4c46-4ab2-acfa-f3a1e01b829e" action="comment" skip="true" useFieldsInCommand="false">
+                <item guid="ed2067c3-4c46-4ab2-acfa-f3a1e01b829e" action="comment" useFieldsInCommand="false">
                     <command>
-                        <body>ORAN CO</body>
+                        <body>ORAN E2E CO</body>
                     </command>
                     <nestedSteps>
-                        <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="s1">
+                        <item guid="063cbf3c-3625-4b5b-b360-bfe18737fff7" action="Custom" session="tas38">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/[...]/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/-516/duNodalTests</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
                                     <item>
                                         <extractorInfo extractorType="query">
                                             <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                                <query>mapped/Json/testSessions/item/name</query>
+                                                <query>mapped/Json/duNodalTests/item/name</query>
                                             </extractorProperties>
                                         </extractorInfo>
                                         <processorInfo ruleType="store">
@@ -685,11 +698,11 @@
                                     </item>
                                 </item>
                             </eventHandlers>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/[...]/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-516/duNodalTests" url.inherit="false"/>
                         </item>
                         <item guid="9c9fadc9-c463-44e5-8fdf-1939ed762dd8" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>pattern = &quot;-(CO)[_-]&quot;</body>
+                                <body>pattern = &quot;-(CO|FN)[_-]&quot;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -724,7 +737,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ ORAN Compliance: [value] tests</message>
+                                                <message>+ ORAN E2E Compliance: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -736,21 +749,21 @@
                     </nestedSteps>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
-                <item guid="57b7058d-7257-43d4-9366-318e2e484dbe" action="comment" skip="true" useFieldsInCommand="false">
+                <item guid="57b7058d-7257-43d4-9366-318e2e484dbe" action="comment" useFieldsInCommand="false">
                     <command>
-                        <body>ORAN CP-PF</body>
+                        <body>ORAN E2E CP-PF</body>
                     </command>
                     <nestedSteps>
-                        <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="s1">
+                        <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="tas38">
                             <command>
-                                <body>-requestMethod GET -dataType json -url libraries/-520/testsessions</body>
+                                <body>-requestMethod GET -dataType json -url libraries/-520/duNodalTests</body>
                             </command>
                             <postProcessing>
                                 <analysisRules>
                                     <item>
                                         <extractorInfo extractorType="query">
                                             <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
-                                                <query>mapped/Json/testSessions/item/name</query>
+                                                <query>mapped/Json/duNodalTests/item/name</query>
                                             </extractorProperties>
                                         </extractorInfo>
                                         <processorInfo ruleType="store">
@@ -773,11 +786,11 @@
                                     </item>
                                 </item>
                             </eventHandlers>
-                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-520/testsessions" url.inherit="false"/>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-520/duNodalTests" url.inherit="false"/>
                         </item>
                         <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
                             <command>
-                                <body>pattern = &quot;-(CP|PF|FN)[_-]&quot;</body>
+                                <body>pattern = &quot;-(CP|PF)[_-]&quot;</body>
                             </command>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
@@ -799,17 +812,10 @@
                                                 <actionsWhenTrue>
                                                     <item actionId="Eval">
                                                         <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
-                                                            <statement>value = int(value) + 1</statement>
+                                                            <statement>total += int(value)</statement>
                                                         </actionProperties>
                                                     </item>
                                                 </actionsWhenTrue>
-                                                <actionsWhenFalse>
-                                                    <item actionId="Eval">
-                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
-                                                            <statement>value = 1</statement>
-                                                        </actionProperties>
-                                                    </item>
-                                                </actionsWhenFalse>
                                             </ruleProperties>
                                         </processorInfo>
                                     </item>
@@ -819,7 +825,7 @@
                                         </extractorInfo>
                                         <processorInfo ruleType="message">
                                             <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
-                                                <message>+ ORAN Capacity and Performance/Functional: [value] tests</message>
+                                                <message>+ ORAN E2E Capacity and Performance: [value] tests</message>
                                                 <tag sub="false" defaultValue=""/>
                                             </ruleProperties>
                                         </processorInfo>
@@ -828,10 +834,92 @@
                             </postProcessing>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
-                        <item guid="6e685eaf-b5e8-4f7e-a27f-6b2c693f1713" action="eval" useFieldsInCommand="false">
+                    </nestedSteps>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="fa4916e2-da1b-4694-b855-ed5020949038" action="comment" useFieldsInCommand="false">
+                    <command>
+                        <body>ORAN DU CP-PF</body>
+                    </command>
+                    <nestedSteps>
+                        <item guid="11152507-0e77-450f-b978-334ca4328881" action="Custom" session="tas38">
                             <command>
-                                <body>total += value</body>
+                                <body>-requestMethod GET -dataType json -url libraries/-519/duNodalTests</body>
                             </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>mapped/Json/duNodalTests/item/name</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="store">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.StoreProcessorPropertyGroup">
+                                                <storageLocation>test_session_list</storageLocation>
+                                                <responseValue type="com.fnfr.documents.PropertyBoolean">false</responseValue>
+                                                <variable type="com.fnfr.documents.PropertyBoolean">true</variable>
+                                                <secret type="com.fnfr.documents.PropertyBoolean">false</secret>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
+                            <eventHandlers>
+                                <item name="OnNoMatchesFound">
+                                    <item actionId="Eval">
+                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                            <statement>test_session_list = []</statement>
+                                        </actionProperties>
+                                    </item>
+                                </item>
+                            </eventHandlers>
+                            <applicationProperties type="com.fnfr.itest.platform2.shared.documents.ntaf.NtafTransferableDocumentObject" action="Custom" subharness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harness="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" harnessName="http://spirent.com/NTAF/harness/iTest/LandslideRest/Main" url="libraries/-519/duNodalTests" url.inherit="false"/>
+                        </item>
+                        <item guid="ae5dc75b-24ea-4393-9596-17e410fde9b0" action="eval" useFieldsInCommand="false">
+                            <command>
+                                <body>pattern = &quot;-(CP|PF)[_-]&quot;</body>
+                            </command>
+                            <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                        </item>
+                        <item guid="928a6d62-3d12-45ec-a717-675fea8b5a45" action="call" useFieldsInCommand="false">
+                            <command>
+                                <body>get_test_list(pattern=pattern, test_session_list=test_session_list)</body>
+                            </command>
+                            <postProcessing>
+                                <analysisRules>
+                                    <item>
+                                        <extractorInfo extractorType="query">
+                                            <extractorProperties type="com.fnfr.svt.mapping.execution.extractors.QueryDataExtractorPropertyGroup">
+                                                <query>count(mapped/yaml/document/child::node())</query>
+                                            </extractorProperties>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="assert">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                                <expression>int(value) &gt; 0</expression>
+                                                <actionsWhenTrue>
+                                                    <item actionId="Eval">
+                                                        <actionProperties type="com.fnfr.svt.execution.builtin.actions.EvalActionPropertyGroup">
+                                                            <statement>total += int(value)</statement>
+                                                        </actionProperties>
+                                                    </item>
+                                                </actionsWhenTrue>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                    <item>
+                                        <extractorInfo extractorType="none">
+                                            <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                        </extractorInfo>
+                                        <processorInfo ruleType="message">
+                                            <ruleProperties type="com.fnfr.svt.execution.builtin.processors.MessageProcessorPropertyGroup" severity="Information">
+                                                <message>+ ORAN DU Capacity and Performance: [value] tests</message>
+                                                <tag sub="false" defaultValue=""/>
+                                            </ruleProperties>
+                                        </processorInfo>
+                                    </item>
+                                </analysisRules>
+                            </postProcessing>
                             <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                         </item>
                     </nestedSteps>
@@ -1023,6 +1111,9 @@
                     </applicationProperties>
                 </item>
                 <item guid="baa0318d-4938-442a-815b-17950599c91d" action="close" session="s1">
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="599873ce-66b4-4310-a8dc-1e1799322126" action="close" session="tas38">
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
